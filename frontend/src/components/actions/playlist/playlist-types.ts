@@ -1,0 +1,5 @@
+export const playlistTypes = {
+    ADD_CATEGORY: 'ADD_CATEGORY',
+    ADD_SELECTED_SONG: 'ADD_SELECTED_SONG',
+    REMOVE_CATEGORY: 'REMOVE_CATEGORY'
+}
