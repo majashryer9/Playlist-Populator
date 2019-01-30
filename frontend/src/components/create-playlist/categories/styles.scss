@@ -17,8 +17,30 @@
     text-align: center;
     background-color: lightgrey;
     border-radius: 40px;
-    width: 150px;
-    padding: 15px;
+    width: 200px;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+
+    .category-name {
+        display: inline-block;
+    }
+
+    .remove-icon {
+        display: inline-block;
+        border-radius: 15px;
+        background-color: darkgray;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    .remove-icon:hover {
+        background-color: slategray;
+    }
 }
 
 .clicked {

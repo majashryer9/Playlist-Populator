@@ -1,6 +1,6 @@
 import * as React from 'react';
 import CategoryChip from './category-chip';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 import { Category } from '../../../models/Category';
 import { IPlaylistState, IState } from '../../../reducers';
 import { connect } from 'react-redux';
@@ -48,7 +48,7 @@ export class ChangeCategoriesContainer extends React.Component<IProps, IChangeCa
         const categoryNames = this.props.categories.map((category: Category) => category.name);
         const playlistCategoryNames = this.props.newPlaylist.categories.map((category: Category) => category.name);
         return (
-            <Container>
+            <>
                 <Row>
                     <Col md={12}>
                         <Typeahead
@@ -59,7 +59,7 @@ export class ChangeCategoriesContainer extends React.Component<IProps, IChangeCa
                                 }
                             }}
                             options={categoryNames.filter((categoryName: string) => !playlistCategoryNames.some((playlistCategoryName: string) => playlistCategoryName === categoryName))}
-                            placeholder='Add another category...'
+                            placeholder='Add a category...'
                             ref={this.setRef}
                         />
                         <Button onClick={this.addCategory}> Add </Button>
@@ -68,13 +68,13 @@ export class ChangeCategoriesContainer extends React.Component<IProps, IChangeCa
                 <Row>
                     {this.props.newPlaylist.categories.map((category: Category) => {
                         return (
-                            <Col md={6} key={category.id}>
+                            <Col md={12} lg={6} key={category.id}>
                                 <CategoryChip categoryName={category.name} />
                             </Col>
                         )
                     })}
                 </Row>
-            </Container>
+            </>
         )
     }
 }

@@ -90,6 +90,7 @@ export class SongsInput extends React.Component<IProps, ISongsContainerState> {
                                     this.setInputtedSong(query);
                                 }}
                                 options={this.state.searchSuggestions}
+                                placeholder='Add a song...'
                                 ref={this.setRef}
                             />
                             <Button onClick={this.chooseSong}> Add Song </Button>
