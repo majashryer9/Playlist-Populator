@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { IPlaylistState, IState } from '../../../reducers';
 import { connect } from 'react-redux';
-import { Category } from '../../../models/Category';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import { environment } from '../../../environment';
 import * as playlistActions from '../../actions/playlist/playlist-actions';
 import { Button, Card, CardBody, Row, Col } from 'reactstrap';
+import ChangeCategoriesContainer from '../categories/change-categories-container';
 
 interface IProps extends IPlaylistState {
-    setSelectedSong: (selectedSong: string) => void
+    addSelectedSong: (selectedSong: string) => void
 }
 
 interface ISongsContainerState {
@@ -18,7 +18,7 @@ interface ISongsContainerState {
     searchSuggestions: string[]
 }
 
-export class SongInput extends React.Component<IProps, ISongsContainerState> {
+export class SongsInput extends React.Component<IProps, ISongsContainerState> {
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -30,7 +30,7 @@ export class SongInput extends React.Component<IProps, ISongsContainerState> {
     }
 
     public chooseSong = () => {
-        this.props.setSelectedSong(this.state.inputtedSong);
+        this.props.addSelectedSong(this.state.inputtedSong);
         this.state.reference.getInstance().clear();
     }
 
@@ -77,7 +77,7 @@ export class SongInput extends React.Component<IProps, ISongsContainerState> {
             <Card>
                 <CardBody>
                     <Row>
-                        <Col>
+                        <Col md={6}>
                             <AsyncTypeahead
                                 isLoading={this.state.isLoading}
                                 onChange={(selectedSong: any) => {
@@ -94,11 +94,8 @@ export class SongInput extends React.Component<IProps, ISongsContainerState> {
                             />
                             <Button onClick={this.chooseSong}> Add Song </Button>
                         </Col>
-                        <Col>
-                            <p>
-                                Selected categories:
-                                {this.props.newPlaylist.categories.map((category: Category) => category.name)}
-                            </p>
+                        <Col md={6}>
+                            <ChangeCategoriesContainer />
                         </Col>
                     </Row>
 
@@ -110,6 +107,6 @@ export class SongInput extends React.Component<IProps, ISongsContainerState> {
 
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
-    setSelectedSong: playlistActions.setSelectedSong
+    addSelectedSong: playlistActions.addSelectedSong
 }
-export default connect(mapStateToProps, mapDispatchToProps)(SongInput);
+export default connect(mapStateToProps, mapDispatchToProps)(SongsInput);

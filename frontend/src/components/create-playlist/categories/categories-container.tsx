@@ -3,12 +3,16 @@ import { Category } from '../../../models/Category';
 import { Row, Col, Button, Container } from 'reactstrap';
 import CategoryCard from './category-card';
 import { environment } from '../../../environment';
+import { IPlaylistState, IState } from '../../../reducers';
+import { connect } from 'react-redux';
+import * as playlistActions from '../../actions/playlist/playlist-actions';
 
-interface IState {
-    categories: Category[];
+interface IProps extends IPlaylistState {
+    setCategories: (categories: Category[]) => void;
+    showSongs: () => void;
 }
 
-export default class CategoriesContainer extends React.Component<any, IState> {
+export class CategoriesContainer extends React.Component<IProps, any> {
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -21,16 +25,13 @@ export default class CategoriesContainer extends React.Component<any, IState> {
         fetch(url)
             .then(resp => resp.json())
             .then(categories => {
-                this.setState({
-                    ...this.state,
-                    categories
-                })
+                this.props.setCategories(categories);
             })
             .catch(error => console.log(error));
     }
 
     public render() {
-        const { categories } = this.state;
+        const { categories } = this.props;
         return (
             <Container>
                 <Row>
@@ -56,3 +57,9 @@ export default class CategoriesContainer extends React.Component<any, IState> {
         );
     }
 }
+
+const mapStateToProps = (state: IState) => (state.playlist);
+const mapDispatchToProps = {
+    setCategories: playlistActions.setCategories
+}
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesContainer);

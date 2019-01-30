@@ -16,7 +16,7 @@ export default class SongsTable extends React.Component<IProps, any> {
         const { songs, buttonLabel } = this.props;
         return (
             <div>
-                <Table>
+                <Table responsive>
                     <thead>
                         <tr>
                             <th>Song Name</th>

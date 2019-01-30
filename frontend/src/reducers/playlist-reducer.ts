@@ -3,13 +3,14 @@ import { Playlist } from '../models/Playlist';
 import { playlistTypes } from '../components/actions/playlist/playlist-types';
 
 const initialState: IPlaylistState = {
+    categories: [],
     newPlaylist: new Playlist(),
     suggestedSongs: []
 }
 
 export const playlistReducer = (state = initialState, action: any) => {
     switch(action.type) {
-        case playlistTypes.ADD_CATEGORY:
+        case playlistTypes.ADD_PLAYLIST_CATEGORY:
             return {
                 ...state,
                 newPlaylist: {
@@ -26,13 +27,18 @@ export const playlistReducer = (state = initialState, action: any) => {
                 },
                 suggestedSongs: action.payload.suggestedSongs
             }
-        case playlistTypes.REMOVE_CATEGORY:
+        case playlistTypes.REMOVE_PLAYLIST_CATEGORY:
             return {
                 ...state,
                 newPlaylist: {
                     ...state.newPlaylist,
                     categories: action.payload.categories
                 }
+            }
+        case playlistTypes.SET_CATEGORIES:
+            return {
+                ...state,
+                categories: action.payload.categories
             }
     }
     return state;

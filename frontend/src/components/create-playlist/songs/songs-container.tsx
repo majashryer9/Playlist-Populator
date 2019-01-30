@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import SongInput from './song-input';
+import SongsInput from './songs-input';
 import SongsTable from './songs-table';
 import { IPlaylistState, IState } from '../../../reducers';
 import { connect } from 'react-redux';
@@ -15,12 +15,12 @@ export class SongsContainer extends React.Component<IPlaylistState, {}> {
             <Container>
                 <Row>
                     <Col>
-                        <SongInput />
+                        <SongsInput />
                     </Col>
                 </Row>
                 <Row>
                     <Col>
-                        <SongsTable buttonLabel={'Remove'} songs={this.props.newPlaylist.songs} />
+                        <SongsTable buttonLabel={'Remove from Playlist'} songs={this.props.newPlaylist.songs} />
                     </Col>
                     <Col>
                         <SongsTable buttonLabel={'Add to Playlist'} songs={this.props.suggestedSongs} />

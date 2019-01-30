@@ -13,6 +13,14 @@
     text-align: center;
 }
 
+.category-chip {
+    text-align: center;
+    background-color: lightgrey;
+    border-radius: 40px;
+    width: 150px;
+    padding: 15px;
+}
+
 .clicked {
     opacity: 0.2;
 }

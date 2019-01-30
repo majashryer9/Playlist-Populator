@@ -3,26 +3,39 @@ import { playlistTypes } from './playlist-types';
 import { environment } from '../../../environment';
 import { Song } from '../../../models/Song';
 
-export const addCategory = (category: Category) => {
-    return {
-        payload: {
-            category
-        },
-        type: playlistTypes.ADD_CATEGORY
+export const addPlaylistCategory = (category: Category) => (dispatch: any, getState: any) => {
+    const playlistCategories = getState().playlist.newPlaylist.categories;
+    if (category.name && playlistCategories.every((playlistCategory: Category) => category.name !== playlistCategory.name)) {
+        dispatch({
+            payload: {
+                category
+            },
+            type: playlistTypes.ADD_PLAYLIST_CATEGORY
+        })
     }
+    return;
 }
 
-export const removeCategory = (category: Category) => (dispatch: any, getState: any) => {
+export const removePlaylistCategory = (category: Category) => (dispatch: any, getState: any) => {
     const categories = getState().playlist.newPlaylist.categories.filter((selectedCategory: Category) => selectedCategory.id !== category.id);
     dispatch({
         payload: {
             categories
         },
-        type: playlistTypes.REMOVE_CATEGORY
+        type: playlistTypes.REMOVE_PLAYLIST_CATEGORY
     })
 }
 
-export const setSelectedSong = (selectedSong: string) => (dispatch: any) => {
+export const setCategories = (categories: Category[]) => {
+    return {
+        payload: {
+            categories
+        },
+        type: playlistTypes.SET_CATEGORIES
+    }
+}
+
+export const addSelectedSong = (selectedSong: string) => (dispatch: any) => {
     const name = selectedSong.split(' ').filter((word: string) => word !== 'by').join(' ');
     const url = `${environment.context}playlist/song-search`;
     fetch(url, {

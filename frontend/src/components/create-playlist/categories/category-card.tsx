@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import * as playlistActions from '../../actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
-    addCategory: (category: Category) => void,
+    addPlaylistCategory: (category: Category) => void,
     category: Category,
-    removeCategory: (category: Category) => void
+    removePlaylistCategory: (category: Category) => void
 }
 
 interface ICategoryCardState {
@@ -25,7 +25,7 @@ export class CategoryCard extends React.Component<IProps, ICategoryCardState> {
     }
 
     public setClicked = () => {
-        (!this.state.clicked)? this.props.addCategory(this.props.category) : this.props.removeCategory(this.props.category);
+        (!this.state.clicked)? this.props.addPlaylistCategory(this.props.category) : this.props.removePlaylistCategory(this.props.category);
         this.setState({
             ...this.state,
             clicked: !this.state.clicked
@@ -50,8 +50,8 @@ export class CategoryCard extends React.Component<IProps, ICategoryCardState> {
 
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
-    addCategory: playlistActions.addCategory,
-    removeCategory: playlistActions.removeCategory
+    addPlaylistCategory: playlistActions.addPlaylistCategory,
+    removePlaylistCategory: playlistActions.removePlaylistCategory
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryCard);
 

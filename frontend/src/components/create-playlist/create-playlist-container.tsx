@@ -8,6 +8,7 @@ interface ICreatePlaylistContainerState {
     showCategories: boolean
 }
 
+
 export class CreatePlaylistContainer extends React.Component<IPlaylistState, ICreatePlaylistContainerState> {
     public constructor(props: any) {
         super(props);
