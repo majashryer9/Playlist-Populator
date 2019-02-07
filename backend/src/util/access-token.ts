@@ -14,4 +14,4 @@ export const getAccessToken = () => {
         json: true
     }
     return rp.post(authOptions);
-} 
+}

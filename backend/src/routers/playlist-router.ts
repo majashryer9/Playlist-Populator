@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 import { getAccessToken } from '../util/access-token';
 import { Song } from '../models/Song';
 import { Category } from '../models/Category';
+import * as songService from '../services/song-service';
+import * as playlistService from '../services/playlist-service';
 
 export const playlistRouter = Router();
 
@@ -41,6 +43,16 @@ playlistRouter.get('/categories', (req: Request, resp: Response, next: any) => {
   POST
 */
 
+playlistRouter.post('/populate', async (req: Request, resp: Response) => {
+  if (req.body.length) {
+    const songs = await songService.getSimilarSongs(req.body);
+    (songs instanceof Error) ? resp.sendStatus(500) : resp.json(songs);
+  }
+  else {
+    resp.sendStatus(400);
+  }
+})
+
 playlistRouter.post('/recommendations', (req: Request, resp: Response) => {
   const song = new Song(req.body);
   const url = `https://api.spotify.com/v1/recommendations?limit=15&market=US&seed_artists=${song.spotifyArtistId}&seed_tracks=${song.spotifyTrackId}`;
@@ -70,7 +82,12 @@ playlistRouter.post('/recommendations', (req: Request, resp: Response) => {
     })
 })
 
-playlistRouter.post('/song-search', (req: Request, resp: Response, next: any) => {
+playlistRouter.post('/save-playlist', async (req: Request, resp: Response) => {
+  const playlistId = await playlistService.savePlaylist(req.body);
+  (playlistId)? resp.json(playlistId) : resp.sendStatus(500);
+})
+
+playlistRouter.post('/song-search', (req: Request, resp: Response) => {
   const song = new Song(req.body);
   const url = `https://api.spotify.com/v1/search?q=${encodeURI(`${song.name}`)}&type=track&market=US`;
   getAccessToken()
