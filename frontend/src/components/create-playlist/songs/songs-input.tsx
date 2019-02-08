@@ -34,6 +34,11 @@ export class SongsInput extends React.Component<IProps, ISongsContainerState> {
         this.state.reference.getInstance().clear();
     }
 
+    public newPlaylistSongsLength = () => {
+        const length = this.props.newPlaylist.songs.length;
+        return 5 < length || length < 3;
+    }
+
     public setRef = (reference: any) => {
         this.setState({
             ...this.state,
@@ -72,6 +77,21 @@ export class SongsInput extends React.Component<IProps, ISongsContainerState> {
         })
     }
 
+    public populate = () => {
+        const url = `${environment.context}playlist/populate`;
+        fetch(url, {
+            body: JSON.stringify(this.props.newPlaylist),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        })
+        .then(resp => resp.json())
+        .then(resp => {
+            console.log(resp);
+        })
+    }
+
     public render() {
         return (
             <Card>
@@ -94,6 +114,7 @@ export class SongsInput extends React.Component<IProps, ISongsContainerState> {
                                 ref={this.setRef}
                             />
                             <Button onClick={this.chooseSong}> Add Song </Button>
+                            <Button disabled={this.newPlaylistSongsLength()} onClick={this.populate}> Populate Playlist </Button>
                         </Col>
                         <Col md={6}>
                             <ChangeCategoriesContainer />

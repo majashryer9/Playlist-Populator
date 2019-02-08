@@ -44,16 +44,60 @@ playlistRouter.get('/categories', (req: Request, resp: Response, next: any) => {
 */
 
 playlistRouter.post('/populate', async (req: Request, resp: Response) => {
-  if (req.body.length) {
-    const songs = await songService.getSimilarSongs(req.body);
-    (songs instanceof Error) ? resp.sendStatus(500) : resp.json(songs);
+  const playlist = req.body;
+  if (playlist && playlist.songs.length) {
+    const songsFromDB = await songService.getSimilarSongs(req.body.songs);
+    const url = `https://api.spotify.com/v1/recommendations?limit=15&market=US&seed_tracks=${encodeURIComponent(playlist.songs.map((song: Song) => song.spotifyTrackId).join())}`;
+    const songsFromSpotify = await getAccessToken()
+      .then(request => request.access_token)
+      .then(accessToken => {
+        return fetch(url, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        })
+          .then(results => results.json())
+          .then(results => {
+            if (results && !results.error) {
+              return results.tracks.map((song: any) => {
+                return new Song({
+                  artistName: (song.artists.length) ? song.artists[0].name : '',
+                  name: song.name,
+                  spotifyArtistId: (song.artists.length) ? song.artists[0].id : '',
+                  spotifyTrackId: song.id
+                });
+              })
+            }
+            return [];
+          })
+          .catch(error => {
+            console.log(error);
+            return [];
+          });
+      })
+    const songs = songsFromDB.concat(songsFromSpotify);
+    const idsWithNoDuplicates = new Set(songs.map((song: Song) => song.spotifyTrackId));
+    const songsWithNoDuplicates = songs.filter((song: Song) => {
+      if (idsWithNoDuplicates.has(song.spotifyTrackId)) {
+        idsWithNoDuplicates.delete(song.spotifyTrackId);
+        return true;
+      }
+      else {
+        return false;
+      }
+    })
+    playlist.songs = [...playlist.songs, ...songsWithNoDuplicates];
+    playlistService.savePlaylist(playlist);
+    resp.json(songsWithNoDuplicates);
   }
   else {
     resp.sendStatus(400);
   }
 })
 
-playlistRouter.post('/recommendations', (req: Request, resp: Response) => {
+playlistRouter.post('/recommendations', async (req: Request, resp: Response) => {
   const song = new Song(req.body);
   const url = `https://api.spotify.com/v1/recommendations?limit=15&market=US&seed_artists=${song.spotifyArtistId}&seed_tracks=${song.spotifyTrackId}`;
   getAccessToken()
@@ -84,7 +128,7 @@ playlistRouter.post('/recommendations', (req: Request, resp: Response) => {
 
 playlistRouter.post('/save-playlist', async (req: Request, resp: Response) => {
   const playlistId = await playlistService.savePlaylist(req.body);
-  (playlistId)? resp.json(playlistId) : resp.sendStatus(500);
+  (playlistId) ? resp.json(playlistId) : resp.sendStatus(500);
 })
 
 playlistRouter.post('/song-search', (req: Request, resp: Response) => {

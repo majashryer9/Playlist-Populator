@@ -80,7 +80,7 @@ export const getSimilarSongs = async (songs: Song[]) => {
         }) : [];
     } catch (error) {
         console.log(error);
-        return new Error('Database failure');
+        return [];
     } finally {
         client.release();
     }

@@ -1,4 +1,5 @@
 export class SqlSong {
+    public album_art_url: string = '';
     public artist_name: string = '';
     public danceability: number = 0;
     public energy: number = 0;

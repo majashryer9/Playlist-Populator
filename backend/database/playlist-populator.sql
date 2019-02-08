@@ -6,7 +6,7 @@ CREATE TABLE app_user(
 	first_name VARCHAR(100) NOT NULL,
 	last_name VARCHAR(100) NOT NULL,
 	password VARCHAR(100) NOT NULL,
-	bucket_key VARCHAR(20) UNIQUE,
+	bucket_key VARCHAR(20),
 	user_id SERIAL PRIMARY KEY,
 	username VARCHAR(100) NOT NULL UNIQUE
 );
@@ -15,12 +15,12 @@ CREATE TABLE playlist(
 	owner_id INTEGER,
 	playlist_id SERIAL PRIMARY KEY,
 	playlist_name VARCHAR(100),
-	bucket_key VARCHAR(20) UNIQUE,
+	bucket_key VARCHAR(20),
 	saved BOOLEAN NOT NULL
 );
 
 CREATE TABLE song(
-	album_art_url VARCHAR(64),
+	album_art_url VARCHAR(100),
 	artist_name VARCHAR(100) NOT NULL,
 	danceability NUMERIC,
 	energy NUMERIC,
@@ -38,7 +38,7 @@ CREATE TABLE song(
 CREATE TABLE category(
 	category_id SERIAL PRIMARY KEY,
 	category_name VARCHAR(100) UNIQUE NOT NULL,
-	image_url VARCHAR(64)
+	image_url VARCHAR(100)
 );
 
 CREATE TABLE users_liked_songs(

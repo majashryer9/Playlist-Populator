@@ -2,6 +2,7 @@ import { SqlSong } from '../dtos/song-dto';
 import { Song } from '../models/Song';
 export const songConverter = (song: SqlSong) => {
     return new Song({
+        albumArtUrl: song.album_art_url,
         artistName: song.artist_name,
         danceability: song.danceability,
         energy: song.energy,

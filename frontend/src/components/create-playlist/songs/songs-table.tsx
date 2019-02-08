@@ -3,6 +3,8 @@ import { Song } from '../../../models/Song';
 import { Table, Button } from 'reactstrap';
 
 interface IProps {
+    buttonClick: (song: Song) => void;
+    buttonDisabled?: boolean;
     buttonLabel: string,
     songs: Song[]
 }
@@ -15,8 +17,8 @@ export default class SongsTable extends React.Component<IProps, any> {
     public render() {
         const { songs, buttonLabel } = this.props;
         return (
-            <div>
-                <Table responsive>
+            <div className='table-responsive songs-table-wrapper'>
+                <Table>
                     <thead>
                         <tr>
                             <th>Song Name</th>
@@ -30,7 +32,7 @@ export default class SongsTable extends React.Component<IProps, any> {
                                 <tr key={song.spotifyTrackId}>
                                     <td>{song.name}</td>
                                     <td>{song.artistName}</td>
-                                    <td><Button>{buttonLabel}</Button></td>
+                                    <td><Button onClick={() => this.props.buttonClick(song)} disabled={(this.props.buttonDisabled)? this.props.buttonDisabled : false}>{buttonLabel}</Button></td>
                                 </tr>
                             )
                         })}

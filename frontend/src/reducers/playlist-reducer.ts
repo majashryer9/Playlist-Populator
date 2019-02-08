@@ -9,7 +9,7 @@ const initialState: IPlaylistState = {
 }
 
 export const playlistReducer = (state = initialState, action: any) => {
-    switch(action.type) {
+    switch (action.type) {
         case playlistTypes.ADD_PLAYLIST_CATEGORY:
             return {
                 ...state,
@@ -27,12 +27,33 @@ export const playlistReducer = (state = initialState, action: any) => {
                 },
                 suggestedSongs: action.payload.suggestedSongs
             }
+        case playlistTypes.ADD_SONG_TO_NEW_PLAYLIST:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    songs: [...state.newPlaylist.songs, action.payload.song]
+                }
+            }
         case playlistTypes.REMOVE_PLAYLIST_CATEGORY:
             return {
                 ...state,
                 newPlaylist: {
                     ...state.newPlaylist,
                     categories: action.payload.categories
+                }
+            }
+        case playlistTypes.REMOVE_SONG_FROM_SUGGESTED_SONGS:
+            return {
+                ...state,
+                suggestedSongs: action.payload.suggestedSongs
+            }
+        case playlistTypes.REMOVE_SONG_FROM_NEW_PLAYLIST:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    songs: action.payload.newPlaylistSongs
                 }
             }
         case playlistTypes.SET_CATEGORIES:

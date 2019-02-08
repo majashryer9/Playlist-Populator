@@ -1,0 +1,4 @@
+.songs-table-wrapper {
+  height: 500px; }
+  .songs-table-wrapper tbody {
+    overflow: auto; }

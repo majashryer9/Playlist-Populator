@@ -44,3 +44,8 @@
 .category-card-col {
   margin-top: 25px;
   margin-bottom: 25px; }
+
+.songs-table-wrapper {
+  height: 500px; }
+  .songs-table-wrapper tbody {
+    overflow: auto; }
