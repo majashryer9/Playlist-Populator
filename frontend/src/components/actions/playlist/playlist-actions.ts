@@ -2,6 +2,7 @@ import { Category } from '../../../models/Category';
 import { playlistTypes } from './playlist-types';
 import { environment } from '../../../environment';
 import { Song } from '../../../models/Song';
+import { Playlist } from '../../../models/Playlist';
 
 /*
 CATEGORIES
@@ -40,56 +41,57 @@ export const setCategories = (categories: Category[]) => {
 }
 
 /*
-SONGS
- */
+PLAYLISTS
+*/
 
-export const addSelectedSong = (selectedSong: string) => (dispatch: any, getState: any) => {
-    const name = selectedSong.split(' ').filter((word: string) => word !== 'by').join(' ');
-    const url = `${environment.context}playlist/song-search`;
+export const savePlaylist = (playlist: Playlist) => (dispatch: any) => {
+    const url = `${environment.context}playlist/save-playlist`;
     fetch(url, {
-        body: JSON.stringify({
-            name
-        }),
+        body: JSON.stringify(playlist),
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST'
     })
         .then(resp => resp.json())
-        .then(resp => {
-            const song = new Song({
-                artistName: (resp.length && resp[0].artists.length) ? resp[0].artists[0].name : '',
-                name: (resp.length) ? resp[0].name : '',
-                spotifyArtistId: (resp.length && resp[0].artists.length) ? resp[0].artists[0].id : '',
-                spotifyTrackId: (resp.length) ? resp[0].id : ''
-            });
-            // if the entered song is not a duplicate
-            const newPlaylistSongs =getState().playlist.newPlaylist.songs;
-            if (!newPlaylistSongs.some((newPlaylistSong: Song) => newPlaylistSong.spotifyTrackId === song.spotifyTrackId)) {
-                // get suggested songs
-                fetch(`${environment.context}playlist/recommendations`, {
-                    body: JSON.stringify(song),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    method: 'POST'
-                })
-                    .then(results => results.json())
-                    .then(suggestedSongs => {
-                        dispatch({
-                            payload: {
-                                song,
-                                suggestedSongs
-                            },
-                            type: playlistTypes.ADD_SELECTED_SONG
-                        })
-                    })
-            }
-            else {
-                // set an error message
-            }
+        .then(playlistId => {
+            dispatch({
+                payload: {
+                    playlistId
+                },
+                type: playlistTypes.SAVE_PLAYLIST
+            })
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error));
+
+}
+
+/*
+SONGS
+ */
+
+export const addSelectedSong = (selectedSong: Song) => (dispatch: any, getState: any) => {
+    const newPlaylistSongs = getState().playlist.newPlaylist.songs;
+    // only proceed if selected song isn't already in the playlist
+    if (!newPlaylistSongs.some((newPlaylistSong: Song) => newPlaylistSong.spotifyTrackId === selectedSong.spotifyTrackId)) {
+        fetch(`${environment.context}song/recommendations`, {
+            body: JSON.stringify([selectedSong]),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        })
+            .then(results => results.json())
+            .then(suggestedSongs => {
+                dispatch({
+                    payload: {
+                        selectedSong,
+                        suggestedSongs
+                    },
+                    type: playlistTypes.ADD_SELECTED_SONG
+                })
+            })
+    }
 }
 
 export const addSongToNewPlaylist = (song: Song) => {
@@ -99,6 +101,66 @@ export const addSongToNewPlaylist = (song: Song) => {
         },
         type: playlistTypes.ADD_SONG_TO_NEW_PLAYLIST
     }
+}
+
+export const getSimilarSongs = (songs: Song[]) => (dispatch: any, getState: any) => {
+    const url = `${environment.context}song/similar-songs`;
+    fetch(url, {
+        body: JSON.stringify(songs),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    })
+        .then(resp => resp.json())
+        .then(similarSongs => {
+            // remove duplicate songs
+            const allSongs = [...getState().playlist.newPlaylist.songs, ...similarSongs];
+            const idsWithNoDuplicates = new Set(allSongs.map((song: Song) => song.spotifyTrackId));
+            const songsWithNoDuplicates = allSongs.filter((song: Song) => {
+                if (idsWithNoDuplicates.has(song.spotifyTrackId)) {
+                    idsWithNoDuplicates.delete(song.spotifyTrackId);
+                    return true;
+                }
+                return false;
+            })
+            dispatch({
+                payload: {
+                    songsWithNoDuplicates
+                },
+                type: playlistTypes.GET_SIMILAR_SONGS
+            })
+        })
+}
+
+export const getSpotifyRecommendations = (songs: Song[]) => (dispatch: any, getState: any) => {
+    const url = `${environment.context}song/recommendations`;
+    fetch(url, {
+        body: JSON.stringify(songs),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    })
+        .then(resp => resp.json())
+        .then(recommendations => {
+            // remove duplicate songs
+            const allSongs = [...getState().playlist.newPlaylist.songs, ...recommendations];
+            const idsWithNoDuplicates = new Set(allSongs.map((song: Song) => song.spotifyTrackId));
+            const songsWithNoDuplicates = allSongs.filter((song: Song) => {
+                if (idsWithNoDuplicates.has(song.spotifyTrackId)) {
+                    idsWithNoDuplicates.delete(song.spotifyTrackId);
+                    return true;
+                }
+                return false;
+            })
+            dispatch({
+                payload: {
+                    songsWithNoDuplicates
+                },
+                type: playlistTypes.GET_SPOTIFY_RECOMMENDATIONS
+            })
+        })
 }
 
 export const removeSongFromNewPlaylist = (songToRemove: Song) => (dispatch: any, getState: any) => {

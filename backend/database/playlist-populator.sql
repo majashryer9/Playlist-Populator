@@ -20,7 +20,7 @@ CREATE TABLE playlist(
 );
 
 CREATE TABLE song(
-	album_art_url VARCHAR(100),
+	album_art_url VARCHAR(200),
 	artist_name VARCHAR(100) NOT NULL,
 	danceability NUMERIC,
 	energy NUMERIC,
@@ -35,10 +35,12 @@ CREATE TABLE song(
 	UNIQUE(song_name, artist_name)
 );
 
+CREATE INDEX spotify_track_id_index ON song(spotify_track_id);
+
 CREATE TABLE category(
 	category_id SERIAL PRIMARY KEY,
 	category_name VARCHAR(100) UNIQUE NOT NULL,
-	image_url VARCHAR(100)
+	image_url VARCHAR(200)
 );
 
 CREATE TABLE users_liked_songs(

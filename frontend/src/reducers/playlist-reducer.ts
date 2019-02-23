@@ -23,7 +23,7 @@ export const playlistReducer = (state = initialState, action: any) => {
                 ...state,
                 newPlaylist: {
                     ...state.newPlaylist,
-                    songs: [...state.newPlaylist.songs, action.payload.song]
+                    songs: [...state.newPlaylist.songs, action.payload.selectedSong]
                 },
                 suggestedSongs: action.payload.suggestedSongs
             }
@@ -35,6 +35,22 @@ export const playlistReducer = (state = initialState, action: any) => {
                     songs: [...state.newPlaylist.songs, action.payload.song]
                 }
             }
+        case playlistTypes.GET_SIMILAR_SONGS:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    songs: action.payload.songsWithNoDuplicates
+                }
+            }
+        case playlistTypes.GET_SPOTIFY_RECOMMENDATIONS:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    songs: action.payload.songsWithNoDuplicates
+                }
+            }
         case playlistTypes.REMOVE_PLAYLIST_CATEGORY:
             return {
                 ...state,
@@ -43,17 +59,25 @@ export const playlistReducer = (state = initialState, action: any) => {
                     categories: action.payload.categories
                 }
             }
-        case playlistTypes.REMOVE_SONG_FROM_SUGGESTED_SONGS:
-            return {
-                ...state,
-                suggestedSongs: action.payload.suggestedSongs
-            }
         case playlistTypes.REMOVE_SONG_FROM_NEW_PLAYLIST:
             return {
                 ...state,
                 newPlaylist: {
                     ...state.newPlaylist,
                     songs: action.payload.newPlaylistSongs
+                }
+            }
+        case playlistTypes.REMOVE_SONG_FROM_SUGGESTED_SONGS:
+            return {
+                ...state,
+                suggestedSongs: action.payload.suggestedSongs
+            }
+        case playlistTypes.SAVE_PLAYLIST:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    id: action.payload.playlistId
                 }
             }
         case playlistTypes.SET_CATEGORIES:

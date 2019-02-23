@@ -1,7 +1,7 @@
 import rp from 'request-promise';
 
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 export const getAccessToken = () => {
     const authOptions = {
         url: 'https://accounts.spotify.com/api/token',
@@ -13,5 +13,5 @@ export const getAccessToken = () => {
         },
         json: true
     }
-    return rp.post(authOptions);
+    return rp.post(authOptions).then(request => request.access_token);
 }
