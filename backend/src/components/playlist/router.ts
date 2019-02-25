@@ -9,7 +9,7 @@ export const playlistRouter = Router();
 */
 
 playlistRouter.get('/photo', async (req: Request, resp: Response) => {
-  const photoUrl = await getUnsplashPhoto();
+  const photoUrl = await getUnsplashPhoto(req.query && req.query.query);
   resp.json(photoUrl);
 })
 

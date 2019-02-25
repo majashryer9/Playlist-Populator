@@ -11,6 +11,7 @@ import { debounce } from 'debounce';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;
+    discardNewPlaylist: () => void;
     getSimilarSongs: (songs: Song[]) => void;
     getSpotifyRecommendations: (songs: Song[]) => void;
     savePlaylist: (playlist: Playlist) => void;
@@ -103,7 +104,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                 <Button disabled={!selectedSong.name} onClick={this.add}> Add Song </Button>
                 <Button disabled={this.newPlaylistSongsLength()} onClick={this.populate}> Populate Playlist </Button>
                 <Button> Save Playlist </Button>
-                <Button> Discard Playlist </Button>
+                <Button onClick={this.props.discardNewPlaylist}> Discard Playlist </Button>
             </>
         )
     }
@@ -112,6 +113,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
     addSelectedSong: playlistActions.addSelectedSong,
+    discardNewPlaylist: playlistActions.discardNewPlaylist,
     getSimilarSongs: playlistActions.getSimilarSongs,
     getSpotifyRecommendations: playlistActions.getSpotifyRecommendations,
     savePlaylist: playlistActions.savePlaylist

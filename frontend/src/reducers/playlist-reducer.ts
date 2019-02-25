@@ -35,6 +35,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                     songs: [...state.newPlaylist.songs, action.payload.song]
                 }
             }
+        case playlistTypes.DISCARD_NEW_PLAYLIST:
+            return {
+                ...state,
+                newPlaylist: action.payload.newPlaylist
+            }
         case playlistTypes.GET_SIMILAR_SONGS:
             return {
                 ...state,

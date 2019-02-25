@@ -44,6 +44,15 @@ export const setCategories = (categories: Category[]) => {
 PLAYLISTS
 */
 
+export const discardNewPlaylist = () => {
+    return {
+        payload: {
+            newPlaylist: new Playlist()
+        },
+        type: playlistTypes.DISCARD_NEW_PLAYLIST
+    }
+}
+
 export const savePlaylist = (playlist: Playlist) => (dispatch: any) => {
     const url = `${environment.context}playlist/save-playlist`;
     fetch(url, {
