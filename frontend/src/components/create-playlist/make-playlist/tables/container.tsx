@@ -10,6 +10,7 @@ interface IProps extends IPlaylistState {
     addSongToNewPlaylist: (song: Song) => void;
     removeSongFromNewPlaylist: (song: Song) => void;
     removeSongFromSuggestedSongs: (song: Song) => void;
+    setMostRecentlyAddedSong: (song: Song) => void;
 }
 
 export class TableContainer extends React.Component<IProps, {}> {
@@ -20,18 +21,39 @@ export class TableContainer extends React.Component<IProps, {}> {
     public add = (song: Song) => {
         this.props.addSongToNewPlaylist(song);
         this.props.removeSongFromSuggestedSongs(song);
+        this.props.setMostRecentlyAddedSong(song);
     }
 
     public render() {
-        const length = this.props.newPlaylist.songs.length;
+        const songs = this.props.newPlaylist.songs;
+        const suggestedSongs = this.props.suggestedSongs;
+        const songsLength = songs.length;
+        const suggestedSongsLength = suggestedSongs.length;
         return (
             <Container>
                 <Row>
                     <Col>
-                        <SongsTable buttonClick={this.props.removeSongFromNewPlaylist} buttonLabel={'Remove from Playlist'} songs={this.props.newPlaylist.songs} />
+                        {
+                            (songsLength) ?
+                                <SongsTable
+                                    buttonClick={this.props.removeSongFromNewPlaylist}
+                                    buttonLabel={'Remove from Playlist'}
+                                    songs={songs}
+                                />
+                                : null
+                        }
                     </Col>
                     <Col>
-                        <SongsTable buttonClick={this.add} buttonDisabled={length > 5} buttonLabel={'Add to Playlist'} songs={this.props.suggestedSongs} />
+                        {
+                            (suggestedSongsLength) ?
+                                <SongsTable
+                                    buttonClick={this.add}
+                                    buttonDisabled={songsLength > 5}
+                                    buttonLabel={'Add to Playlist'}
+                                    songs={suggestedSongs}
+                                />
+                                : null
+                        }
                     </Col>
                 </Row>
             </Container>
@@ -43,6 +65,7 @@ const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
     addSongToNewPlaylist: playlistActions.addSongToNewPlaylist,
     removeSongFromNewPlaylist: playlistActions.removeSongFromNewPlaylist,
-    removeSongFromSuggestedSongs: playlistActions.removeSongFromSuggestedSongs
+    removeSongFromSuggestedSongs: playlistActions.removeSongFromSuggestedSongs,
+    setMostRecentlyAddedSong: playlistActions.setMostRecentlyAddedSong
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TableContainer);

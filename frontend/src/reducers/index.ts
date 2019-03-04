@@ -12,8 +12,10 @@ export interface IHomeState {
 
 export interface IPlaylistState {
     categories: Category[];
+    mostRecentlyAddedSong: Song;
     newPlaylist: Playlist;
     suggestedSongs: Song[];
+    uploadedImage: File | null;
 }
 
 export interface IUserState {

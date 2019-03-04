@@ -5,7 +5,8 @@ const secretAccessKey = process.env.AWS_SECRET_KEY;
 
 AWS.config.update({
     accessKeyId,
-    secretAccessKey
+    secretAccessKey,
+    region: 'us-east-2'
 });
 
 const s3Bucket = new AWS.S3();
@@ -16,13 +17,7 @@ const params = {
     Expires: 60 * 60
 };
 
-export const putObjectSignedUrl = () => {
-    // generate key
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let key = '';
-    for (let i = 0; i < 20; i++) {
-        key += chars[Math.floor(Math.random() * chars.length)]
-    }
+export const putObjectSignedUrl = (key: string) => {
     params.Key = key;
     return s3Bucket.getSignedUrl('putObject', params);
 }

@@ -1,6 +1,10 @@
 import { Song } from '../../models/Song';
 import * as songDao from './dao';
 
+export const getPlaylistSongs = (playlistId: number) => {
+    return songDao.getPlaylistSongs(playlistId);
+}
+
 export const getSimilarSongs = (songs: Song[]) => {
     return songDao.getSimilarSongs(songs);
 }

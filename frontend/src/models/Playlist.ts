@@ -9,6 +9,7 @@ export class Playlist {
     public ownerId: number = 0;
     public saved: boolean = false;
     public songs: Song[] = [];
+    public unsplashImageUrl: string = '';
 
     public constructor(init?: Partial<Playlist>) {
         Object.assign(this, init);

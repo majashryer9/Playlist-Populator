@@ -17,7 +17,12 @@ playlistRouter.get('/photo', async (req: Request, resp: Response) => {
   POST
 */
 
+playlistRouter.post('/playlists-containing-song', async (req: Request, resp: Response) => {
+  const playlists = await playlistService.getPlaylistsContainingSong(req.body);
+  resp.json(playlists);
+})
+
 playlistRouter.post('/save-playlist', async (req: Request, resp: Response) => {
-  const playlistId = await playlistService.savePlaylist(req.body);
-  (playlistId) ? resp.json(playlistId) : resp.sendStatus(500);
+  const playlistIdAndSignedUrl = await playlistService.savePlaylist(req.body);
+  (playlistIdAndSignedUrl.playlistId) ? resp.json(playlistIdAndSignedUrl) : resp.sendStatus(500);
 })

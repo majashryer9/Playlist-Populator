@@ -3,11 +3,11 @@
   background-color: lightgrey;
   border-radius: 40px;
   width: 200px;
-  padding: 10px;
+  padding: 10px 10px 10px 35px;
   margin-top: 5px;
   margin-bottom: 5px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: nowrap; }
   .category-chip .category-name {
     display: inline-block; }

@@ -1,5 +1,7 @@
-import { Category } from "../../models/Category";
-import { connectionPool } from "../../util/connection-util";
+import { Category } from '../../models/Category';
+import { connectionPool } from '../../util/connection-util';
+import { SqlCategory } from '../../dtos/Category';
+import { categoryConverter } from './converter';
 
 export const getCategoryIdByName = async (categoryName: string) => {
     const client = await connectionPool.connect();
@@ -12,6 +14,25 @@ export const getCategoryIdByName = async (categoryName: string) => {
     } catch (error) {
         console.log(error);
         return 0;
+    } finally {
+        client.release();
+    }
+}
+
+export const getPlaylistCategories = async (playlistId: number) => {
+    const client = await connectionPool.connect();
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.category
+            INNER JOIN playlist_populator.playlists_categories USING(category_id)
+            WHERE playlist_id = $1`,
+            [playlistId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((category: SqlCategory) => categoryConverter(category)) : [];
+    } catch (error) {
+        console.log(error);
+        return [];
     } finally {
         client.release();
     }

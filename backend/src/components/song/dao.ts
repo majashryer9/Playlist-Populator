@@ -3,6 +3,25 @@ import { Song } from '../../models/Song';
 import { SqlSong } from '../../dtos/Song';
 import { songConverter } from './converter';
 
+export const getPlaylistSongs = async (playlistId: number) => {
+    const client = await connectionPool.connect();
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.song
+            INNER JOIN playlist_populator.playlists_songs USING(song_id)
+            WHERE playlist_id = $1`,
+            [playlistId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((song: SqlSong) => songConverter(song)) : [];
+    } catch (error) {
+        console.log(error);
+        return [];
+    } finally {
+        client.release();
+    }
+}
+
 export const getSimilarSongs = async (songs: Song[]) => {
     const client = await connectionPool.connect();
     let songsString = `(`;
@@ -35,9 +54,8 @@ export const getSimilarSongs = async (songs: Song[]) => {
             ORDER BY(song_counter) DESC
             LIMIT(10)`, songArray
         );
-        return (resp && resp.rows) ? resp.rows.map((song: SqlSong) => {
-            return songConverter(new SqlSong(song));
-        }) : [];
+        return (resp && resp.rows) ?
+            resp.rows.map((song: SqlSong) => songConverter(song)) : [];
     } catch (error) {
         console.log(error);
         return [];

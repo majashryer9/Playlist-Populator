@@ -1,7 +1,7 @@
 .category-card {
     border-radius: 25px;
-    transition: all .5s;
     cursor: pointer;
+    transition: all .5s;
 }
 
 .category-card-img {
@@ -14,8 +14,8 @@
 }
 
 .category-card-col {
-    margin-top: 25px;
     margin-bottom: 25px;
+    margin-top: 25px;
 }
 
 .clicked {
@@ -24,6 +24,5 @@
 
 .not-clicked:hover {
     box-shadow: 0 40px 180px rgba(0, 0, 0, 0.6);
-    -webkit-transform: scale(1.1, 1.1);
     transform: scale(1.1, 1.1);
 }

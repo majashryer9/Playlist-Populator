@@ -44,6 +44,24 @@ export const setCategories = (categories: Category[]) => {
 PLAYLISTS
 */
 
+export const clearUnsplashImageUrl = () => {
+    return {
+        payload: {
+            unsplashImageUrl: ''
+        },
+        type: playlistTypes.CLEAR_UNSPLASH_IMAGE_URL
+    }
+}
+
+export const clearUploadedImage = () => {
+    return {
+        payload: {
+            uploadedImage: null
+        },
+        type: playlistTypes.CLEAR_UPLOADED_IMAGE
+    }
+}
+
 export const discardNewPlaylist = () => {
     return {
         payload: {
@@ -53,8 +71,17 @@ export const discardNewPlaylist = () => {
     }
 }
 
-export const savePlaylist = (playlist: Playlist) => (dispatch: any) => {
+export const savePlaylist = (playlist: Playlist) => (dispatch: any, getState: any) => {
     const url = `${environment.context}playlist/save-playlist`;
+    const uploadedImage = getState().playlist.uploadedImage;
+    if (uploadedImage) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let bucketKey = '';
+        for (let i = 0; i < 20; i++) {
+            bucketKey += chars[Math.floor(Math.random() * chars.length)]
+        }
+        playlist.bucketKey = bucketKey;
+    }
     fetch(url, {
         body: JSON.stringify(playlist),
         headers: {
@@ -63,16 +90,42 @@ export const savePlaylist = (playlist: Playlist) => (dispatch: any) => {
         method: 'POST'
     })
         .then(resp => resp.json())
-        .then(playlistId => {
+        .then(playlistIdAndSignedUrl => {
+            const playlistId = playlistIdAndSignedUrl.playlistId;
             dispatch({
                 payload: {
                     playlistId
                 },
                 type: playlistTypes.SAVE_PLAYLIST
             })
+            if (playlistIdAndSignedUrl.signedUrl && uploadedImage) {
+                fetch(playlistIdAndSignedUrl.signedUrl, {
+                    body: JSON.stringify(uploadedImage),
+                    method: 'PUT'
+                })
+                    .then(resp => console.log(resp))
+                    .catch(error => console.log(error));
+            }
         })
         .catch(error => console.log(error));
+}
 
+export const setUnsplashImageUrl = (unsplashImageUrl: string) => {
+    return {
+        payload: {
+            unsplashImageUrl
+        },
+        type: playlistTypes.SET_UNSPLASH_IMAGE_URL
+    }
+}
+
+export const setUploadedImage = (uploadedImage: File) => {
+    return {
+        payload: {
+            uploadedImage
+        },
+        type: playlistTypes.SET_UPLOADED_IMAGE
+    }
 }
 
 /*
@@ -91,15 +144,23 @@ export const addSelectedSong = (selectedSong: Song) => (dispatch: any, getState:
             method: 'POST'
         })
             .then(results => results.json())
-            .then(suggestedSongs => {
-                dispatch({
-                    payload: {
-                        selectedSong,
-                        suggestedSongs
-                    },
-                    type: playlistTypes.ADD_SELECTED_SONG
-                })
+            .then(unfilteredSuggestedSongs => {
+                // filter any suggestedSongs that are already in the playlist
+                const suggestedSongs = unfilteredSuggestedSongs.filter((suggestedSong: Song) => {
+                    return !newPlaylistSongs.some((newPlaylistSong: Song) =>
+                        suggestedSong.spotifyTrackId === newPlaylistSong.spotifyTrackId)
+                });
+                if (suggestedSongs && suggestedSongs.length) {
+                    dispatch({
+                        payload: {
+                            selectedSong,
+                            suggestedSongs
+                        },
+                        type: playlistTypes.ADD_SELECTED_SONG
+                    })
+                }
             })
+            .catch(error => console.log(error));
     }
 }
 
@@ -140,6 +201,7 @@ export const getSimilarSongs = (songs: Song[]) => (dispatch: any, getState: any)
                 type: playlistTypes.GET_SIMILAR_SONGS
             })
         })
+        .catch(error => console.log(error));
 }
 
 export const getSpotifyRecommendations = (songs: Song[]) => (dispatch: any, getState: any) => {
@@ -170,6 +232,7 @@ export const getSpotifyRecommendations = (songs: Song[]) => (dispatch: any, getS
                 type: playlistTypes.GET_SPOTIFY_RECOMMENDATIONS
             })
         })
+        .catch(error => console.log(error));
 }
 
 export const removeSongFromNewPlaylist = (songToRemove: Song) => (dispatch: any, getState: any) => {
@@ -190,4 +253,13 @@ export const removeSongFromSuggestedSongs = (songToRemove: Song) => (dispatch: a
         },
         type: playlistTypes.REMOVE_SONG_FROM_SUGGESTED_SONGS
     })
+}
+
+export const setMostRecentlyAddedSong = (mostRecentlyAddedSong: Song) => {
+    return {
+        payload: {
+            mostRecentlyAddedSong
+        },
+        type: playlistTypes.SET_MOST_RECENTLY_ADDED_SONG
+    }
 }

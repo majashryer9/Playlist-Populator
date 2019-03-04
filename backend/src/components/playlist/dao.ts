@@ -1,16 +1,38 @@
-import { Playlist } from "../../models/Playlist";
-import { connectionPool } from "../../util/connection-util";
-import { Category } from "../../models/Category";
-import { Song } from "../../models/Song";
+import { Playlist } from '../../models/Playlist';
+import { connectionPool } from '../../util/connection-util';
+import { Category } from '../../models/Category';
+import { Song } from '../../models/Song';
+import { playlistConverter } from './converter';
+import { SqlPlaylist } from '../../dtos/Playlist';
+
+export const getPlaylistsContainingSong = async (song: Song) => {
+    const client = await connectionPool.connect();
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.playlist
+            INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
+            INNER JOIN playlist_populator.song USING(song_id)
+            WHERE spotify_track_id = $1`,
+            [song.spotifyTrackId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((playlist: SqlPlaylist) => playlistConverter(playlist)) : [];
+    } catch (error) {
+        console.log(error);
+        return [];
+    } finally {
+        client.release();
+    }
+}
 
 export const savePlaylist = async (playlist: Playlist) => {
     const client = await connectionPool.connect();
     try {
         // insert playlist information and get back a playlist id
         const resp = await client.query(
-            `INSERT INTO playlist_populator.playlist(owner_id, playlist_name, bucket_key, saved)
-            VALUES($1, $2, $3, $4) RETURNING playlist_id`,
-            [playlist.ownerId, playlist.name, playlist.bucketKey, playlist.saved]
+            `INSERT INTO playlist_populator.playlist(owner_id, playlist_name, bucket_key, saved, unsplash_image_url)
+            VALUES($1, $2, $3, $4, $5) RETURNING playlist_id`,
+            [playlist.ownerId, playlist.name, playlist.bucketKey, playlist.saved, playlist.unsplashImageUrl]
         )
         const playlistId = (resp && resp.rows && resp.rows.length) ? resp.rows[0].playlist_id : 0;
         if (playlistId) {

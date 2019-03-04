@@ -1,11 +1,14 @@
 import { IPlaylistState } from '.';
 import { Playlist } from '../models/Playlist';
 import { playlistTypes } from '../components/actions/playlist/playlist-types';
+import { Song } from '../models/Song';
 
 const initialState: IPlaylistState = {
     categories: [],
+    mostRecentlyAddedSong: new Song(),
     newPlaylist: new Playlist(),
-    suggestedSongs: []
+    suggestedSongs: [],
+    uploadedImage: null
 }
 
 export const playlistReducer = (state = initialState, action: any) => {
@@ -34,6 +37,19 @@ export const playlistReducer = (state = initialState, action: any) => {
                     ...state.newPlaylist,
                     songs: [...state.newPlaylist.songs, action.payload.song]
                 }
+            }
+        case playlistTypes.CLEAR_UNSPLASH_IMAGE_URL:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    unsplashImageUrl: action.payload.unsplashImageUrl
+                }
+            }
+        case playlistTypes.CLEAR_UPLOADED_IMAGE:
+            return {
+                ...state,
+                uploadedImage: action.payload.uploadedImage
             }
         case playlistTypes.DISCARD_NEW_PLAYLIST:
             return {
@@ -89,6 +105,24 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 categories: action.payload.categories
+            }
+        case playlistTypes.SET_MOST_RECENTLY_ADDED_SONG:
+            return {
+                ...state,
+                mostRecentlyAddedSong: action.payload.mostRecentlyAddedSong
+            }
+        case playlistTypes.SET_UNSPLASH_IMAGE_URL:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    unsplashImageUrl: action.payload.unsplashImageUrl
+                }
+            }
+        case playlistTypes.SET_UPLOADED_IMAGE:
+            return {
+                ...state,
+                uploadedImage: action.payload.uploadedImage
             }
     }
     return state;

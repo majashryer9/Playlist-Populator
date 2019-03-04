@@ -1,5 +1,12 @@
 .songs-table-wrapper {
+    border: 1px solid #DEE2EB;
+    border-radius: 5px;
     height: 500px;
+
+    th, td {
+        text-align: center;
+        font-weight: bold;
+    }
 
     tbody {
         overflow: auto;

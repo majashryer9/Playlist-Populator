@@ -15,6 +15,7 @@ interface IProps extends IPlaylistState {
     getSimilarSongs: (songs: Song[]) => void;
     getSpotifyRecommendations: (songs: Song[]) => void;
     savePlaylist: (playlist: Playlist) => void;
+    setMostRecentlyAddedSong: (song: Song) => void;
 }
 
 interface ISongInputState {
@@ -55,6 +56,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
 
     public add = () => {
         this.props.addSelectedSong(this.state.selectedSong);
+        this.props.setMostRecentlyAddedSong(this.state.selectedSong);
         this.setState({ value: '' });
     }
 
@@ -116,6 +118,7 @@ const mapDispatchToProps = {
     discardNewPlaylist: playlistActions.discardNewPlaylist,
     getSimilarSongs: playlistActions.getSimilarSongs,
     getSpotifyRecommendations: playlistActions.getSpotifyRecommendations,
-    savePlaylist: playlistActions.savePlaylist
+    savePlaylist: playlistActions.savePlaylist,
+    setMostRecentlyAddedSong: playlistActions.setMostRecentlyAddedSong
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SongInput);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IHomeState, IState } from '../reducers';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
-import CreatePlaylistContainer from './create-playlist/create-playlist-container';
+import CreatePlaylistContainer from 'src/components/create-playlist/create-playlist-container';
 
 interface IProps extends IHomeState {
     otherVariablePlaceholder: string;

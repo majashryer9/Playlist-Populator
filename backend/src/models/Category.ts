@@ -1,5 +1,5 @@
 export class Category {
-    public id: string = '';
+    public id: number = 0;
     public imageUrl: string = '';
     public name: string = '';
 
