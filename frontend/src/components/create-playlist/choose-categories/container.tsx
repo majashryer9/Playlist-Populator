@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Category } from '../../../models/Category';
 import { Row, Col, Button, Container } from 'reactstrap';
-import CategoryCard from './card';
-import { environment } from '../../../environment';
-import { IPlaylistState, IState } from '../../../reducers';
 import { connect } from 'react-redux';
-import * as playlistActions from '../../actions/playlist/playlist-actions';
+import { Category } from 'src/models/Category';
+import CategoryCard from './card';
+import { environment } from 'src/environment';
+import { IPlaylistState, IState } from 'src/reducers';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     setCategories: (categories: Category[]) => void;

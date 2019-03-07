@@ -1,14 +1,57 @@
+@import 'src/theme/theme-variables.scss';
+
 .songs-table-wrapper {
-    border: 1px solid #DEE2EB;
-    border-radius: 5px;
-    height: 500px;
+  border: 1px solid #dee2eb;
+  border-radius: 5px;
+  height: 500px;
 
-    th, td {
-        text-align: center;
-        font-weight: bold;
-    }
+  th,
+  td {
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+  }
 
-    tbody {
-        overflow: auto;
+  tbody {
+    overflow: auto;
+  }
+
+  tr:hover {
+    @extend .font-18-medium;
+
+    .song-album-art {
+      transform: scale(1.08, 1.08);
+      transition: all 0.2s;
     }
+  }
+}
+
+.song-album-art {
+  border-radius: 3px;
+  height: 60px;
+  width: 60px;
+}
+
+.song-album-art-table-elements {
+  @media all and (max-width: 576px) {
+    display: none;
+  }
+}
+
+.table-icon:hover {
+  cursor: pointer;
+  transform: scale(1.5, 1.5);
+  transition: all 0.2s;
+}
+
+.new-playlist-songs-table {
+  .table-icon:hover {
+    color: red;
+  }
+}
+
+.suggested-songs-table {
+  .table-icon:hover {
+    color: green;
+  }
 }

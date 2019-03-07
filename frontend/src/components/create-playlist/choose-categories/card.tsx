@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Category } from '../../../models/Category';
 import { Card, CardText, CardImg, CardImgOverlay } from 'reactstrap';
-import { IPlaylistState, IState } from '../../../reducers';
 import { connect } from 'react-redux';
-import * as playlistActions from '../../actions/playlist/playlist-actions';
+import { IPlaylistState, IState } from 'src/reducers';
+import { Category } from 'src/models/Category';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     addPlaylistCategory: (category: Category) => void,
@@ -25,7 +25,7 @@ export class CategoryCard extends React.Component<IProps, ICategoryCardState> {
     }
 
     public setClicked = () => {
-        (!this.state.clicked)? this.props.addPlaylistCategory(this.props.category) : this.props.removePlaylistCategory(this.props.category);
+        (!this.state.clicked) ? this.props.addPlaylistCategory(this.props.category) : this.props.removePlaylistCategory(this.props.category);
         this.setState({
             ...this.state,
             clicked: !this.state.clicked

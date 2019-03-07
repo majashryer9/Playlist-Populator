@@ -1,11 +1,11 @@
 import * as React from 'react';
-import CategoryChip from './chip';
 import { Row, Col, Button } from 'reactstrap';
-import { Category } from '../../../../../models/Category';
-import { IPlaylistState, IState } from '../../../../../reducers';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import * as playlistActions from '../../../../actions/playlist/playlist-actions';
+import CategoryChip from './chip';
+import { Category } from 'src/models/Category';
+import { IPlaylistState, IState } from 'src/reducers';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     addPlaylistCategory: (category: Category) => void;

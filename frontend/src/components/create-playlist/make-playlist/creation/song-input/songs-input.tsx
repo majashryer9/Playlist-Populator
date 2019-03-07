@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { IPlaylistState, IState } from '../../../../../reducers';
 import { connect } from 'react-redux';
 import * as Autosuggest from 'react-autosuggest';
-import { environment } from '../../../../../environment';
-import * as playlistActions from '../../../../actions/playlist/playlist-actions';
 import { Button } from 'reactstrap';
-import { Song } from '../../../../../models/Song';
-import { Playlist } from '../../../../../models/Playlist';
 import { debounce } from 'debounce';
+import { IPlaylistState, IState } from 'src/reducers';
+import { environment } from 'src/environment';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
+import { Song } from 'src/models/Song';
+import { Playlist } from 'src/models/Playlist';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;

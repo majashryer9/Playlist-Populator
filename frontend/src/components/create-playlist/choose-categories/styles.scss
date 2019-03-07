@@ -1,28 +1,28 @@
 .category-card {
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all .5s;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.5s;
 }
 
 .category-card-img {
-    border-radius: 25px;
+  border-radius: 25px;
 }
 
 .category-card-text {
-    color: white;
-    text-align: center;
+  color: white;
+  text-align: center;
 }
 
 .category-card-col {
-    margin-bottom: 25px;
-    margin-top: 25px;
+  margin-bottom: 25px;
+  margin-top: 25px;
 }
 
 .clicked {
-    opacity: 0.2;
+  opacity: 0.2;
 }
 
 .not-clicked:hover {
-    box-shadow: 0 40px 180px rgba(0, 0, 0, 0.6);
-    transform: scale(1.1, 1.1);
+  box-shadow: 0 40px 180px rgba(0, 0, 0, 0.6);
+  transform: scale(1.1, 1.1);
 }

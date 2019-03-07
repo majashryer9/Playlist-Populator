@@ -1,7 +1,7 @@
 import { IPlaylistState } from '.';
-import { Playlist } from '../models/Playlist';
-import { playlistTypes } from '../components/actions/playlist/playlist-types';
-import { Song } from '../models/Song';
+import { Playlist } from 'src/models/Playlist';
+import { playlistTypes } from 'src/actions/playlist/playlist-types';
+import { Song } from 'src/models/Song';
 
 const initialState: IPlaylistState = {
     categories: [],

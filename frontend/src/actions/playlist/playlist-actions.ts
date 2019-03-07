@@ -1,8 +1,8 @@
-import { Category } from '../../../models/Category';
 import { playlistTypes } from './playlist-types';
-import { environment } from '../../../environment';
-import { Song } from '../../../models/Song';
-import { Playlist } from '../../../models/Playlist';
+import { environment } from 'src/environment';
+import { Category } from 'src/models/Category';
+import { Playlist } from 'src/models/Playlist';
+import { Song } from 'src/models/Song';
 
 /*
 CATEGORIES
@@ -133,9 +133,9 @@ SONGS
  */
 
 export const addSelectedSong = (selectedSong: Song) => (dispatch: any, getState: any) => {
-    const newPlaylistSongs = getState().playlist.newPlaylist.songs;
+    const currentNewPlaylistSongs = getState().playlist.newPlaylist.songs;
     // only proceed if selected song isn't already in the playlist
-    if (!newPlaylistSongs.some((newPlaylistSong: Song) => newPlaylistSong.spotifyTrackId === selectedSong.spotifyTrackId)) {
+    if (!currentNewPlaylistSongs.some((newPlaylistSong: Song) => newPlaylistSong.spotifyTrackId === selectedSong.spotifyTrackId)) {
         fetch(`${environment.context}song/recommendations`, {
             body: JSON.stringify([selectedSong]),
             headers: {
@@ -145,7 +145,8 @@ export const addSelectedSong = (selectedSong: Song) => (dispatch: any, getState:
         })
             .then(results => results.json())
             .then(unfilteredSuggestedSongs => {
-                // filter any suggestedSongs that are already in the playlist
+                // filter any suggestedSongs that are already in the playlist or that are the selected song
+                const newPlaylistSongs = [selectedSong, ...currentNewPlaylistSongs];
                 const suggestedSongs = unfilteredSuggestedSongs.filter((suggestedSong: Song) => {
                     return !newPlaylistSongs.some((newPlaylistSong: Song) =>
                         suggestedSong.spotifyTrackId === newPlaylistSong.spotifyTrackId)

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { homeReducer } from './home-reducer';
-import { Playlist } from '../models/Playlist';
+import { Playlist } from 'src/models/Playlist';
 import { playlistReducer } from './playlist-reducer';
-import { Song } from '../models/Song';
-import { Category } from '../models/Category';
+import { Song } from 'src/models/Song';
+import { Category } from 'src/models/Category';
 import { userReducer } from './user-reducer';
 
 export interface IHomeState {

@@ -1,0 +1,28 @@
+@mixin setFont($fontSize, $fontWeight) {
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+}
+
+.font-16-regular {
+  @include setFont(16px, normal);
+}
+
+.font-16-medium {
+  @include setFont(16px, 500);
+}
+
+.font-16-bold {
+  @include setFont(16px, bold);
+}
+
+.font-18-regular {
+  @include setFont(18px, normal);
+}
+
+.font-18-medium {
+  @include setFont(18px, 500);
+}
+
+.font-18-bold {
+  @include setFont(18px, bold);
+}

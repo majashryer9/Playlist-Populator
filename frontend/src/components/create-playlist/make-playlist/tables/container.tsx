@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import SongsTable from './table';
-import { IPlaylistState, IState } from '../../../../reducers';
+import { FaPlus, FaTimes } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { Song } from '../../../../models/Song';
-import * as playlistActions from '../../../actions/playlist/playlist-actions';
+import SongsTable from './table';
+import { IPlaylistState, IState } from 'src/reducers';
+import { Song } from 'src/models/Song';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     addSongToNewPlaylist: (song: Song) => void;
@@ -19,9 +20,12 @@ export class TableContainer extends React.Component<IProps, {}> {
     }
 
     public add = (song: Song) => {
-        this.props.addSongToNewPlaylist(song);
-        this.props.removeSongFromSuggestedSongs(song);
-        this.props.setMostRecentlyAddedSong(song);
+        const songsLength = this.props.newPlaylist.songs.length;
+        if (songsLength <= 5) {
+            this.props.addSongToNewPlaylist(song);
+            this.props.removeSongFromSuggestedSongs(song);
+            this.props.setMostRecentlyAddedSong(song);
+        }
     }
 
     public render() {
@@ -37,7 +41,9 @@ export class TableContainer extends React.Component<IProps, {}> {
                             (songsLength) ?
                                 <SongsTable
                                     buttonClick={this.props.removeSongFromNewPlaylist}
-                                    buttonLabel={'Remove from Playlist'}
+                                    buttonLabel={'Remove'}
+                                    className='new-playlist-songs-table'
+                                    icon={<FaTimes className='table-icon' />}
                                     songs={songs}
                                 />
                                 : null
@@ -48,8 +54,9 @@ export class TableContainer extends React.Component<IProps, {}> {
                             (suggestedSongsLength) ?
                                 <SongsTable
                                     buttonClick={this.add}
-                                    buttonDisabled={songsLength > 5}
-                                    buttonLabel={'Add to Playlist'}
+                                    buttonLabel={'Add'}
+                                    className='suggested-songs-table'
+                                    icon={<FaPlus className='table-icon' />}
                                     songs={suggestedSongs}
                                 />
                                 : null

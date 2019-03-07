@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Song } from '../../../../models/Song';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
+import { Song } from 'src/models/Song';
 
 interface IProps {
-    buttonClick: (song: Song) => void,
-    buttonDisabled?: boolean,
-    buttonLabel: string,
-    songs: Song[],
+    buttonClick: (song: Song) => void;
+    buttonLabel: string;
+    className: string;
+    icon: any;
+    songs: Song[];
 }
 
 export default class SongsTable extends React.Component<IProps, any> {
@@ -15,24 +16,36 @@ export default class SongsTable extends React.Component<IProps, any> {
     }
 
     public render() {
-        const { songs, buttonLabel } = this.props;
+        const { buttonClick, buttonLabel, className, icon, songs } = this.props;
         return (
-            <div className='table-responsive songs-table-wrapper'>
+            <div className={`${className} table-responsive songs-table-wrapper`}>
                 <Table>
                     <thead>
                         <tr>
+                            <th className='song-album-art-table-elements'></th>
                             <th>Song Name</th>
                             <th>Artist Name</th>
-                            <th></th>
+                            <th>{buttonLabel}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {songs.map((song: Song) => {
                             return (
                                 <tr key={song.spotifyTrackId}>
+                                    <td className='song-album-art-table-elements'>
+                                        <img
+                                            alt='album art'
+                                            className='song-album-art'
+                                            src={song.albumArtUrl}
+                                        />
+                                    </td>
                                     <td>{song.name}</td>
                                     <td>{song.artistName}</td>
-                                    <td><Button onClick={() => this.props.buttonClick(song)} disabled={(this.props.buttonDisabled)? this.props.buttonDisabled : false}>{buttonLabel}</Button></td>
+                                    <td>
+                                        <div onClick={() => buttonClick(song)}>
+                                            {icon}
+                                        </div>
+                                    </td>
                                 </tr>
                             )
                         })}

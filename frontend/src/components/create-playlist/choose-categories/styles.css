@@ -1,7 +1,7 @@
 .category-card {
   border-radius: 25px;
   cursor: pointer;
-  transition: all .5s; }
+  transition: all 0.5s; }
 
 .category-card-img {
   border-radius: 25px; }

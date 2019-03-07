@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FaTimes } from 'react-icons/fa';
-import { IState, IPlaylistState } from '../../../../../reducers';
 import { connect } from 'react-redux';
-import { Category } from '../../../../../models/Category';
-import * as playlistActions from '../../../../actions/playlist/playlist-actions';
+import { IState, IPlaylistState } from 'src/reducers';
+import { Category } from 'src/models/Category';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     categoryName: string;

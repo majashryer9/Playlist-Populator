@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IState, IPlaylistState } from '../../reducers';
+import { IState, IPlaylistState } from 'src/reducers';
 import ChooseCategoriesContainer from './choose-categories/container';
 import MakePlaylistContainer from './make-playlist/container';
 

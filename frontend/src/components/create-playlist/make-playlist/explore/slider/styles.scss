@@ -2,45 +2,45 @@ $space-between-items: 40px;
 $width: 300px;
 
 .slider-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    padding: 100px 0;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  padding: 100px 0;
 }
 
 .arrow-wrapper {
-    align-items: center;
-    cursor: pointer;
-    display: flex;
-    font-size: 45px;
-    justify-content: center;
-    z-index: 1;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 45px;
+  justify-content: center;
+  z-index: 1;
 }
 
 .highlighted-item-wrapper {
-    margin: 0 auto;
-    max-width: $width;
+  margin: 0 auto;
+  max-width: $width;
 }
 
 .item {
-    margin-right: $space-between-items;
+  margin-right: $space-between-items;
 }
 
 .item-active {
-    @extend .item;
-    box-shadow: 0 40px 180px rgba(0, 0, 0, 0.6);
-    opacity: 1;
-    transform: scale(1.1, 1.1);
-    transition: all 0.8s;
+  @extend .item;
+  box-shadow: 0 40px 180px rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  transform: scale(1.1, 1.1);
+  transition: all 0.8s;
 }
 
 .item-not-active {
-    @extend .item;
-    opacity: 0.5;
+  @extend .item;
+  opacity: 0.5;
 }
 
 .items-wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    transition: all 0.8s;
+  display: flex;
+  flex-wrap: nowrap;
+  transition: all 0.8s;
 }

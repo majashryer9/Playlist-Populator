@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { FaCamera } from 'react-icons/fa';
-import { environment } from '../../../../../environment';
-import { IPlaylistState, IState } from '../../../../../reducers';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Modal, Input, Button } from 'reactstrap';
-import * as playlistActions from '../../../../actions/playlist/playlist-actions';
+import { environment } from 'src/environment';
+import { IPlaylistState, IState } from 'src/reducers';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     clearUnsplashImageUrl: () => void;
@@ -127,13 +127,13 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
 
     public render() {
         return (
-            <Container className='playlist-image-wrapper'>
+            <Container>
                 <Row>
                     <Col sm={12}>
                         <div>
                             {this.state.savedImageUrl && <img className='playlist-image' onClick={this.toggle} src={this.state.savedImageUrl} alt='playlist image' />}
                         </div>
-                        <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                        <Modal className='playlist-image-modal' isOpen={this.state.modal} toggle={this.toggle}>
                             <Container>
                                 <Row>
                                     <Col sm={4}>
@@ -143,9 +143,6 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                                 You may choose to keep this, pick a photo from
                                                 one of the other options below, search for more photos,
                                                 or upload your own image. Please save whatever image you choose.
-                                            </div>
-                                            <div>
-                                                <Button onClick={this.setSavedImageUrl}> Save </Button>
                                             </div>
                                         </div>
                                     </Col>
@@ -185,7 +182,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                         </div>
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row className='playlist-image-wrapper'>
                                     {this.state.imageUrls.length &&
                                         this.state.imageUrls
                                             .filter((imageUrl: string) => imageUrl !== this.state.unsavedImageUrl)
@@ -199,6 +196,14 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                                 );
                                             })
                                     }
+                                </Row>
+                                <Row className='save-and-cancel-buttons-wrapper'>
+                                    <Col sm={12}>
+                                        <div className='save-and-cancel-buttons'>
+                                            <Button onClick={this.setSavedImageUrl}> Save </Button>
+                                            <Button onClick={this.toggle}> Cancel </Button>
+                                        </div>
+                                    </Col>
                                 </Row>
                             </Container>
                         </Modal>

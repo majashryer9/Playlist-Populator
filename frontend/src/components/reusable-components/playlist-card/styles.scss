@@ -1,16 +1,16 @@
 .playlist-card-wrapper {
-    width: 300px;
-    height: 300px;
-    cursor: pointer;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
 }
 
 .playlist-modal-body {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-color: rgb(180,180,180);
-    background-blend-mode: screen;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgb(180, 180, 180);
+  background-blend-mode: screen;
 }
 
 .modal-content {
-    overflow-y: auto;
+  overflow-y: auto;
 }
