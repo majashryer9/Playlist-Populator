@@ -1,21 +1,47 @@
 import * as React from 'react';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import * as reusableFunctions from '../../../../../util/reusable-functions';
 
 interface IProps {
     arrayOfItems: any[]
 }
 
 interface IState {
-    curIndex: number
+    curIndex: number,
+    spaceBetweenItems: number,
+    widthOfItem: number
 }
 
-const SPACE_BETWEEN_ITEMS = 40;
-const WIDTH_OF_ITEM = 300;
 export default class Slider extends React.Component<IProps, IState> {
     public constructor(props: any) {
         super(props);
         this.state = {
-            curIndex: 0
+            curIndex: 0,
+            spaceBetweenItems: reusableFunctions.isMobile() ? 20 : 40,
+            widthOfItem: reusableFunctions.isMobile() ? 180 : 300
+        }
+    }
+
+    public componentDidMount() {
+        window.addEventListener('resize', this.detectForMobile);
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener('resize', this.detectForMobile);
+    }
+
+    public detectForMobile = () => {
+        if (reusableFunctions.isMobile()) {
+            this.setState({
+                spaceBetweenItems: 20,
+                widthOfItem: 180
+            })
+        }
+        else {
+            this.setState({
+                spaceBetweenItems: 40,
+                widthOfItem: 300
+            })
         }
     }
 
@@ -39,8 +65,8 @@ export default class Slider extends React.Component<IProps, IState> {
     }
 
     public transform = () => {
-        const { curIndex } = this.state;
-        return `translateX(-${curIndex * (WIDTH_OF_ITEM + SPACE_BETWEEN_ITEMS)}px)`;
+        const { curIndex, spaceBetweenItems, widthOfItem } = this.state;
+        return `translateX(-${curIndex * (widthOfItem + spaceBetweenItems)}px)`;
     }
 
     public render() {
@@ -48,8 +74,8 @@ export default class Slider extends React.Component<IProps, IState> {
         const { curIndex } = this.state;
         return (
             <div className='slider-wrapper'>
-                <div className='arrow-wrapper'>
-                    {curIndex !== 0 && <FaChevronLeft onClick={this.prevSlide} />}
+                <div className={(curIndex === 0) ? 'hide-arrow' : 'arrow-wrapper'}>
+                    <FaChevronLeft onClick={this.prevSlide} />
                 </div>
                 <div className='highlighted-item-wrapper'>
                     <div className='items-wrapper'
@@ -66,8 +92,8 @@ export default class Slider extends React.Component<IProps, IState> {
                         })}
                     </div>
                 </div>
-                <div className='arrow-wrapper'>
-                    {curIndex !== arrayOfItems.length - 1 && <FaChevronRight onClick={this.nextSlide} />}
+                <div className={(curIndex === arrayOfItems.length - 1) ? 'hide-arrow' : 'arrow-wrapper'}>
+                    <FaChevronRight onClick={this.nextSlide} />
                 </div>
             </div>
         )
