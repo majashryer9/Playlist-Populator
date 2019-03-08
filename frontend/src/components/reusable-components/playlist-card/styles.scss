@@ -1,6 +1,22 @@
-.playlist-card-wrapper {
+@mixin itemWidth() {
   width: 300px;
+
+  @media all and (max-width: 576px) {
+    width: 180px;
+  }
+}
+
+@mixin itemHeight() {
   height: 300px;
+
+  @media all and (max-width: 576px) {
+    height: 180px;
+  }
+}
+
+.playlist-card-wrapper {
+  @include itemHeight();
+  @include itemWidth();
   cursor: pointer;
 }
 

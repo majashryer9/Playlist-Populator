@@ -1,7 +1,13 @@
 .playlist-card-wrapper {
-  width: 300px;
   height: 300px;
+  width: 300px;
   cursor: pointer; }
+  @media all and (max-width: 576px) {
+    .playlist-card-wrapper {
+      height: 180px; } }
+  @media all and (max-width: 576px) {
+    .playlist-card-wrapper {
+      width: 180px; } }
 
 .playlist-modal-body {
   background-repeat: no-repeat;

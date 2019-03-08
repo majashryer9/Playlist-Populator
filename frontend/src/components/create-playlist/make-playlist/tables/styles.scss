@@ -1,5 +1,3 @@
-@import 'src/theme/theme-variables.scss';
-
 .songs-table-wrapper {
   border: 1px solid #dee2eb;
   border-radius: 5px;
@@ -17,8 +15,6 @@
   }
 
   tr:hover {
-    @extend .font-18-medium;
-
     .song-album-art {
       transform: scale(1.08, 1.08);
       transition: all 0.2s;

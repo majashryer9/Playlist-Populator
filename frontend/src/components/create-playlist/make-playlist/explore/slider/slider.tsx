@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
+import { Swipeable } from 'react-swipeable';
 import * as reusableFunctions from '../../../../../util/reusable-functions';
 
 interface IProps {
@@ -73,29 +74,34 @@ export default class Slider extends React.Component<IProps, IState> {
         const { arrayOfItems } = this.props;
         const { curIndex } = this.state;
         return (
-            <div className='slider-wrapper'>
-                <div className={(curIndex === 0) ? 'hide-arrow' : 'arrow-wrapper'}>
-                    <FaChevronLeft onClick={this.prevSlide} />
-                </div>
-                <div className='highlighted-item-wrapper'>
-                    <div className='items-wrapper'
-                        style={{ transform: this.transform() }}
-                    >
-                        {arrayOfItems.map((item: any, index: number) => {
-                            return (
-                                <div className={(index === curIndex) ? 'item-active' : 'item-not-active'}
-                                    key={index}
-                                >
-                                    {item}
-                                </div>
-                            );
-                        })}
+            <Swipeable
+                onSwipedLeft={this.nextSlide}
+                onSwipedRight={this.prevSlide}
+            >
+                <div className='slider-wrapper'>
+                    <div className={(curIndex === 0) ? 'hide-arrow' : 'arrow-wrapper'}>
+                        <FaChevronLeft onClick={this.prevSlide} />
+                    </div>
+                    <div className='highlighted-item-wrapper'>
+                        <div className='items-wrapper'
+                            style={{ transform: this.transform() }}
+                        >
+                            {arrayOfItems.map((item: any, index: number) => {
+                                return (
+                                    <div className={(index === curIndex) ? 'item-active' : 'item-not-active'}
+                                        key={index}
+                                    >
+                                        {item}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className={(curIndex === arrayOfItems.length - 1) ? 'hide-arrow' : 'arrow-wrapper'}>
+                        <FaChevronRight onClick={this.nextSlide} />
                     </div>
                 </div>
-                <div className={(curIndex === arrayOfItems.length - 1) ? 'hide-arrow' : 'arrow-wrapper'}>
-                    <FaChevronRight onClick={this.nextSlide} />
-                </div>
-            </div>
+            </Swipeable>
         )
     }
 }
