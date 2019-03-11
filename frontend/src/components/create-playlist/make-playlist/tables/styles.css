@@ -1,34 +1,164 @@
-.songs-table-wrapper {
-  border: 1px solid #dee2eb;
-  border-radius: 5px;
-  height: 500px; }
-  .songs-table-wrapper th,
-  .songs-table-wrapper td {
-    text-align: center;
-    font-weight: bold;
-    vertical-align: middle; }
-  .songs-table-wrapper tbody {
-    overflow: auto; }
-  .songs-table-wrapper tr:hover .song-album-art {
-    transform: scale(1.08, 1.08);
-    transition: all 0.2s; }
+.font-12-regular {
+  font-size: 12px;
+  font-weight: normal; }
 
-.song-album-art {
-  border-radius: 3px;
+.font-12-medium {
+  font-size: 12px;
+  font-weight: 500; }
+
+.font-12-bold {
+  font-size: 12px;
+  font-weight: bold; }
+
+.font-14-regular, .song-and-artist-name-wrapper .artist-name {
+  font-size: 14px;
+  font-weight: normal; }
+
+.font-14-medium {
+  font-size: 14px;
+  font-weight: 500; }
+
+.font-14-bold {
+  font-size: 14px;
+  font-weight: bold; }
+
+.font-16-regular {
+  font-size: 16px;
+  font-weight: normal; }
+
+.font-16-medium, .song-and-artist-name-wrapper .song-name {
+  font-size: 16px;
+  font-weight: 500; }
+
+.font-16-bold {
+  font-size: 16px;
+  font-weight: bold; }
+
+.font-18-regular {
+  font-size: 18px;
+  font-weight: normal; }
+
+.font-18-medium {
+  font-size: 18px;
+  font-weight: 500; }
+
+.font-18-bold {
+  font-size: 18px;
+  font-weight: bold; }
+
+.table-rows-wrapper {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto; }
+
+.transition-effects, .table-row:after, .table-row:before {
+  background-image: linear-gradient(to right, white, #eef7fa);
+  border-radius: 2px;
+  content: '';
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: -1; }
+
+.table-row {
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 2px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  max-height: 60px;
+  min-width: 228px;
+  position: relative;
+  overflow: hidden; }
+  .table-row:after {
+    transition: width 2s ease;
+    width: 0; }
+  .table-row:before {
+    opacity: 0;
+    transition: opacity 2s ease;
+    width: 100%; }
+  .table-row:hover:after {
+    transition: width 0s;
+    width: 100%; }
+  .table-row:hover:before {
+    opacity: 1;
+    transition: opacity 0s; }
+
+.song-info {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+.album-art-wrapper {
+  margin-right: 15px; }
+
+.tr-icons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  min-width: 55px; }
+  .tr-icons-wrapper .play-icon-wrapper {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 20px;
+    height: 100%;
+    position: absolute; }
+  .tr-icons-wrapper .hide {
+    display: none; }
+
+.album-art {
+  border-radius: 2px;
   height: 60px;
   width: 60px; }
 
-@media all and (max-width: 576px) {
-  .song-album-art-table-elements {
-    display: none; } }
+.song-and-artist-name-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+  @media all and (max-width: 767px) {
+    .song-and-artist-name-wrapper {
+      width: 50%; } }
+  @media all and (min-width: 768px) and (max-width: 991px) {
+    .song-and-artist-name-wrapper {
+      width: 65%; } }
+  @media all and (min-width: 992px) {
+    .song-and-artist-name-wrapper {
+      width: 75%; } }
+  .song-and-artist-name-wrapper .song-name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%; }
+  .song-and-artist-name-wrapper .artist-name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%; }
 
-.table-icon:hover {
+.icon-wrapper {
+  align-items: center;
   cursor: pointer;
-  transform: scale(1.5, 1.5);
-  transition: all 0.2s; }
+  display: flex; }
 
-.new-playlist-songs-table .table-icon:hover {
-  color: red; }
+.row-dropdown-height {
+  display: flex;
+  height: 80px;
+  overflow: hidden;
+  transition: height 1s;
+  width: inherit; }
 
-.suggested-songs-table .table-icon:hover {
-  color: green; }
+.row-dropdown-no-height {
+  height: 0;
+  overflow: hidden;
+  transition: height 1s; }

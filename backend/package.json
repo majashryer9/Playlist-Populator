@@ -15,7 +15,7 @@
     "@types/node-fetch": "^2.1.4",
     "@types/request": "^2.48.1",
     "@types/request-promise": "^4.1.42",
-    "aws-sdk": "^2.409.0",
+    "aws-sdk": "^2.417.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
@@ -27,6 +27,7 @@
     "request-promise": "^4.2.2"
   },
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
     "@types/pg": "^7.4.11"
   }
 }

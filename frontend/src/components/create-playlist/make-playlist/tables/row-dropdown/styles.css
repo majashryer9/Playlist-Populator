@@ -1,0 +1,30 @@
+.top-ten-item-wrapper {
+  cursor: pointer;
+  display: flex;
+  height: 60px;
+  overflow: hidden;
+  width: 180px; }
+  .top-ten-item-wrapper .audio-and-image-wrapper {
+    position: relative;
+    margin-right: 5px; }
+  .top-ten-item-wrapper .play-icon-wrapper {
+    align-items: center;
+    display: flex;
+    font-size: 30px;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    width: 100%; }
+  .top-ten-item-wrapper .show-play {
+    visibility: hidden; }
+  .top-ten-item-wrapper .hide {
+    display: none; }
+
+.half-opacity {
+  opacity: 0.5; }
+
+.top-ten-item-wrapper:hover .show-play {
+  visibility: visible; }
+
+.top-ten-item-wrapper:hover .album-art {
+  opacity: 0.5; }

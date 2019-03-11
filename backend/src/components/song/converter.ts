@@ -9,6 +9,7 @@ export const songConverter = (song: SqlSong) => {
         id: song.song_id,
         name: song.song_name,
         popularity: song.popularity,
+        previewUrl: song.preview_url,
         songKey: song.song_key,
         spotifyArtistId: song.spotify_artist_id,
         spotifyTrackId: song.spotify_track_id,

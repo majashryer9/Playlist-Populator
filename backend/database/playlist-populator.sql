@@ -26,6 +26,7 @@ CREATE TABLE song(
 	danceability NUMERIC,
 	energy NUMERIC,
 	popularity INTEGER,
+	preview_url VARCHAR(200),
 	song_id SERIAL PRIMARY KEY,
 	song_key INTEGER,
 	song_name VARCHAR(100) NOT NULL,
@@ -44,18 +45,6 @@ CREATE TABLE category(
 	image_url VARCHAR(200)
 );
 
-CREATE TABLE users_liked_songs(
-	user_id INTEGER REFERENCES app_user(user_id) NOT NULL,
-	song_id INTEGER REFERENCES song(song_id) NOT NULL,
-	UNIQUE(user_id, song_id)
-);
-
-CREATE TABLE users_playlists(
-	user_id INTEGER REFERENCES app_user(user_id) NOT NULL,
-	playlist_id INTEGER REFERENCES playlist(playlist_id) NOT NULL,
-	UNIQUE(user_id, playlist_id)
-);
-
 CREATE TABLE playlists_songs(
 	playlist_id INTEGER REFERENCES playlist(playlist_id) NOT NULL,
 	song_id INTEGER REFERENCES song(song_id) NOT NULL,
@@ -70,3 +59,34 @@ CREATE TABLE playlists_categories(
 	category_id INTEGER REFERENCES category(category_id) NOT NULL,
 	UNIQUE(playlist_id, category_id)
 );
+
+CREATE INDEX playlist_id_index ON playlists_categories(playlist_id);
+CREATE INDEX category_id_index ON playlists_categories(song_id);
+
+CREATE TABLE users_liked_songs(
+	user_id INTEGER REFERENCES app_user(user_id) NOT NULL,
+	song_id INTEGER REFERENCES song(song_id) NOT NULL,
+	UNIQUE(user_id, song_id)
+);
+
+CREATE TABLE users_playlists(
+	user_id INTEGER REFERENCES app_user(user_id) NOT NULL,
+	playlist_id INTEGER REFERENCES playlist(playlist_id) NOT NULL,
+	UNIQUE(user_id, playlist_id)
+);
+
+
+-- QUERY TO GET MOST FREQUENTLY OCCURRING SONGS IN A GIVEN CATEGORY:
+
+SELECT * FROM playlist_populator.song
+INNER JOIN (
+	SELECT song_id, COUNT(song_id) AS song_counter FROM playlist_populator.song
+	INNER JOIN playlist_populator.playlists_songs USING(song_id)
+	INNER JOIN playlist_populator.playlist USING(playlist_id)
+	INNER JOIN playlist_populator.playlists_categories USING (playlist_id)
+	INNER JOIN playlist_populator.category USING(category_id)
+	WHERE category_name='Mood'
+	GROUP BY(song_id)
+) AS songs USING(song_id)
+ORDER BY(song_counter) DESC
+LIMIT(20);

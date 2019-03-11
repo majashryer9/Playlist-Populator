@@ -1,6 +1,22 @@
+.songs-table-wrapper {
+  border: 1px solid #dee2eb;
+  border-radius: 5px;
+  height: 500px; }
+  .songs-table-wrapper th,
+  .songs-table-wrapper td {
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle; }
+  .songs-table-wrapper tbody {
+    overflow: auto; }
+  .songs-table-wrapper tr:hover .song-album-art {
+    transform: scale(1.08, 1.08);
+    transition: all 0.2s; }
+
 .playlist-card-wrapper {
   height: 300px;
   width: 300px;
+  border-radius: 5px;
   cursor: pointer; }
   @media all and (max-width: 576px) {
     .playlist-card-wrapper {

@@ -15,7 +15,7 @@ interface IProps extends IPlaylistState {
 }
 
 export class TableContainer extends React.Component<IProps, {}> {
-    public constructor(props: any) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -36,26 +36,22 @@ export class TableContainer extends React.Component<IProps, {}> {
         return (
             <Container>
                 <Row>
-                    <Col>
+                    <Col sm={12} md={6}>
                         {
                             (songsLength) ?
                                 <SongsTable
                                     buttonClick={this.props.removeSongFromNewPlaylist}
-                                    buttonLabel={'Remove'}
-                                    className='new-playlist-songs-table'
                                     icon={<FaTimes className='table-icon' />}
                                     songs={songs}
                                 />
                                 : null
                         }
                     </Col>
-                    <Col>
+                    <Col sm={12} md={6}>
                         {
                             (suggestedSongsLength) ?
                                 <SongsTable
                                     buttonClick={this.add}
-                                    buttonLabel={'Add'}
-                                    className='suggested-songs-table'
                                     icon={<FaPlus className='table-icon' />}
                                     songs={suggestedSongs}
                                 />

@@ -5,6 +5,7 @@ export class SqlSong {
     public danceability: number = 0;
     public energy: number = 0;
     public popularity: number = 0;
+    public preview_url: string = '';
     public song_id: number = 0;
     public song_key: number = 0;
     public song_name: string = '';

@@ -7,6 +7,7 @@ export class Song {
     public id: number = 0;
     public name: string = '';
     public popularity: number = 0;
+    public previewUrl: string = '';
     public songKey: number = 0;
     public spotifyArtistId: string = '';
     public spotifyTrackId: string = '';

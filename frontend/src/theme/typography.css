@@ -1,3 +1,27 @@
+.font-12-regular {
+  font-size: 12px;
+  font-weight: normal; }
+
+.font-12-medium {
+  font-size: 12px;
+  font-weight: 500; }
+
+.font-12-bold {
+  font-size: 12px;
+  font-weight: bold; }
+
+.font-14-regular {
+  font-size: 14px;
+  font-weight: normal; }
+
+.font-14-medium {
+  font-size: 14px;
+  font-weight: 500; }
+
+.font-14-bold {
+  font-size: 14px;
+  font-weight: bold; }
+
 .font-16-regular {
   font-size: 16px;
   font-weight: normal; }

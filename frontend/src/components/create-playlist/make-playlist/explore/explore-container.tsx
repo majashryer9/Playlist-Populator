@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Slider from './slider/slider';
+import Slider from '../../../reusable-components/slider/slider';
 import { IPlaylistState, IState } from 'src/reducers';
 import { environment } from 'src/environment';
 import { Playlist } from 'src/models/Playlist';
@@ -48,7 +48,18 @@ export class ExploreContainer extends React.Component<IPlaylistState, IExploreCo
                 {
                     (this.state.playlistCards.length) ?
                         <div>
-                            <Slider arrayOfItems={this.state.playlistCards} />
+                            <Slider
+                                arrayOfItems={this.state.playlistCards}
+                                fontSize={45}
+                                height={300}
+                                mobileFontSize={20}
+                                mobileHeight={180}
+                                mobileSpacing={20}
+                                mobileWidth={180}
+                                spacing={40}
+                                width={300}
+                                wrapperPadding={30}
+                            />
                         </div> : null
                 }
             </>

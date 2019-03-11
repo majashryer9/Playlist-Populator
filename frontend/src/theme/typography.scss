@@ -3,6 +3,30 @@
   font-weight: $fontWeight;
 }
 
+.font-12-regular {
+  @include setFont(12px, normal);
+}
+
+.font-12-medium {
+  @include setFont(12px, 500);
+}
+
+.font-12-bold {
+  @include setFont(12px, bold);
+}
+
+.font-14-regular {
+  @include setFont(14px, normal);
+}
+
+.font-14-medium {
+  @include setFont(14px, 500);
+}
+
+.font-14-bold {
+  @include setFont(14px, bold);
+}
+
 .font-16-regular {
   @include setFont(16px, normal);
 }

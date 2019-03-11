@@ -1,0 +1,51 @@
+.outer-slider-wrapper {
+  width: 100%;
+}
+.slider-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.arrow-wrapper {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.hide-arrow {
+  @extend .arrow-wrapper;
+
+  svg {
+    visibility: hidden;
+  }
+}
+
+.highlighted-item-wrapper {
+  margin: 0 auto;
+}
+
+.item {
+  border-radius: 5px;
+}
+
+.item-active {
+  @extend .item;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  transform: scale(1.1, 1.1);
+  transition: all 0.8s;
+}
+
+.item-not-active {
+  @extend .item;
+  opacity: 0.5;
+}
+
+.items-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  transition: all 0.8s;
+}

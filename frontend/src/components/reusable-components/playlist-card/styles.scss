@@ -14,9 +14,34 @@
   }
 }
 
+.songs-table-wrapper {
+  border: 1px solid #dee2eb;
+  border-radius: 5px;
+  height: 500px;
+
+  th,
+  td {
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+
+  tbody {
+    overflow: auto;
+  }
+
+  tr:hover {
+    .song-album-art {
+      transform: scale(1.08, 1.08);
+      transition: all 0.2s;
+    }
+  }
+}
+
 .playlist-card-wrapper {
   @include itemHeight();
   @include itemWidth();
+  border-radius: 5px;
   cursor: pointer;
 }
 

@@ -84,12 +84,14 @@ export const saveSong = async (song: Song) => {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
-            `INSERT INTO playlist_populator.song(album_art_url, artist_name, danceability, energy, 
-            popularity, song_key, song_name, spotify_artist_id, spotify_track_id, tempo, valence)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+            `INSERT INTO playlist_populator.song(album_art_url, artist_name, danceability, 
+            energy, popularity, preview_url, song_key, song_name, spotify_artist_id, 
+            spotify_track_id, tempo, valence) 
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
             RETURNING song_id`,
-            [song.albumArtUrl, song.artistName, song.danceability, song.energy, song.popularity, song.songKey,
-            song.name, song.spotifyArtistId, song.spotifyTrackId, song.tempo, song.valence]
+            [song.albumArtUrl, song.artistName, song.danceability, song.energy, song.popularity,
+            song.previewUrl, song.songKey, song.name, song.spotifyArtistId, song.spotifyTrackId,
+            song.tempo, song.valence]
         );
         return (resp && resp.rows && resp.rows.length) ? resp.rows[0].song_id : 0;
     } catch (error) {

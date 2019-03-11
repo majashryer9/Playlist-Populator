@@ -256,11 +256,38 @@ export const removeSongFromSuggestedSongs = (songToRemove: Song) => (dispatch: a
     })
 }
 
+export const setCurRef = (curRef: any) => {
+    return {
+        payload: {
+            curRef
+        },
+        type: playlistTypes.SET_CUR_REF
+    }
+}
+
 export const setMostRecentlyAddedSong = (mostRecentlyAddedSong: Song) => {
     return {
         payload: {
             mostRecentlyAddedSong
         },
         type: playlistTypes.SET_MOST_RECENTLY_ADDED_SONG
+    }
+}
+
+export const setNewTimeout = (timeout: any) => {
+    return {
+        payload: {
+            timeout
+        },
+        type: playlistTypes.SET_NEW_TIMEOUT
+    }
+}
+
+export const setPlaying = (playing: boolean) => {
+    return {
+        payload: {
+            playing
+        },
+        type: playlistTypes.SET_PLAYING
     }
 }

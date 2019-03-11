@@ -12,9 +12,12 @@ export interface IHomeState {
 
 export interface IPlaylistState {
     categories: Category[];
+    curRef: any;
     mostRecentlyAddedSong: Song;
     newPlaylist: Playlist;
+    playing: boolean;
     suggestedSongs: Song[];
+    timeout: any;
     uploadedImage: File | null;
 }
 

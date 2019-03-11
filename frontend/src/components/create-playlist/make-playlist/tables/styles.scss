@@ -1,53 +1,154 @@
-.songs-table-wrapper {
-  border: 1px solid #dee2eb;
-  border-radius: 5px;
+@import '../../../../theme/theme-variables.scss';
+
+.table-rows-wrapper {
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
   height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
 
-  th,
-  td {
-    text-align: center;
-    font-weight: bold;
-    vertical-align: middle;
+.transition-effects {
+  background-image: linear-gradient(to right, white, #eef7fa);
+  border-radius: 2px;
+  content: '';
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+.table-row {
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 2px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  max-height: 60px;
+  min-width: 228px;
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    @extend .transition-effects;
+    transition: width 2s ease;
+    width: 0;
   }
 
-  tbody {
-    overflow: auto;
+  &:before {
+    @extend .transition-effects;
+    opacity: 0;
+    transition: opacity 2s ease;
+    width: 100%;
   }
 
-  tr:hover {
-    .song-album-art {
-      transform: scale(1.08, 1.08);
-      transition: all 0.2s;
+  &:hover {
+    &:after {
+      transition: width 0s;
+      width: 100%;
+    }
+
+    &:before {
+      opacity: 1;
+      transition: opacity 0s;
     }
   }
 }
 
-.song-album-art {
-  border-radius: 3px;
-  height: 60px;
-  width: 60px;
+.song-info {
+  cursor: pointer;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.song-album-art-table-elements {
-  @media all and (max-width: 576px) {
+.album-art-wrapper {
+  margin-right: 15px;
+}
+
+.tr-icons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+  min-width: 55px;
+
+  .play-icon-wrapper {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 20px;
+    height: 100%;
+    position: absolute;
+  }
+
+  .hide {
     display: none;
   }
 }
 
-.table-icon:hover {
+.album-art {
+  border-radius: 2px;
+  height: 60px;
+  width: 60px;
+}
+
+.song-and-artist-name-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media all and (max-width: 767px) {
+    width: 50%;
+  }
+
+  @media all and (min-width: 768px) and (max-width: 991px) {
+    width: 65%;
+  }
+
+  @media all and (min-width: 992px) {
+    width: 75%;
+  }
+
+  .song-name {
+    @extend .font-16-medium;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .artist-name {
+    @extend .font-14-regular;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+  }
+}
+
+.icon-wrapper {
+  align-items: center;
   cursor: pointer;
-  transform: scale(1.5, 1.5);
-  transition: all 0.2s;
+  display: flex;
 }
 
-.new-playlist-songs-table {
-  .table-icon:hover {
-    color: red;
-  }
+.row-dropdown-height {
+  display: flex;
+  height: 80px;
+  overflow: hidden;
+  transition: height 1s;
+  width: inherit;
 }
 
-.suggested-songs-table {
-  .table-icon:hover {
-    color: green;
-  }
+.row-dropdown-no-height {
+  height: 0;
+  overflow: hidden;
+  transition: height 1s;
 }
