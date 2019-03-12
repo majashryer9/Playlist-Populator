@@ -136,7 +136,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                         <Modal className='playlist-image-modal' isOpen={this.state.modal} toggle={this.toggle}>
                             <Container>
                                 <Row>
-                                    <Col sm={4}>
+                                    <Col xs={12} sm={4}>
                                         <div className='left instructions-and-button-wrapper'>
                                             <div>
                                                 To the right is your current playlist image.
@@ -146,7 +146,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                             </div>
                                         </div>
                                     </Col>
-                                    <Col sm={4}>
+                                    <Col xs={8} sm={4}>
                                         <div className='center'>
                                             <img
                                                 alt='playlist image'
@@ -156,7 +156,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                             />
                                         </div>
                                     </Col>
-                                    <Col sm={4}>
+                                    <Col xs={4} sm={4}>
                                         <div className='right'>
                                             <div>
                                                 <div>
@@ -171,14 +171,14 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col sm={10}>
+                                    <Col xs={8} sm={10}>
                                         <div className='left'>
-                                            <Input onChange={this.setPhotoSearchQuery} type='text' placeholder='Search for a new photo...' alt='enter photo query' />
+                                            <Input className='font-override' onChange={this.setPhotoSearchQuery} type='text' placeholder='Search for a new photo...' alt='enter photo query' />
                                         </div>
                                     </Col>
-                                    <Col sm={2}>
+                                    <Col xs={4} sm={2}>
                                         <div className='right'>
-                                            <Button disabled={!this.state.photoSearchQuery} onClick={this.getDifferentPhotos}> Search </Button>
+                                            <Button className='font-override' disabled={!this.state.photoSearchQuery} onClick={this.getDifferentPhotos}> Search </Button>
                                         </div>
                                     </Col>
                                 </Row>
@@ -200,8 +200,8 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                 <Row className='save-and-cancel-buttons-wrapper'>
                                     <Col sm={12}>
                                         <div className='save-and-cancel-buttons'>
-                                            <Button onClick={this.setSavedImageUrl}> Save </Button>
-                                            <Button onClick={this.toggle}> Cancel </Button>
+                                            <Button className='font-override' onClick={this.setSavedImageUrl}> Save </Button>
+                                            <Button className='font-override' onClick={this.toggle}> Cancel </Button>
                                         </div>
                                     </Col>
                                 </Row>

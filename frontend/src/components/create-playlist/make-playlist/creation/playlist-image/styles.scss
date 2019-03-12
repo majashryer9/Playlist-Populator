@@ -1,11 +1,17 @@
 .playlist-image-modal {
   max-width: 800px;
 
+  @media all and (max-width: 320px) {
+    font-size: 14px;
+  }
+
   .container {
     max-width: 100%;
-    @media all and (max-width: 768px) {
-      max-width: 100%;
-    }
+  }
+
+  .modal-content {
+    max-height: 840px;
+    overflow-y: hidden;
   }
 }
 
@@ -55,11 +61,19 @@
 }
 
 .playlist-image-wrapper {
-  height: 480px;
+  height: 250px;
   margin-bottom: 10px;
   margin-top: 10px;
   overflow-x: hidden;
   overflow-y: auto;
+
+  @media all and (max-width: 600px) {
+    height: 190px;
+  }
+
+  @media all and (max-width: 320px) {
+    height: 160px;
+  }
 }
 
 .playlist-image {
@@ -88,16 +102,31 @@
     height: 170px;
     width: 170px;
   }
+
+  @media all and (max-width: 320px) {
+    height: 150px;
+    width: 150px;
+  }
 }
 
 .camera-icon-container {
   color: #6c757d;
   cursor: pointer;
   font-size: 60px;
+
+  @media all and (max-width: 600px) {
+    font-size: 40px;
+  }
 }
 
 .file-input {
   display: none;
+}
+
+.font-override {
+  @media all and (max-width: 320px) {
+    font-size: 14px !important;
+  }
 }
 
 .save-and-cancel-buttons-wrapper {
