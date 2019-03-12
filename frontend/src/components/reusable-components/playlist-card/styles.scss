@@ -50,6 +50,11 @@
   background-size: cover;
   background-color: rgb(180, 180, 180);
   background-blend-mode: screen;
+
+  .album-art {
+    height: 60px;
+    width: 60px;
+  }
 }
 
 .modal-content {

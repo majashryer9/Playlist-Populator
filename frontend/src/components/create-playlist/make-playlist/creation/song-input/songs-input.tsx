@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Autosuggest from 'react-autosuggest';
-import { Button } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import { debounce } from 'debounce';
 import { IPlaylistState, IState } from 'src/reducers';
 import { environment } from 'src/environment';
@@ -19,7 +19,8 @@ interface IProps extends IPlaylistState {
 }
 
 interface ISongInputState {
-    selectedSong: Song
+    populated: boolean;
+    selectedSong: Song;
     suggestions: Song[];
     value: string;
 }
@@ -48,6 +49,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
     public constructor(props: any) {
         super(props);
         this.state = {
+            populated: false,
             selectedSong: new Song(),
             suggestions: [],
             value: ''
@@ -78,13 +80,14 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
     };
 
     public populate = () => {
+        this.setState({ populated: true });
         this.props.savePlaylist(this.props.newPlaylist);
         this.props.getSimilarSongs(this.props.newPlaylist.songs);
         this.props.getSpotifyRecommendations(this.props.newPlaylist.songs);
     }
 
     public render() {
-        const { selectedSong, suggestions, value } = this.state;
+        const { populated, selectedSong, suggestions, value } = this.state;
         const inputProps = {
             onChange: this.onChange,
             placeholder: 'Add a song...',
@@ -92,21 +95,45 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
         };
         return (
             <>
-                <Autosuggest
-                    suggestions={suggestions}
-                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={(suggestion: Song) => {
-                        this.setState({ selectedSong: suggestion });
-                        return `${suggestion.name} by ${suggestion.artistName}`;
-                    }}
-                    renderSuggestion={(suggestion: Song) => <span> {suggestion.name} by {suggestion.artistName} </span>}
-                    inputProps={inputProps}
-                />
-                <Button disabled={!selectedSong.name} onClick={this.add}> Add Song </Button>
-                <Button disabled={this.newPlaylistSongsLength()} onClick={this.populate}> Populate Playlist </Button>
-                <Button> Save Playlist </Button>
-                <Button onClick={this.props.discardNewPlaylist}> Discard Playlist </Button>
+                <Row>
+                    <Col xs={9}>
+                        <Autosuggest
+                            suggestions={suggestions}
+                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                            getSuggestionValue={(suggestion: Song) => {
+                                this.setState({ selectedSong: suggestion });
+                                return `${suggestion.name} by ${suggestion.artistName}`;
+                            }}
+                            renderSuggestion={(suggestion: Song) => <span> {suggestion.name} by {suggestion.artistName} </span>}
+                            inputProps={inputProps}
+                        />
+                    </Col>
+                    <Col xs={3}>
+                        <div className='center-button'>
+                            <Button disabled={!selectedSong.name} onClick={this.add}> Add Song </Button>
+                        </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6}>
+                        {
+                            !populated && <div className='center-button'>
+                                <Button disabled={this.newPlaylistSongsLength()} onClick={this.populate}> Populate Playlist </Button>
+                            </div>
+                        }
+                        {
+                            populated && <div className='center-button'>
+                                <Button> Save Playlist </Button>
+                            </div>
+                        }
+                    </Col>
+                    <Col xs={6}>
+                        <div className='center-button'>
+                            <Button onClick={this.props.discardNewPlaylist}> Discard Playlist </Button>
+                        </div>
+                    </Col>
+                </Row>
             </>
         )
     }

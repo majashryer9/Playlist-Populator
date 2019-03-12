@@ -30,6 +30,13 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
         }
     }
 
+    public buttonClickAndSetPlayingToFalse = () => {
+        const { buttonClick, setPlaying, song, timeout } = this.props;
+        buttonClick(song);
+        clearTimeout(timeout);
+        setPlaying(false);
+    }
+
     public playOrPause = (newRef: any) => {
         const { curRef, playing, setCurRef, setNewTimeout, setPlaying, timeout } = this.props;
         if ((!curRef && newRef) || curRef.id === newRef.id) {
@@ -73,7 +80,7 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
     }
 
     public render() {
-        const { curRef, buttonClick, icon, playing, song } = this.props;
+        const { curRef, icon, playing, song } = this.props;
         const { clicked, ref } = this.state;
         return (
             <>
@@ -116,7 +123,7 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
                                 </>
                             }
                         </div>
-                        <div className='icon-wrapper' onClick={() => buttonClick(song)}>
+                        <div className='icon-wrapper' onClick={this.buttonClickAndSetPlayingToFalse}>
                             {icon}
                         </div>
                     </div>

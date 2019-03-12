@@ -45,3 +45,7 @@
 
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd; }
+
+.center-button {
+  display: flex;
+  justify-content: center; }

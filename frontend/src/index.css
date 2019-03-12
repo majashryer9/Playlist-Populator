@@ -95,6 +95,10 @@
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd; }
 
+.center-button {
+  display: flex;
+  justify-content: center; }
+
 .playlist-image-modal {
   max-width: 800px; }
   @media all and (max-width: 320px) {
@@ -443,6 +447,9 @@
   background-size: cover;
   background-color: #b4b4b4;
   background-blend-mode: screen; }
+  .playlist-modal-body .album-art {
+    height: 60px;
+    width: 60px; }
 
 .modal-content {
   overflow-y: auto; }

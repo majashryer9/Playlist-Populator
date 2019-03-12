@@ -30,6 +30,9 @@
   background-size: cover;
   background-color: #b4b4b4;
   background-blend-mode: screen; }
+  .playlist-modal-body .album-art {
+    height: 60px;
+    width: 60px; }
 
 .modal-content {
   overflow-y: auto; }
