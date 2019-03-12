@@ -41,6 +41,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                     songs: [...state.newPlaylist.songs, action.payload.song]
                 }
             }
+        case playlistTypes.ADD_SONG_TO_SUGGESTED_SONGS:
+            return {
+                ...state,
+                suggestedSongs: [action.payload.song, ...state.suggestedSongs]
+            }
         case playlistTypes.CLEAR_UNSPLASH_IMAGE_URL:
             return {
                 ...state,

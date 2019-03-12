@@ -9,6 +9,7 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     addSongToNewPlaylist: (song: Song) => void;
+    addSongToSuggestedSongs: (song: Song) => void;
     removeSongFromNewPlaylist: (song: Song) => void;
     removeSongFromSuggestedSongs: (song: Song) => void;
     setMostRecentlyAddedSong: (song: Song) => void;
@@ -28,6 +29,11 @@ export class TableContainer extends React.Component<IProps, {}> {
         }
     }
 
+    public removeFromNewPlaylistAndAddToSuggestedSongs = (song: Song) => {
+        this.props.removeSongFromNewPlaylist(song);
+        this.props.addSongToSuggestedSongs(song);
+    }
+
     public render() {
         const songs = this.props.newPlaylist.songs;
         const suggestedSongs = this.props.suggestedSongs;
@@ -40,7 +46,7 @@ export class TableContainer extends React.Component<IProps, {}> {
                         {
                             (songsLength) ?
                                 <SongsTable
-                                    buttonClick={this.props.removeSongFromNewPlaylist}
+                                    buttonClick={this.removeFromNewPlaylistAndAddToSuggestedSongs}
                                     icon={<FaTimes className='table-icon' />}
                                     songs={songs}
                                 />
@@ -67,6 +73,7 @@ export class TableContainer extends React.Component<IProps, {}> {
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
     addSongToNewPlaylist: playlistActions.addSongToNewPlaylist,
+    addSongToSuggestedSongs: playlistActions.addSongToSuggestedSongs,
     removeSongFromNewPlaylist: playlistActions.removeSongFromNewPlaylist,
     removeSongFromSuggestedSongs: playlistActions.removeSongFromSuggestedSongs,
     setMostRecentlyAddedSong: playlistActions.setMostRecentlyAddedSong

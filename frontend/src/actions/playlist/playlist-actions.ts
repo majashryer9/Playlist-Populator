@@ -174,6 +174,15 @@ export const addSongToNewPlaylist = (song: Song) => {
     }
 }
 
+export const addSongToSuggestedSongs = (song: Song) => {
+    return {
+        payload: {
+            song
+        },
+        type: playlistTypes.ADD_SONG_TO_SUGGESTED_SONGS
+    }
+}
+
 export const getSimilarSongs = (songs: Song[]) => (dispatch: any, getState: any) => {
     const url = `${environment.context}song/similar-songs`;
     fetch(url, {
