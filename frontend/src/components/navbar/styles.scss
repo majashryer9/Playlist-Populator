@@ -3,7 +3,7 @@ $link-color: white;
 .nav {
   background-color: lightblue;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 20px;
   margin-bottom: 15px;
 
@@ -12,13 +12,25 @@ $link-color: white;
     margin-right: 20px;
   }
 
+  .logo-and-menu-container {
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
   .links-container {
     align-items: center;
     display: flex;
     height: 100%;
 
-    @media all and (max-width: 575px) {
-      display: none;
+    .hide-on-mobile {
+      @media all and (max-width: 575px) {
+        display: none;
+      }
     }
   }
 
@@ -34,10 +46,6 @@ $link-color: white;
       justify-content: flex-end;
     }
   }
-
-  @media all and (max-width: 575px) {
-    flex-direction: column;
-  }
 }
 
 .dropdown-links {
@@ -49,7 +57,6 @@ $link-color: white;
   &.no-height {
     max-height: 0px;
     overflow: hidden;
-
   }
 
   @media all and (min-width: 575px) {

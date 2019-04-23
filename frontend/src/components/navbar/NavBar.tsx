@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaMusic } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 interface INavBarState {
@@ -17,7 +17,7 @@ export default class NavBar extends React.Component<any, INavBarState> {
     public links = () => {
         return (
             <>
-                <Link to='/home'> Home </Link>
+                <Link to='/my-profile'> My Profile </Link>
                 <Link to='/create-playlist'> Create Playlist </Link>
                 <Link to='/browse'> Browse </Link>
             </>
@@ -34,16 +34,25 @@ export default class NavBar extends React.Component<any, INavBarState> {
         return (
             <>
                 <div className='nav'>
-                    <div className='links-container'>
-                        {this.links()}
+                    <div className='logo-and-menu-container'>
+                        <div className='links-container'>
+                            <div className='logo'>
+                                <Link to='/home'>
+                                    <FaMusic />
+                                </Link>
+                            </div>
+                            <div className='hide-on-mobile'>
+                                {this.links()}
+                            </div>
+                        </div>
+                        <div
+                            className='hamburger-menu-container'
+                            onClick={this.toggle}
+                        >
+                            <FaBars />
+                        </div>
                     </div>
-                    <div
-                        className='hamburger-menu-container'
-                        onClick={this.toggle}
-                    >
-                        <FaBars />
-                    </div>
-                    <div className={(this.state.showDropdown)? 'dropdown-links' : 'dropdown-links no-height'}>
+                    <div className={(this.state.showDropdown) ? 'dropdown-links' : 'dropdown-links no-height'}>
                         {this.links()}
                     </div>
                 </div>

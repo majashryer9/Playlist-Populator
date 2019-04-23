@@ -631,18 +631,24 @@
 .nav {
   background-color: lightblue;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 20px;
   margin-bottom: 15px; }
   .nav a {
     color: white;
     margin-right: 20px; }
+  .nav .logo-and-menu-container {
+    display: flex;
+    justify-content: space-between;
+    height: 30px; }
+  .nav .logo {
+    font-size: 20px; }
   .nav .links-container {
     align-items: center;
     display: flex;
     height: 100%; }
     @media all and (max-width: 575px) {
-      .nav .links-container {
+      .nav .links-container .hide-on-mobile {
         display: none; } }
   .nav .hamburger-menu-container {
     align-items: center;
@@ -654,9 +660,6 @@
       .nav .hamburger-menu-container {
         display: flex;
         justify-content: flex-end; } }
-  @media all and (max-width: 575px) {
-    .nav {
-      flex-direction: column; } }
 
 .dropdown-links {
   display: flex;
