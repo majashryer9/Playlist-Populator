@@ -12,7 +12,7 @@ export const getPlaylistsContainingSong = async (song: Song) => {
             `SELECT * FROM playlist_populator.playlist
             INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
             INNER JOIN playlist_populator.song USING(song_id)
-            WHERE spotify_track_id = $1`,
+            WHERE spotify_track_id = $1 AND saved=true`,
             [song.spotifyTrackId]
         );
         return (resp && resp.rows) ?

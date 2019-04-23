@@ -14,7 +14,7 @@ CREATE TABLE app_user(
 CREATE TABLE playlist(
 	owner_id INTEGER,
 	playlist_id SERIAL PRIMARY KEY,
-	playlist_name VARCHAR(100),
+	playlist_name VARCHAR(200),
 	bucket_key VARCHAR(20),
 	saved BOOLEAN NOT NULL,
 	unsplash_image_url VARCHAR(200)
@@ -22,14 +22,14 @@ CREATE TABLE playlist(
 
 CREATE TABLE song(
 	album_art_url VARCHAR(200),
-	artist_name VARCHAR(100) NOT NULL,
+	artist_name VARCHAR(200) NOT NULL,
 	danceability NUMERIC,
 	energy NUMERIC,
 	popularity INTEGER,
 	preview_url VARCHAR(200),
 	song_id SERIAL PRIMARY KEY,
 	song_key INTEGER,
-	song_name VARCHAR(100) NOT NULL,
+	song_name VARCHAR(200) NOT NULL,
 	spotify_artist_id VARCHAR(22) NOT NULL,
 	spotify_track_id VARCHAR(22) NOT NULL UNIQUE,
 	tempo NUMERIC,
@@ -37,11 +37,11 @@ CREATE TABLE song(
 	UNIQUE(song_name, artist_name)
 );
 
-CREATE INDEX spotify_track_id_index ON song(spotify_track_id);
+CREATE INDEX spotify_track_id_index_song ON song(spotify_track_id);
 
 CREATE TABLE category(
 	category_id SERIAL PRIMARY KEY,
-	category_name VARCHAR(100) UNIQUE NOT NULL,
+	category_name VARCHAR(200) UNIQUE NOT NULL,
 	image_url VARCHAR(200)
 );
 
@@ -51,8 +51,8 @@ CREATE TABLE playlists_songs(
 	UNIQUE(playlist_id, song_id)
 );
 
-CREATE INDEX playlist_id_index ON playlists_songs(playlist_id);
-CREATE INDEX song_id_index ON playlists_songs(song_id);
+CREATE INDEX playlist_id_index_playlists_songs ON playlists_songs(playlist_id);
+CREATE INDEX song_id_index_playlists_songs ON playlists_songs(song_id);
 
 CREATE TABLE playlists_categories(
 	playlist_id INTEGER REFERENCES playlist(playlist_id) NOT NULL,
@@ -60,8 +60,8 @@ CREATE TABLE playlists_categories(
 	UNIQUE(playlist_id, category_id)
 );
 
-CREATE INDEX playlist_id_index ON playlists_categories(playlist_id);
-CREATE INDEX category_id_index ON playlists_categories(song_id);
+CREATE INDEX playlist_id_index_playlists_categories ON playlists_categories(playlist_id);
+CREATE INDEX category_id_index_playlists_categories ON playlists_categories(category_id);
 
 CREATE TABLE users_liked_songs(
 	user_id INTEGER REFERENCES app_user(user_id) NOT NULL,
