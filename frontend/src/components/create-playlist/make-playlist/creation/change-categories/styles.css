@@ -1,22 +1,27 @@
 .category-chip {
-  text-align: center;
+  align-items: center;
   background-color: lightgrey;
   border-radius: 40px;
-  width: 200px;
-  padding: 10px 10px 10px 35px;
-  margin-top: 5px;
-  margin-bottom: 5px;
   display: flex;
+  flex-wrap: nowrap;
+  height: 50px;
   justify-content: space-between;
-  flex-wrap: nowrap; }
+  margin: 5px 14px;
+  padding: 10px;
+  text-align: center;
+  width: 111.5px; }
   .category-chip .category-name {
-    display: inline-block; }
+    display: block;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 60px; }
   .category-chip .remove-icon {
-    display: inline-block;
     border-radius: 15px;
     background-color: darkgray;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     cursor: pointer; }
   .category-chip .remove-icon:hover {
     background-color: slategray; }

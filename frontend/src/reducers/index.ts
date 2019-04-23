@@ -16,6 +16,7 @@ export interface IPlaylistState {
     mostRecentlyAddedSong: Song;
     newPlaylist: Playlist;
     playing: boolean;
+    populated: boolean;
     suggestedSongs: Song[];
     timeout: any;
     uploadedImage: File | null;

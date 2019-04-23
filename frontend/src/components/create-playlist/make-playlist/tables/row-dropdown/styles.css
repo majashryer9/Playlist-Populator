@@ -19,6 +19,12 @@
     visibility: hidden; }
   .top-ten-item-wrapper .hide {
     display: none; }
+  .top-ten-item-wrapper .song-info-wrapper div {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 115px; }
 
 .half-opacity {
   opacity: 0.5; }

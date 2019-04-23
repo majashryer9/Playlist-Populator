@@ -27,6 +27,16 @@
   .hide {
     display: none;
   }
+
+  .song-info-wrapper {
+    div {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 115px;
+    }
+  }
 }
 
 .half-opacity {

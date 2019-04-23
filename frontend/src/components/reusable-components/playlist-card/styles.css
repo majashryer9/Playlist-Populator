@@ -24,6 +24,25 @@
   @media all and (max-width: 576px) {
     .playlist-card-wrapper {
       width: 180px; } }
+  .playlist-card-wrapper .card-img-overlay {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    z-index: 1; }
+  .playlist-card-wrapper:before {
+    background-color: rgba(0, 0, 0, 0);
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: background-color 0.5s;
+    width: 100%;
+    z-index: 1; }
+  .playlist-card-wrapper:hover:before {
+    background-color: rgba(0, 0, 0, 0.4);
+    transition: background-color 0.5s; }
 
 .playlist-modal-body {
   background-repeat: no-repeat;
@@ -34,5 +53,45 @@
     height: 60px;
     width: 60px; }
 
-.modal-content {
-  overflow-y: auto; }
+.playlist-modal .modal-content {
+  max-height: 650px;
+  overflow-y: auto;
+  overflow-x: hidden; }
+
+.playlist-modal .modal-table-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px; }
+  .playlist-modal .modal-table-row .album-art-song-info-wrapper {
+    display: flex;
+    width: 85%; }
+    .playlist-modal .modal-table-row .album-art-song-info-wrapper .song-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%; }
+      .playlist-modal .modal-table-row .album-art-song-info-wrapper .song-info .album-art {
+        height: 60px;
+        width: 60px; }
+      .playlist-modal .modal-table-row .album-art-song-info-wrapper .song-info .artist-name {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%; }
+      .playlist-modal .modal-table-row .album-art-song-info-wrapper .song-info .song-name {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%; }
+  .playlist-modal .modal-table-row .play-pause-wrapper {
+    display: flex;
+    align-items: center; }
+    .playlist-modal .modal-table-row .play-pause-wrapper .play-icon-wrapper {
+      cursor: pointer; }
+  .playlist-modal .modal-table-row .hide {
+    display: none; }
+
+.playlist-modal ::-webkit-scrollbar {
+  width: 0 !important; }

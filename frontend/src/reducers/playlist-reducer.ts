@@ -9,6 +9,7 @@ const initialState: IPlaylistState = {
     mostRecentlyAddedSong: new Song(),
     newPlaylist: new Playlist(),
     playing: false,
+    populated: false,
     suggestedSongs: [],
     timeout: null,
     uploadedImage: null
@@ -46,6 +47,24 @@ export const playlistReducer = (state = initialState, action: any) => {
                 ...state,
                 suggestedSongs: [action.payload.song, ...state.suggestedSongs]
             }
+        case playlistTypes.CLEAR_MOST_RECENTLY_ADDED_SONG:
+            return {
+                ...state,
+                mostRecentlyAddedSong: action.payload.mostRecentlyAddedSong
+            }
+        case playlistTypes.CLEAR_PLAYLIST_SONGS:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    songs: action.payload.songs
+                }
+            }
+        case playlistTypes.CLEAR_SUGGESTED_SONGS:
+            return {
+                ...state,
+                suggestedSongs: action.payload.suggestedSongs
+            }
         case playlistTypes.CLEAR_UNSPLASH_IMAGE_URL:
             return {
                 ...state,
@@ -58,11 +77,6 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 uploadedImage: action.payload.uploadedImage
-            }
-        case playlistTypes.DISCARD_NEW_PLAYLIST:
-            return {
-                ...state,
-                newPlaylist: action.payload.newPlaylist
             }
         case playlistTypes.GET_SIMILAR_SONGS:
             return {
@@ -128,6 +142,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 playing: action.payload.playing
+            }
+        case playlistTypes.SET_POPULATED:
+            return {
+                ...state,
+                populated: action.payload.populated
             }
         case playlistTypes.SET_NEW_TIMEOUT:
             return {

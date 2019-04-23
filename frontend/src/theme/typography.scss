@@ -50,3 +50,15 @@
 .font-18-bold {
   @include setFont(18px, bold);
 }
+
+.font-24-regular {
+  @include setFont(24px, normal);
+}
+
+.font-24-medium {
+  @include setFont(24px, 500);
+}
+
+.font-24-bold {
+  @include setFont(24px, bold);
+}

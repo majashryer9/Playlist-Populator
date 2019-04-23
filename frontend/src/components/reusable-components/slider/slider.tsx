@@ -50,7 +50,7 @@ export default class Slider extends React.Component<IProps, IState> {
             if (reusableFunctions.isMobile()) {
                 this.setState({
                     arrowSize: mobileFontSize ? mobileFontSize : fontSize,
-                    heightOfItem: mobileHeight? mobileHeight : height,
+                    heightOfItem: mobileHeight ? mobileHeight : height,
                     spaceBetweenItems: mobileSpacing ? mobileSpacing : spacing,
                     widthOfItem: mobileWidth ? mobileWidth : width
                 })
@@ -103,11 +103,13 @@ export default class Slider extends React.Component<IProps, IState> {
                         className='slider-wrapper'
                         style={{ padding: `${wrapperPadding}px 0` }}
                     >
-                        <div
-                            className={(curIndex === 0) ? 'hide-arrow' : 'arrow-wrapper'}
-                            style={{ fontSize: `${arrowSize}px` }}
-                        >
-                            <FaChevronLeft onClick={this.prevSlide} />
+                        <div className='position-relative'>
+                            <div
+                                className={(curIndex === 0) ? 'hide-arrow' : 'arrow-wrapper left-arrow'}
+                                style={{ fontSize: `${arrowSize}px` }}
+                            >
+                                <FaChevronLeft onClick={this.prevSlide} />
+                            </div>
                         </div>
                         <div
                             className='highlighted-item-wrapper'
@@ -136,11 +138,13 @@ export default class Slider extends React.Component<IProps, IState> {
                                 })}
                             </div>
                         </div>
-                        <div
-                            className={(curIndex === arrayOfItems.length - 1) ? 'hide-arrow' : 'arrow-wrapper'}
-                            style={{ fontSize: `${arrowSize}px` }}
-                        >
-                            <FaChevronRight onClick={this.nextSlide} />
+                        <div className='position-relative'>
+                            <div
+                                className={(curIndex === arrayOfItems.length - 1) ? 'hide-arrow' : 'arrow-wrapper right-arrow'}
+                                style={{ fontSize: `${arrowSize}px` }}
+                            >
+                                <FaChevronRight onClick={this.nextSlide} />
+                            </div>
                         </div>
                     </div>
                 </Swipeable>

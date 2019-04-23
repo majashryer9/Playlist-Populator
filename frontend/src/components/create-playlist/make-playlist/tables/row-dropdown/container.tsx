@@ -5,8 +5,9 @@ import AudioItem from './audio-item';
 import Slider from '../../../../reusable-components/slider/slider';
 
 interface IProps {
-    spotifyArtistId: string;
     clicked: boolean;
+    spotifyArtistId: string;
+    spotifyTrackId: string;
 }
 
 interface IState {
@@ -40,14 +41,14 @@ export default class RowDropdown extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const { clicked } = this.props;
+        const { clicked, spotifyTrackId } = this.props;
         const { topSongs } = this.state;
         return (
             <div className={(clicked && topSongs.length) ? 'row-dropdown-height' : 'row-dropdown-no-height'}>
                 <Slider
                     arrayOfItems={
                         topSongs
-                            .filter((song: Song) => song.previewUrl)
+                            .filter((song: Song) => song.previewUrl && song.spotifyTrackId !== spotifyTrackId)
                             .map((song: Song) => <AudioItem key={song.spotifyTrackId} song={song} />)
                     }
                     fontSize={20}

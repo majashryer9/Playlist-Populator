@@ -31,10 +31,13 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
     }
 
     public buttonClickAndSetPlayingToFalse = () => {
-        const { buttonClick, setPlaying, song, timeout } = this.props;
+        const { buttonClick, curRef, setPlaying, song, timeout } = this.props;
+        const { ref } = this.state;
         buttonClick(song);
-        clearTimeout(timeout);
-        setPlaying(false);
+        if (curRef && ref && curRef.id === ref.id) {
+            clearTimeout(timeout);
+            setPlaying(false);
+        }
     }
 
     public playOrPause = (newRef: any) => {
@@ -103,10 +106,10 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
                         </div>
                     </div>
                     <div className='tr-icons-wrapper'>
-                        <div onClick={() => this.playOrPause(ref)}>
+                        <div>
                             {
                                 song.previewUrl &&
-                                <>
+                                <div onClick={() => this.playOrPause(ref)}>
                                     <audio
                                         id={song.spotifyTrackId}
                                         ref={this.setRef}
@@ -120,7 +123,7 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
                                             className={(playing && (ref && curRef && (curRef.id === ref.id))) ? 'show-pause' : 'hide'}
                                         />
                                     </div>
-                                </>
+                                </div>
                             }
                         </div>
                         <div className='icon-wrapper' onClick={this.buttonClickAndSetPlayingToFalse}>
@@ -128,7 +131,7 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
                         </div>
                     </div>
                 </div>
-                <RowDropdown clicked={clicked} spotifyArtistId={song.spotifyArtistId} />
+                <RowDropdown clicked={clicked} spotifyArtistId={song.spotifyArtistId} spotifyTrackId={song.spotifyTrackId} />
             </>
         );
     }

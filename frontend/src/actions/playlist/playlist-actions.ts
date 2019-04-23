@@ -1,8 +1,7 @@
 import { playlistTypes } from './playlist-types';
-import { environment } from 'src/environment';
-import { Category } from 'src/models/Category';
-import { Playlist } from 'src/models/Playlist';
-import { Song } from 'src/models/Song';
+import { environment } from '../../environment';
+import { Category } from '../../models/Category';
+import { Song } from '../../models/Song';
 
 /*
 CATEGORIES
@@ -44,6 +43,33 @@ export const setCategories = (categories: Category[]) => {
 PLAYLISTS
 */
 
+export const clearMostRecentlyAddedSong = () => {
+    return {
+        payload: {
+            mostRecentlyAddedSong: new Song()
+        },
+        type: playlistTypes.CLEAR_MOST_RECENTLY_ADDED_SONG
+    }
+}
+
+export const clearPlaylistSongs = () => {
+    return {
+        payload: {
+            songs: []
+        },
+        type: playlistTypes.CLEAR_PLAYLIST_SONGS
+    }
+}
+
+export const clearSuggestedSongs = () => {
+    return {
+        payload: {
+            suggestedSongs: []
+        },
+        type: playlistTypes.CLEAR_SUGGESTED_SONGS
+    }
+}
+
 export const clearUnsplashImageUrl = () => {
     return {
         payload: {
@@ -62,17 +88,10 @@ export const clearUploadedImage = () => {
     }
 }
 
-export const discardNewPlaylist = () => {
-    return {
-        payload: {
-            newPlaylist: new Playlist()
-        },
-        type: playlistTypes.DISCARD_NEW_PLAYLIST
-    }
-}
-
-export const savePlaylist = (playlist: Playlist) => (dispatch: any, getState: any) => {
+export const savePlaylist = (saved: boolean) => (dispatch: any, getState: any) => {
     const url = `${environment.context}playlist/save-playlist`;
+    const playlist = getState().playlist.newPlaylist;
+    playlist.saved = saved;
     const uploadedImage = getState().playlist.uploadedImage;
     if (uploadedImage) {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -108,6 +127,15 @@ export const savePlaylist = (playlist: Playlist) => (dispatch: any, getState: an
             }
         })
         .catch(error => console.log(error));
+}
+
+export const setPopulated = (populated: boolean) => {
+    return {
+        payload: {
+            populated
+        },
+        type: playlistTypes.SET_POPULATED
+    }
 }
 
 export const setUnsplashImageUrl = (unsplashImageUrl: string) => {
@@ -183,7 +211,8 @@ export const addSongToSuggestedSongs = (song: Song) => {
     }
 }
 
-export const getSimilarSongs = (songs: Song[]) => (dispatch: any, getState: any) => {
+export const getSimilarSongs = () => (dispatch: any, getState: any) => {
+    const songs = getState().playlist.newPlaylist.songs;
     const url = `${environment.context}song/similar-songs`;
     fetch(url, {
         body: JSON.stringify(songs),
@@ -214,7 +243,8 @@ export const getSimilarSongs = (songs: Song[]) => (dispatch: any, getState: any)
         .catch(error => console.log(error));
 }
 
-export const getSpotifyRecommendations = (songs: Song[]) => (dispatch: any, getState: any) => {
+export const getSpotifyRecommendations = () => (dispatch: any, getState: any) => {
+    const songs = getState().playlist.newPlaylist.songs;
     const url = `${environment.context}song/recommendations`;
     fetch(url, {
         body: JSON.stringify(songs),

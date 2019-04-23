@@ -20,7 +20,11 @@ export class ExploreContainer extends React.Component<IPlaylistState, IExploreCo
 
     public componentDidUpdate(prevProps: IPlaylistState) {
         const mostRecentlyAddedSong = this.props.mostRecentlyAddedSong;
-        if (mostRecentlyAddedSong && mostRecentlyAddedSong.spotifyTrackId !== prevProps.mostRecentlyAddedSong.spotifyTrackId) {
+        if (
+            mostRecentlyAddedSong &&
+            mostRecentlyAddedSong.spotifyTrackId &&
+            mostRecentlyAddedSong.spotifyTrackId !== prevProps.mostRecentlyAddedSong.spotifyTrackId
+        ) {
             const url = `${environment.context}playlist/playlists-containing-song`;
             fetch(url, {
                 body: JSON.stringify(mostRecentlyAddedSong),
@@ -39,6 +43,15 @@ export class ExploreContainer extends React.Component<IPlaylistState, IExploreCo
                     }
                 })
                 .catch(error => console.log(error));
+        }
+        else if (
+            mostRecentlyAddedSong &&
+            !mostRecentlyAddedSong.spotifyTrackId &&
+            this.state.playlistCards.length
+        ) {
+            this.setState({
+                playlistCards: []
+            })
         }
     }
 

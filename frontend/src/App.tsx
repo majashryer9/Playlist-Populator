@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './Store';
 import HomeComponent from './components/home-component';
+import NavBar from './components/navbar/NavBar';
 
 class App extends React.Component {
   public render() {
@@ -12,7 +13,7 @@ class App extends React.Component {
       <Provider store={store}>
         <BrowserRouter>
           <div>
-            {/* put nav bar here  */}
+            <NavBar />
             <div id="main-content-container">
               <Switch>
                 <Route component={HomeComponent} />

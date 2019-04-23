@@ -61,8 +61,8 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
     public getDifferentPhotos = async () => {
         const imageUrls = await this.getPlaylistImage(this.state.photoSearchQuery);
         this.setState({
-            imageUrls,
-        })
+            imageUrls
+        });
     }
 
     public getPlaylistImage = (query: string = 'nature') => {
@@ -127,94 +127,93 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
 
     public render() {
         return (
-            <Container>
-                <Row>
-                    <Col sm={12}>
+            <>
+                <div className='playlist-image-container'>
+                    <div className='playlist-image-text-container'>
                         <div>
-                            {this.state.savedImageUrl && <img className='playlist-image' onClick={this.toggle} src={this.state.savedImageUrl} alt='playlist image' />}
+                            We require that each playlist has an associated playlist image.
+                            Click the image to choose a different photo or to upload your own.
                         </div>
-                        <Modal className='playlist-image-modal' isOpen={this.state.modal} toggle={this.toggle}>
-                            <Container>
-                                <Row>
-                                    <Col xs={12} sm={4}>
-                                        <div className='left instructions-and-button-wrapper'>
-                                            <div>
-                                                To the right is your current playlist image.
-                                                You may choose to keep this, pick a photo from
-                                                one of the other options below, search for more photos,
-                                                or upload your own image. Please save whatever image you choose.
+                    </div>
+                    <div>
+                        {this.state.savedImageUrl && <img className='playlist-image picked-image' onClick={this.toggle} src={this.state.savedImageUrl} alt='playlist image' />}
+                    </div>
+                </div>
+                <Modal className='playlist-image-modal' isOpen={this.state.modal} toggle={this.toggle}>
+                    <Container>
+                        <Row>
+                            <Col xs={12} sm={4}>
+                                <div className='left instructions-and-button-wrapper'>
+                                    <div>
+                                        To the right is your current playlist image.
+                                        You may choose to keep this, pick a photo from
+                                        one of the other options below, search for more photos,
+                                        or upload your own image. Please save whatever image you choose.
                                             </div>
-                                        </div>
-                                    </Col>
-                                    <Col xs={8} sm={4}>
-                                        <div className='center'>
-                                            <img
-                                                alt='playlist image'
-                                                className='playlist-image'
-                                                onClick={this.toggle}
-                                                src={this.state.unsavedImageUrl}
-                                            />
-                                        </div>
-                                    </Col>
-                                    <Col xs={4} sm={4}>
-                                        <div className='right'>
-                                            <div>
-                                                <div>
-                                                    Click the camera to upload your own image
+                                </div>
+                            </Col>
+                            <Col xs={8} sm={4}>
+                                <div className='center'>
+                                    <img
+                                        alt='playlist image'
+                                        className='playlist-image'
+                                        onClick={this.toggle}
+                                        src={this.state.unsavedImageUrl}
+                                    />
+                                </div>
+                            </Col>
+                            <Col xs={4} sm={4}>
+                                <div className='right'>
+                                    <div>
+                                        <div>
+                                            Click the camera to upload your own image
                                                 </div>
-                                                <div className='camera-icon-container' onClick={this.clickInputRef}>
-                                                    <FaCamera />
-                                                    <input className='file-input' onChange={this.uploadImage} type='file' accept='image/*' ref={this.setInputRef} />
+                                        <div className='camera-icon-container' onClick={this.clickInputRef}>
+                                            <FaCamera />
+                                            <input className='file-input' onChange={this.uploadImage} type='file' accept='image/*' ref={this.setInputRef} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={8} sm={10}>
+                                <div className='left'>
+                                    <Input className='font-override' onChange={this.setPhotoSearchQuery} type='text' placeholder='Search for a new photo...' alt='enter photo query' />
+                                </div>
+                            </Col>
+                            <Col xs={4} sm={2}>
+                                <div className='right'>
+                                    <Button className='font-override' disabled={!this.state.photoSearchQuery} onClick={this.getDifferentPhotos}> Search </Button>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row className='playlist-image-wrapper'>
+                            {this.state.imageUrls.length &&
+                                this.state.imageUrls
+                                    .filter((imageUrl: string) => imageUrl !== this.state.unsavedImageUrl)
+                                    .map((imageUrl: string, index: number) => {
+                                        return (
+                                            <Col key={imageUrl} sm={4}>
+                                                <div className={(index % 3 === 0) ? 'left' : (index % 3 === 2) ? 'right' : 'center'}>
+                                                    <img className='playlist-image' onClick={() => this.unsplashImageUrl(imageUrl)} src={imageUrl} alt='playlist image option' />
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col xs={8} sm={10}>
-                                        <div className='left'>
-                                            <Input className='font-override' onChange={this.setPhotoSearchQuery} type='text' placeholder='Search for a new photo...' alt='enter photo query' />
-                                        </div>
-                                    </Col>
-                                    <Col xs={4} sm={2}>
-                                        <div className='right'>
-                                            <Button className='font-override' disabled={!this.state.photoSearchQuery} onClick={this.getDifferentPhotos}> Search </Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                                <Row className='playlist-image-wrapper'>
-                                    {this.state.imageUrls.length &&
-                                        this.state.imageUrls
-                                            .filter((imageUrl: string) => imageUrl !== this.state.unsavedImageUrl)
-                                            .map((imageUrl: string, index: number) => {
-                                                return (
-                                                    <Col key={imageUrl} sm={4}>
-                                                        <div className={(index % 3 === 0) ? 'left' : (index % 3 === 2) ? 'right' : 'center'}>
-                                                            <img className='playlist-image' onClick={() => this.unsplashImageUrl(imageUrl)} src={imageUrl} alt='playlist image option' />
-                                                        </div>
-                                                    </Col>
-                                                );
-                                            })
-                                    }
-                                </Row>
-                                <Row className='save-and-cancel-buttons-wrapper'>
-                                    <Col sm={12}>
-                                        <div className='save-and-cancel-buttons'>
-                                            <Button className='font-override' onClick={this.setSavedImageUrl}> Save </Button>
-                                            <Button className='font-override' onClick={this.toggle}> Cancel </Button>
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </Modal>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col sm={12}>
-                        Search for another photo
-                    </Col>
-                </Row>
-            </Container>
+                                            </Col>
+                                        );
+                                    })
+                            }
+                        </Row>
+                        <Row className='save-and-cancel-buttons-wrapper'>
+                            <Col sm={12}>
+                                <div className='save-and-cancel-buttons'>
+                                    <Button className='font-override' onClick={this.setSavedImageUrl}> Save </Button>
+                                    <Button className='font-override' onClick={this.toggle}> Cancel </Button>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Modal>
+            </>
         )
     }
 }

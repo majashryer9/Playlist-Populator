@@ -1,0 +1,38 @@
+.nav {
+  background-color: lightblue;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 15px; }
+  .nav a {
+    color: white;
+    margin-right: 20px; }
+  .nav .links-container {
+    align-items: center;
+    display: flex;
+    height: 100%; }
+    @media all and (max-width: 575px) {
+      .nav .links-container {
+        display: none; } }
+  .nav .hamburger-menu-container {
+    align-items: center;
+    color: white;
+    display: none;
+    font-size: 20px;
+    height: 100%; }
+    @media all and (max-width: 575px) {
+      .nav .hamburger-menu-container {
+        display: flex;
+        justify-content: flex-end; } }
+  @media all and (max-width: 575px) {
+    .nav {
+      flex-direction: column; } }
+
+.dropdown-links {
+  display: flex;
+  flex-direction: column; }
+  .dropdown-links a {
+    color: white; }
+  @media all and (min-width: 575px) {
+    .dropdown-links a {
+      display: none; } }

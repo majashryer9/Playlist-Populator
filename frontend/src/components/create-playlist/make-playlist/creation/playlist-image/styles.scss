@@ -1,3 +1,30 @@
+.playlist-image-container {
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+  margin: 10px 0;
+
+  .playlist-image-text-container {
+    display: flex;
+    align-items: center;
+
+    div {
+      padding-right: 25px;
+
+      @media all and (max-width: 420px) {
+        padding-right: 0;
+        text-align: center;
+      }
+    }
+  }
+
+  @media all and (max-width: 420px) {
+    flex-direction: column;
+  }
+}
+
 .playlist-image-modal {
   max-width: 800px;
 
@@ -107,6 +134,10 @@
     height: 150px;
     width: 150px;
   }
+}
+
+.picked-image {
+  margin: 0;
 }
 
 .camera-icon-container {

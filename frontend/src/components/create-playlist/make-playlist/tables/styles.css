@@ -46,17 +46,32 @@
   font-size: 18px;
   font-weight: bold; }
 
+.font-24-regular {
+  font-size: 24px;
+  font-weight: normal; }
+
+.font-24-medium {
+  font-size: 24px;
+  font-weight: 500; }
+
+.font-24-bold {
+  font-size: 24px;
+  font-weight: bold; }
+
 .table-rows-wrapper {
   border: 1px solid #dee2e6;
   border-radius: 6px;
-  height: 500px;
+  height: 300px;
   overflow-x: hidden;
   overflow-y: auto; }
+  .table-rows-wrapper .populate-button-container {
+    display: flex;
+    justify-content: center; }
 
 .transition-effects, .table-row:after, .table-row:before {
   background-image: linear-gradient(to right, white, #eef7fa);
   border-radius: 2px;
-  content: '';
+  content: "";
   display: block;
   height: 100%;
   left: 0;
@@ -81,10 +96,10 @@
     opacity: 0;
     transition: opacity 2s ease;
     width: 100%; }
-  .table-row:hover:after {
+  .table-row:active:after {
     transition: width 0s;
     width: 100%; }
-  .table-row:hover:before {
+  .table-row:active:before {
     opacity: 1;
     transition: opacity 0s; }
 
@@ -92,10 +107,7 @@
   cursor: pointer;
   display: flex;
   flex-wrap: nowrap;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; }
+  overflow: hidden; }
 
 .album-art-wrapper {
   margin-right: 15px; }

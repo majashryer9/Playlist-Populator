@@ -21,11 +21,14 @@ export class TableContainer extends React.Component<IProps, {}> {
     }
 
     public add = (song: Song) => {
-        const songsLength = this.props.newPlaylist.songs.length;
-        if (songsLength <= 5) {
+        const numSongsAlreadyAdded = this.props.newPlaylist.songs.length;
+        if (numSongsAlreadyAdded < 5) {
             this.props.addSongToNewPlaylist(song);
             this.props.removeSongFromSuggestedSongs(song);
             this.props.setMostRecentlyAddedSong(song);
+        }
+        else {
+            // set an error message 
         }
     }
 
@@ -48,9 +51,11 @@ export class TableContainer extends React.Component<IProps, {}> {
                                 <SongsTable
                                     buttonClick={this.removeFromNewPlaylistAndAddToSuggestedSongs}
                                     icon={<FaTimes className='table-icon' />}
+                                    includePopulateButton={true}
                                     songs={songs}
                                 />
-                                : null
+                                :
+                                null
                         }
                     </Col>
                     <Col sm={12} md={6}>
@@ -61,7 +66,8 @@ export class TableContainer extends React.Component<IProps, {}> {
                                     icon={<FaPlus className='table-icon' />}
                                     songs={suggestedSongs}
                                 />
-                                : null
+                                :
+                                null
                         }
                     </Col>
                 </Row>

@@ -1,17 +1,22 @@
-@import '../../../../theme/theme-variables.scss';
+@import "../../../../theme/theme-variables.scss";
 
 .table-rows-wrapper {
   border: 1px solid #dee2e6;
   border-radius: 6px;
-  height: 500px;
+  height: 300px;
   overflow-x: hidden;
   overflow-y: auto;
+
+  .populate-button-container {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .transition-effects {
   background-image: linear-gradient(to right, white, #eef7fa);
   border-radius: 2px;
-  content: '';
+  content: "";
   display: block;
   height: 100%;
   left: 0;
@@ -44,7 +49,7 @@
     width: 100%;
   }
 
-  &:hover {
+  &:active {
     &:after {
       transition: width 0s;
       width: 100%;
@@ -61,10 +66,7 @@
   cursor: pointer;
   display: flex;
   flex-wrap: nowrap;
-  width: 100%;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .album-art-wrapper {

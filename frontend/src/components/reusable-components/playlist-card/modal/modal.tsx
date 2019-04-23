@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Modal, ModalBody, Table } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import { Song } from 'src/models/Song';
+import ModalRow from './row';
 
-interface IProps {
+interface IProps  {
     imageSrc: string;
     modal: boolean;
     songs: Song[];
@@ -13,14 +14,17 @@ export default class PlaylistModal extends React.Component<IProps, any> {
 
     constructor(props: IProps) {
         super(props);
+        this.state = {
+            ref: null
+        }
     }
 
     public render() {
         const { imageSrc, modal, songs, toggle } = this.props;
         return (
-            <Modal isOpen={modal} toggle={toggle}>
+            <Modal className='playlist-modal' isOpen={modal} toggle={toggle}>
                 <ModalBody className='playlist-modal-body' style={{ backgroundImage: `url(${imageSrc})` }}>
-                    <div className='table-responsive songs-table-wrapper'>
+                    {/* <div className='table-responsive songs-table-wrapper'>
                         <Table>
                             <thead>
                                 <tr>
@@ -39,6 +43,13 @@ export default class PlaylistModal extends React.Component<IProps, any> {
                                 })}
                             </tbody>
                         </Table>
+                    </div> */}
+                    <div className='modal-table-wrapper'>
+                        {songs.map((song: Song) => {
+                            return (
+                                <ModalRow key={song.spotifyTrackId} song={song} />
+                            )
+                        })}
                     </div>
                 </ModalBody>
             </Modal>

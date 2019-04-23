@@ -7,19 +7,19 @@ import { IPlaylistState, IState } from 'src/reducers';
 import { environment } from 'src/environment';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import { Song } from 'src/models/Song';
-import { Playlist } from 'src/models/Playlist';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;
-    discardNewPlaylist: () => void;
-    getSimilarSongs: (songs: Song[]) => void;
-    getSpotifyRecommendations: (songs: Song[]) => void;
-    savePlaylist: (playlist: Playlist) => void;
+    clearMostRecentlyAddedSong: () => void;
+    clearPlaylistSongs: () => void;
+    clearSuggestedSongs: () => void;
+    populated: boolean;
+    savePlaylist: (saved: boolean) => void;
     setMostRecentlyAddedSong: (song: Song) => void;
+    setPopulated: (populated: boolean) => void;
 }
 
 interface ISongInputState {
-    populated: boolean;
     selectedSong: Song;
     suggestions: Song[];
     value: string;
@@ -49,7 +49,6 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
     public constructor(props: any) {
         super(props);
         this.state = {
-            populated: false,
             selectedSong: new Song(),
             suggestions: [],
             value: ''
@@ -57,14 +56,23 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
     }
 
     public add = () => {
-        this.props.addSelectedSong(this.state.selectedSong);
-        this.props.setMostRecentlyAddedSong(this.state.selectedSong);
-        this.setState({ value: '' });
+        const numSongsAlreadyAdded = this.props.newPlaylist.songs.length;
+        // only add another song if there are fewer than 5 songs
+        if (numSongsAlreadyAdded < 5) {
+            this.props.addSelectedSong(this.state.selectedSong);
+            this.props.setMostRecentlyAddedSong(this.state.selectedSong);
+            this.setState({ value: '' });
+        }
+        else {
+            // set an error message
+        }
     }
 
-    public newPlaylistSongsLength = () => {
-        const length = this.props.newPlaylist.songs.length;
-        return 5 < length || length < 3;
+    public discard = () => {
+        this.props.clearPlaylistSongs();
+        this.props.clearSuggestedSongs();
+        this.props.setPopulated(false);
+        this.props.clearMostRecentlyAddedSong();
     }
 
     public onChange = (e: any, { newValue }: any) => {
@@ -79,15 +87,9 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
         });
     };
 
-    public populate = () => {
-        this.setState({ populated: true });
-        this.props.savePlaylist(this.props.newPlaylist);
-        this.props.getSimilarSongs(this.props.newPlaylist.songs);
-        this.props.getSpotifyRecommendations(this.props.newPlaylist.songs);
-    }
-
     public render() {
-        const { populated, selectedSong, suggestions, value } = this.state;
+        const { selectedSong, suggestions, value } = this.state;
+        const { populated, savePlaylist } = this.props;
         const inputProps = {
             onChange: this.onChange,
             placeholder: 'Add a song...',
@@ -118,20 +120,19 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                 <Row>
                     <Col xs={6}>
                         {
-                            !populated && <div className='center-button'>
-                                <Button disabled={this.newPlaylistSongsLength()} onClick={this.populate}> Populate Playlist </Button>
-                            </div>
-                        }
-                        {
-                            populated && <div className='center-button'>
-                                <Button> Save Playlist </Button>
+                            populated &&
+                            <div className='center-button'>
+                                <Button onClick={() => savePlaylist(true)}> Save Playlist </Button>
                             </div>
                         }
                     </Col>
                     <Col xs={6}>
-                        <div className='center-button'>
-                            <Button onClick={this.props.discardNewPlaylist}> Discard Playlist </Button>
-                        </div>
+                        {
+                            populated &&
+                            <div className='center-button'>
+                                <Button onClick={this.discard}> Discard Playlist </Button>
+                            </div>
+                        }
                     </Col>
                 </Row>
             </>
@@ -142,10 +143,11 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
     addSelectedSong: playlistActions.addSelectedSong,
-    discardNewPlaylist: playlistActions.discardNewPlaylist,
-    getSimilarSongs: playlistActions.getSimilarSongs,
-    getSpotifyRecommendations: playlistActions.getSpotifyRecommendations,
+    clearMostRecentlyAddedSong: playlistActions.clearMostRecentlyAddedSong,
+    clearPlaylistSongs: playlistActions.clearPlaylistSongs,
+    clearSuggestedSongs: playlistActions.clearSuggestedSongs,
     savePlaylist: playlistActions.savePlaylist,
-    setMostRecentlyAddedSong: playlistActions.setMostRecentlyAddedSong
+    setMostRecentlyAddedSong: playlistActions.setMostRecentlyAddedSong,
+    setPopulated: playlistActions.setPopulated
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SongInput);

@@ -1,8 +1,6 @@
 .playlist-information-wrapper {
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center; }
+  flex-direction: column; }
 
 .playlist-name-input {
   margin-bottom: 10px; }

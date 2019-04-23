@@ -6,12 +6,23 @@
   flex-wrap: nowrap;
   overflow: hidden; }
 
+.position-relative {
+  position: relative; }
+
 .arrow-wrapper, .hide-arrow {
   align-items: center;
   cursor: pointer;
   display: flex;
+  height: 100%;
+  position: absolute;
   justify-content: center;
   z-index: 1; }
+
+.left-arrow {
+  left: 0; }
+
+.right-arrow {
+  right: 0; }
 
 .hide-arrow svg {
   visibility: hidden; }
