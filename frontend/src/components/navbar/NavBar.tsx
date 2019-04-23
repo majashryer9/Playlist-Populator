@@ -43,13 +43,9 @@ export default class NavBar extends React.Component<any, INavBarState> {
                     >
                         <FaBars />
                     </div>
-                    {
-                        this.state.showDropdown ?
-                            <div className='dropdown-links'>
-                                {this.links()}
-                            </div>
-                            : null
-                    }
+                    <div className={(this.state.showDropdown)? 'dropdown-links' : 'dropdown-links no-height'}>
+                        {this.links()}
+                    </div>
                 </div>
             </>
         )

@@ -43,14 +43,16 @@ $link-color: white;
 .dropdown-links {
   display: flex;
   flex-direction: column;
+  max-height: 100px;
+  transition: all 1s;
 
-  a {
-    color: $link-color;
+  &.no-height {
+    max-height: 0px;
+    overflow: hidden;
+
   }
 
   @media all and (min-width: 575px) {
-    a {
-      display: none;
-    }
+    display: none;
   }
 }

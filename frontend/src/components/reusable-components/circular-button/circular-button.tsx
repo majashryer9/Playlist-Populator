@@ -13,7 +13,7 @@ export default class CircularButton extends React.Component<IProps, any> {
     public render() {
         const { icon, onClick } = this.props;
         return (
-            <div className='dancing-button-container' onClick={onClick}>
+            <div className='circular-button-container' onClick={onClick}>
                 {icon}
             </div>
         );
