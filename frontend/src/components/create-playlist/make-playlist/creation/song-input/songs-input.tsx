@@ -7,6 +7,8 @@ import { IPlaylistState, IState } from 'src/reducers';
 import { environment } from 'src/environment';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import { Song } from 'src/models/Song';
+import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
+import { FaPlus } from 'react-icons/fa';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;
@@ -57,8 +59,9 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
 
     public add = () => {
         const numSongsAlreadyAdded = this.props.newPlaylist.songs.length;
+        const { selectedSong } = this.state;
         // only add another song if there are fewer than 5 songs
-        if (numSongsAlreadyAdded < 5) {
+        if (numSongsAlreadyAdded < 5 && selectedSong.name) {
             this.props.addSelectedSong(this.state.selectedSong);
             this.props.setMostRecentlyAddedSong(this.state.selectedSong);
             this.setState({ value: '' });
@@ -88,7 +91,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
     };
 
     public render() {
-        const { selectedSong, suggestions, value } = this.state;
+        const { suggestions, value } = this.state;
         const { populated, savePlaylist } = this.props;
         const inputProps = {
             onChange: this.onChange,
@@ -98,22 +101,33 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
         return (
             <>
                 <Row>
-                    <Col xs={9}>
-                        <Autosuggest
-                            suggestions={suggestions}
-                            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                            getSuggestionValue={(suggestion: Song) => {
-                                this.setState({ selectedSong: suggestion });
-                                return `${suggestion.name} by ${suggestion.artistName}`;
-                            }}
-                            renderSuggestion={(suggestion: Song) => <span> {suggestion.name} by {suggestion.artistName} </span>}
-                            inputProps={inputProps}
-                        />
-                    </Col>
-                    <Col xs={3}>
-                        <div className='center-button'>
-                            <Button disabled={!selectedSong.name} onClick={this.add}> Add Song </Button>
+                    <Col sm={12}>
+                        <div className='add-song-wrapper'>
+                            <Row>
+                                <Col xs={9} sm={10}>
+                                    <Autosuggest
+                                        suggestions={suggestions}
+                                        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                        getSuggestionValue={(suggestion: Song) => {
+                                            this.setState({ selectedSong: suggestion });
+                                            return `${suggestion.name} by ${suggestion.artistName}`;
+                                        }}
+                                        renderSuggestion={(suggestion: Song) => <span> {suggestion.name} by {suggestion.artistName} </span>}
+                                        inputProps={inputProps}
+                                    />
+                                </Col>
+                                <Col xs={3} sm={2}>
+                                    <div className='center-button'>
+                                        <CircularButton
+                                            icon={<FaPlus />}
+                                            onClick={this.add}
+                                            height={38}
+                                            width={38}
+                                        />
+                                    </div>
+                                </Col>
+                            </Row>
                         </div>
                     </Col>
                 </Row>

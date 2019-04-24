@@ -20,6 +20,11 @@
     }
   }
 
+  .center-image {
+    display: flex;
+    justify-content: center;
+  }
+
   @media all and (max-width: 420px) {
     flex-direction: column;
   }

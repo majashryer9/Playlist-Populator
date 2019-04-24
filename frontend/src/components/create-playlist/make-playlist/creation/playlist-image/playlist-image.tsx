@@ -135,7 +135,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                             Click the image to choose a different photo or to upload your own.
                         </div>
                     </div>
-                    <div>
+                    <div className='center-image'>
                         {this.state.savedImageUrl && <img className='playlist-image picked-image' onClick={this.toggle} src={this.state.savedImageUrl} alt='playlist image' />}
                     </div>
                 </div>

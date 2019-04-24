@@ -16,13 +16,17 @@ export default class CreationContainer extends React.Component<any, any> {
                 <Row>
                     <Col md={12} lg={6}>
                         <PlaylistImage />
-                        <SongInput />
                     </Col>
                     <Col md={12} lg={6}>
                         <div className='playlist-info-and-categories-wrapper'>
                             <PlaylistInformation />
                             <ChangeCategories />
                         </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md={12} lg={{ size: 6, offset: 3 }}>
+                        <SongInput />
                     </Col>
                 </Row>
             </Container>

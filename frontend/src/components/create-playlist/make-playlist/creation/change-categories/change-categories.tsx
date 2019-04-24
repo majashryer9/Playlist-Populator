@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Category } from 'src/models/Category';
 import { IPlaylistState, IState } from 'src/reducers';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import CategoryChipSlider from './category-chip-slider';
+import { FaPlus } from 'react-icons/fa';
+import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 
 interface IProps extends IPlaylistState {
     addPlaylistCategory: (category: Category) => void;
@@ -24,8 +26,10 @@ export class ChangeCategories extends React.Component<IProps, IChangeCategoriesS
     }
 
     public addCategory = () => {
-        this.props.addPlaylistCategory(this.state.selectedCategory);
-        this.setState({ selectedCategory: new Category() });
+        if (this.state.selectedCategory.name) {
+            this.props.addPlaylistCategory(this.state.selectedCategory);
+            this.setState({ selectedCategory: new Category() });
+        }
     }
 
     public render() {
@@ -44,18 +48,26 @@ export class ChangeCategories extends React.Component<IProps, IChangeCategoriesS
                     </Col>
                 </Row>
                 <Row>
-                    <Col sm={10}>
+                    <Col xs={9} sm={10}>
                         <Select
                             onChange={(selectedOption: any) => {
                                 this.setState({ selectedCategory: selectedOption.value });
                             }}
                             // filter out any categories that have already been selected
                             options={options.filter((option: any) => !playlistCategoryNames.some((playlistCategoryName: string) => playlistCategoryName === option.label))}
+                            placeholder='Add another category...'
                             value={{ value: this.state.selectedCategory, label: this.state.selectedCategory.name }}
                         />
                     </Col>
-                    <Col sm={2}>
-                        <Button onClick={this.addCategory}> Add </Button>
+                    <Col xs={3} sm={2}>
+                        <div className='center-button'>
+                            <CircularButton
+                                icon={<FaPlus />}
+                                onClick={this.addCategory}
+                                height={38}
+                                width={38}
+                            />
+                        </div>
                     </Col>
                 </Row>
             </>

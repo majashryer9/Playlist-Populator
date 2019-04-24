@@ -49,7 +49,12 @@ export class SongsTable extends React.Component<IProps, any> {
                 {
                     (includePopulateButton && !populated && songs.length >= 3) ?
                         <div className='populate-button-container'>
-                            <CircularButton onClick={this.populate} icon={<FaMusic />} />
+                            <CircularButton
+                                onClick={this.populate}
+                                icon={<FaMusic />}
+                                height={50}
+                                width={50}
+                            />
                         </div>
                         : null
                 }
