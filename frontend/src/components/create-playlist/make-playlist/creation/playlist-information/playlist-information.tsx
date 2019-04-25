@@ -1,7 +1,15 @@
 import * as React from 'react';
 import { Input } from 'reactstrap';
+import { IPlaylistState, IState } from 'src/reducers';
+import { connect } from 'react-redux';
+import * as playlistActions from '../../../../../actions/playlist/playlist-actions';
 
-export default class PlaylistInformation extends React.Component<any, any> {
+interface IProps extends IPlaylistState {
+    setPlaylistDescription: (description: string) => void;
+    setPlaylistName: (name: string) => void;
+}
+
+export class PlaylistInformation extends React.Component<IProps, any> {
     public constructor(props: any) {
         super(props);
     }
@@ -9,9 +17,25 @@ export default class PlaylistInformation extends React.Component<any, any> {
     public render() {
         return (
             <div className='playlist-information-wrapper'>
-                <Input className='playlist-name-input' placeholder='Name your playlist...' type='text' />
-                <Input placeholder='Describe your playlist...' type='textarea' />
+                <Input
+                    className='playlist-name-input'
+                    onChange={(e: any) => this.props.setPlaylistName(e.target.value)}
+                    placeholder='Name your playlist...'
+                    type='text'
+                />
+                <Input
+                    onChange={(e: any) => this.props.setPlaylistDescription(e.target.value)}
+                    placeholder='Describe your playlist...'
+                    type='textarea'
+                />
             </div>
         )
     }
 }
+
+const mapStateToProps = (state: IState) => (state.playlist);
+const mapDispatchToProps = {
+    setPlaylistDescription: playlistActions.setPlaylistDescription,
+    setPlaylistName: playlistActions.setPlaylistName
+}
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistInformation);

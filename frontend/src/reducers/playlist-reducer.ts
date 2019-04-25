@@ -148,6 +148,22 @@ export const playlistReducer = (state = initialState, action: any) => {
                 ...state,
                 populated: action.payload.populated
             }
+        case playlistTypes.SET_PLAYLIST_DESCRIPTION:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    description: action.payload.description
+                }
+            }
+        case playlistTypes.SET_PLAYLIST_NAME:
+            return {
+                ...state,
+                newPlaylist: {
+                    ...state.newPlaylist,
+                    name: action.payload.name
+                }
+            }
         case playlistTypes.SET_NEW_TIMEOUT:
             return {
                 ...state,

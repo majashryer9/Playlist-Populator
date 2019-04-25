@@ -129,6 +129,24 @@ export const savePlaylist = (saved: boolean) => (dispatch: any, getState: any) =
         .catch(error => console.log(error));
 }
 
+export const setPlaylistDescription = (description: string) => {
+    return {
+        payload: {
+            description
+        },
+        type: playlistTypes.SET_PLAYLIST_DESCRIPTION
+    }
+}
+
+export const setPlaylistName = (name: string) => {
+    return {
+        payload: {
+            name
+        },
+        type: playlistTypes.SET_PLAYLIST_NAME
+    }
+}
+
 export const setPopulated = (populated: boolean) => {
     return {
         payload: {

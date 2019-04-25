@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, CardImg, CardImgOverlay, CardTitle, CardText } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardText } from 'reactstrap';
 import PlaylistModal from './modal/modal';
 import { Playlist } from 'src/models/Playlist';
 
@@ -55,7 +55,6 @@ export default class PlaylistCard extends React.Component<IProps, IState> {
                     <CardImg width='100%' height='100%' src={playlist.unsplashImageUrl} alt='playlist image' />
                     <CardImgOverlay>
                         <CardText className='font-24-bold'>{cardText}</CardText>
-                        {playlist.name && <CardTitle>Playlist Name</CardTitle>}
                     </CardImgOverlay>
                 </Card>
                 <PlaylistModal imageSrc={playlist.unsplashImageUrl} modal={modal} songs={playlist.songs} toggle={this.toggle} />

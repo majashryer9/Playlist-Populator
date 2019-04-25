@@ -1,21 +1,26 @@
-@import './components/create-playlist/choose-categories/styles.scss';
-@import './components/create-playlist/make-playlist/creation/change-categories/styles.scss';
-@import './components/create-playlist/make-playlist/creation/song-input/styles.scss';
-@import './components/create-playlist/make-playlist/creation/playlist-image/styles.scss';
-@import './components/create-playlist/make-playlist/tables/styles.scss';
-@import './components/reusable-components/slider/styles.scss';
-@import './components/reusable-components/playlist-card/styles.scss';
-@import './components/create-playlist/make-playlist/creation/playlist-information/styles.scss';
-@import './components/create-playlist/make-playlist/tables/row-dropdown/styles.scss';
-@import './components/create-playlist/styles.scss';
-@import './components/reusable-components/circular-button/styles.scss';
-@import './components/create-playlist/make-playlist/creation/styles.scss';
-@import './components/navbar/styles.scss';
-@import './theme/theme-variables.scss';
+@import "./components/create-playlist/choose-categories/styles.scss";
+@import "./components/create-playlist/make-playlist/creation/change-categories/styles.scss";
+@import "./components/create-playlist/make-playlist/creation/song-input/styles.scss";
+@import "./components/create-playlist/make-playlist/creation/playlist-image/styles.scss";
+@import "./components/create-playlist/make-playlist/tables/styles.scss";
+@import "./components/reusable-components/slider/styles.scss";
+@import "./components/reusable-components/playlist-card/styles.scss";
+@import "./components/create-playlist/make-playlist/creation/playlist-information/styles.scss";
+@import "./components/create-playlist/make-playlist/tables/row-dropdown/styles.scss";
+@import "./components/create-playlist/styles.scss";
+@import "./components/reusable-components/circular-button/styles.scss";
+@import "./components/create-playlist/make-playlist/creation/styles.scss";
+@import "./components/navbar/styles.scss";
+@import "./theme/theme-variables.scss";
 
 body {
-  font-family: 'Abel', 'Arial', 'Helvetica', sans-serif;
+  font-family: "Abel", "Arial", "Helvetica", sans-serif;
   font-size: 16px;
+}
+
+body, html {
+  background-color: white;
+  min-height: 100vh;
 }
 
 /*

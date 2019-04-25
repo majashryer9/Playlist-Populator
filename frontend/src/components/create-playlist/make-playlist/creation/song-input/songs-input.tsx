@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Autosuggest from 'react-autosuggest';
-import { Button, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import { debounce } from 'debounce';
 import { IPlaylistState, IState } from 'src/reducers';
 import { environment } from 'src/environment';
@@ -9,6 +9,7 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import { Song } from 'src/models/Song';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
+import { MdDeleteForever, MdSave } from 'react-icons/md';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;
@@ -136,7 +137,12 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                         {
                             populated &&
                             <div className='center-button'>
-                                <Button onClick={() => savePlaylist(true)}> Save Playlist </Button>
+                                <CircularButton
+                                    icon={<MdSave />}
+                                    onClick={() => savePlaylist(true)}
+                                    height={38}
+                                    width={38}
+                                />
                             </div>
                         }
                     </Col>
@@ -144,7 +150,12 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                         {
                             populated &&
                             <div className='center-button'>
-                                <Button onClick={this.discard}> Discard Playlist </Button>
+                                <CircularButton
+                                    icon={<MdDeleteForever />}
+                                    onClick={this.discard}
+                                    height={38}
+                                    width={38}
+                                />
                             </div>
                         }
                     </Col>
