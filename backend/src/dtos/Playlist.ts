@@ -4,6 +4,7 @@ export class SqlPlaylist {
     public owner_id: number = 0;
     public playlist_id: number = 0;
     public playlist_name: string = '';
+    public playlist_description: string = '';
     public saved: boolean = false;
     public unsplash_image_url: string = '';
 

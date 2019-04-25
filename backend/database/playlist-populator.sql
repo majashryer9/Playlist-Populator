@@ -15,6 +15,7 @@ CREATE TABLE playlist(
 	owner_id INTEGER,
 	playlist_id SERIAL PRIMARY KEY,
 	playlist_name VARCHAR(200),
+	playlist_description TEXT,
 	bucket_key VARCHAR(20),
 	saved BOOLEAN NOT NULL,
 	unsplash_image_url VARCHAR(200)

@@ -6,6 +6,7 @@ export const playlistConverter = (playlist: SqlPlaylist) => {
         bucketKey: playlist.bucket_key,
         id: playlist.playlist_id,
         name: playlist.playlist_name,
+        description: playlist.playlist_description,
         ownerId: playlist.owner_id,
         saved: playlist.saved,
         unsplashImageUrl: playlist.unsplash_image_url

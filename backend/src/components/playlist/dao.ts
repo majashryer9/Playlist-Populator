@@ -30,9 +30,9 @@ export const savePlaylist = async (playlist: Playlist) => {
     try {
         // insert playlist information and get back a playlist id
         const resp = await client.query(
-            `INSERT INTO playlist_populator.playlist(owner_id, playlist_name, bucket_key, saved, unsplash_image_url)
-            VALUES($1, $2, $3, $4, $5) RETURNING playlist_id`,
-            [playlist.ownerId, playlist.name, playlist.bucketKey, playlist.saved, playlist.unsplashImageUrl]
+            `INSERT INTO playlist_populator.playlist(owner_id, playlist_name, playlist_description, bucket_key, saved, unsplash_image_url)
+            VALUES($1, $2, $3, $4, $5, $6) RETURNING playlist_id`,
+            [playlist.ownerId, playlist.name, playlist.description, playlist.bucketKey, playlist.saved, playlist.unsplashImageUrl]
         )
         const playlistId = (resp && resp.rows && resp.rows.length) ? resp.rows[0].playlist_id : 0;
         if (playlistId) {
