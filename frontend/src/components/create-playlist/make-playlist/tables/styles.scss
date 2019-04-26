@@ -1,12 +1,18 @@
 @import "../../../../theme/theme-variables.scss";
 
+.table-label {
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+  padding: 5px 0;
+}
+
 .table-rows-wrapper {
   border: 1px solid #dee2e6;
   border-radius: 6px;
   height: 300px;
   overflow-x: hidden;
   overflow-y: auto;
-  margin: 10px 0;
+  margin-bottom: 10px;
 
   .populate-button-container {
     display: flex;

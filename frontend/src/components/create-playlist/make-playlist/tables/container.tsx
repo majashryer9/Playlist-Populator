@@ -53,6 +53,7 @@ export class TableContainer extends React.Component<IProps, {}> {
                                     icon={<FaTimes className='table-icon' />}
                                     includePopulateButton={true}
                                     songs={songs}
+                                    tableLabel={'Your playlist: '}
                                 />
                                 :
                                 null
@@ -65,6 +66,7 @@ export class TableContainer extends React.Component<IProps, {}> {
                                     buttonClick={this.add}
                                     icon={<FaPlus className='table-icon' />}
                                     songs={suggestedSongs}
+                                    tableLabel={'Suggested songs to add to your playlist: '}
                                 />
                                 :
                                 null

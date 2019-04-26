@@ -16,6 +16,7 @@ interface IProps extends IPlaylistState {
     savePlaylist: (saved: boolean) => void;
     setPopulated: (populated: boolean) => void;
     songs: Song[];
+    tableLabel: string;
 }
 
 export class SongsTable extends React.Component<IProps, any> {
@@ -33,32 +34,35 @@ export class SongsTable extends React.Component<IProps, any> {
     public render() {
         const { buttonClick, icon, includePopulateButton, populated, songs } = this.props;
         return (
-            <div className='table-rows-wrapper'>
-                {
-                    songs.map((song: Song) => {
-                        return (
-                            <TableRow
-                                buttonClick={buttonClick}
-                                icon={icon}
-                                key={song.spotifyTrackId}
-                                song={song}
-                            />
-                        )
-                    })
-                }
-                {
-                    (includePopulateButton && !populated && songs.length >= 3) ?
-                        <div className='populate-button-container'>
-                            <CircularButton
-                                onClick={this.populate}
-                                icon={<FaMusic />}
-                                height={50}
-                                width={50}
-                            />
-                        </div>
-                        : null
-                }
-            </div>
+            <>
+                <div className='table-rows-wrapper'>
+                    <div className='table-label'> {this.props.tableLabel} </div>
+                    {
+                        songs.map((song: Song) => {
+                            return (
+                                <TableRow
+                                    buttonClick={buttonClick}
+                                    icon={icon}
+                                    key={song.spotifyTrackId}
+                                    song={song}
+                                />
+                            )
+                        })
+                    }
+                    {
+                        (includePopulateButton && !populated && songs.length >= 3) ?
+                            <div className='populate-button-container'>
+                                <CircularButton
+                                    onClick={this.populate}
+                                    icon={<FaMusic />}
+                                    height={50}
+                                    width={50}
+                                />
+                            </div>
+                            : null
+                    }
+                </div>
+            </>
         )
     }
 }
