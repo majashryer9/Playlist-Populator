@@ -1,0 +1,16 @@
+.error-message-container {
+  background-color: #FFCCCC;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px;
+  align-items: center;
+  font-size: 25px;
+  border-radius: 8px;
+  border: 2px solid red;
+
+  .error-icon-container {
+      font-size: 30px;
+  }
+}

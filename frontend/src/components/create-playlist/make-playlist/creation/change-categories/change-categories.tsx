@@ -56,7 +56,7 @@ export class ChangeCategories extends React.Component<IProps, IChangeCategoriesS
                             // filter out any categories that have already been selected
                             options={options.filter((option: any) => !playlistCategoryNames.some((playlistCategoryName: string) => playlistCategoryName === option.label))}
                             placeholder='Add another category...'
-                            value={{ value: this.state.selectedCategory, label: this.state.selectedCategory.name }}
+                            value={(this.state.selectedCategory.name)? { value: this.state.selectedCategory, label: this.state.selectedCategory.name } : null}
                         />
                     </Col>
                     <Col xs={3} sm={2}>
