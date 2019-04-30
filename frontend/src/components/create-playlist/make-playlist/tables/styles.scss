@@ -2,13 +2,15 @@
 
 .table-label {
   text-align: center;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid white;
   padding: 5px 0;
 }
 
 .table-rows-wrapper {
-  border: 1px solid #dee2e6;
+  background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
+  border: 1px solid white;
   border-radius: 6px;
+  color: white;
   height: 300px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -33,7 +35,7 @@
 }
 
 .table-row {
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid white;
   border-radius: 2px;
   display: flex;
   flex-wrap: nowrap;

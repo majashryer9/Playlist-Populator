@@ -1,7 +1,9 @@
 .category-chip {
   align-items: center;
-  background-color: lightgrey;
+  background-color: #9C0D38;
+  border: 1px solid white;
   border-radius: 40px;
+  color: white;
   display: flex;
   flex-wrap: nowrap;
   height: 50px;
@@ -19,7 +21,7 @@
     width: 60px; }
   .category-chip .remove-icon {
     border-radius: 15px;
-    background-color: darkgray;
+    background-color: #560815;
     width: 25px;
     height: 25px;
     cursor: pointer; }

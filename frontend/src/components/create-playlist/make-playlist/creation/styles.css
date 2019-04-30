@@ -1,5 +1,6 @@
 .playlist-info-and-categories-wrapper {
-  border: 1px solid #ced4da;
+  background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
+  border: 1px solid white;
   padding: 26px;
   border-radius: 8px;
   margin-bottom: 10px; }

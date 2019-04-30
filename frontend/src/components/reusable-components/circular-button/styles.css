@@ -1,7 +1,9 @@
 .circular-button-container {
   align-items: center;
-  border: 1px solid black;
+  background-color: #9C0D38;
+  border: 1px solid white;
   border-radius: 50%;
+  color: white;
   cursor: pointer;
   display: flex;
   justify-content: center; }
