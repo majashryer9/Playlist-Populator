@@ -24,6 +24,10 @@
     .alert-success {
       background-color: #bee6ce;
       width: 75%;
+
+      @media all and (max-width: 320px) {
+        width: 60%;
+      }
     }
   }
 }

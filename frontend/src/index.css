@@ -340,6 +340,9 @@
     .table-rows-wrapper .populate-button-container .alert-success {
       background-color: #bee6ce;
       width: 75%; }
+      @media all and (max-width: 320px) {
+        .table-rows-wrapper .populate-button-container .alert-success {
+          width: 60%; } }
 
 .transition-effects, .table-row:after, .table-row:before {
   background-image: linear-gradient(to right, white, #eef7fa);
