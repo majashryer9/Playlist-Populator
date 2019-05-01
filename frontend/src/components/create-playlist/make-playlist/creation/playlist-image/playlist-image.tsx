@@ -184,7 +184,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                             </Col>
                             <Col xs={4} sm={2}>
                                 <div className='right'>
-                                    <Button className='font-override' disabled={!this.state.photoSearchQuery} onClick={this.getDifferentPhotos}> Search </Button>
+                                    <Button className='font-override search-button' disabled={!this.state.photoSearchQuery} onClick={this.getDifferentPhotos}> Search </Button>
                                 </div>
                             </Col>
                         </Row>
@@ -205,7 +205,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                         </Row>
                         <Row className='save-and-cancel-buttons-wrapper'>
                             <Col sm={12}>
-                                <div className='save-and-cancel-buttons'>
+                                <div className='save-and-cancel-and-buttons'>
                                     <Button className='font-override' onClick={this.setSavedImageUrl}> Save </Button>
                                     <Button className='font-override' onClick={this.toggle}> Cancel </Button>
                                 </div>

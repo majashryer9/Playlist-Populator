@@ -122,7 +122,7 @@
   margin-bottom: 10px; }
 
 .playlist-image-container {
-  background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
+  background: linear-gradient(#b7d1da 10%, #406e8e 90%);
   border: 1px solid white;
   border-radius: 8px;
   color: white;
@@ -154,6 +154,9 @@
   .playlist-image-modal .container {
     max-width: 100%; }
   .playlist-image-modal .modal-content {
+    background: linear-gradient(#b7d1da 10%, #406e8e 90%);
+    border: 1px solid white;
+    color: white;
     max-height: 840px;
     overflow-y: hidden; }
 
@@ -238,7 +241,7 @@
   margin: 0; }
 
 .camera-icon-container {
-  color: #6c757d;
+  color: #9c0d38;
   cursor: pointer;
   font-size: 60px; }
   @media all and (max-width: 600px) {
@@ -253,14 +256,21 @@
     font-size: 14px !important; } }
 
 .save-and-cancel-buttons-wrapper {
-  border-top: 1px solid #ced4da; }
+  border-top: 1px solid white; }
 
-.save-and-cancel-buttons {
+.save-and-cancel-and-buttons {
   padding: 10px;
   display: flex;
   justify-content: flex-end; }
-  .save-and-cancel-buttons .btn {
-    margin-left: 10px; }
+  .save-and-cancel-and-buttons .btn {
+    margin-left: 10px;
+    border: 1px solid white;
+    background-color: #9c0d38; }
+
+.search-button {
+  border: 1px solid white !important;
+  background-color: #9c0d38 !important;
+  opacity: 1 !important; }
 
 .font-12-regular {
   font-size: 12px;

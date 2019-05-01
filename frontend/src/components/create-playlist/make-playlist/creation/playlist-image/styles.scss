@@ -1,5 +1,5 @@
 .playlist-image-container {
-  background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
+  background: linear-gradient(#b7d1da 10%, #406e8e 90%);
   border: 1px solid white;
   border-radius: 8px;
   color: white;
@@ -44,6 +44,9 @@
   }
 
   .modal-content {
+    background: linear-gradient(#b7d1da 10%, #406e8e 90%);
+    border: 1px solid white;
+    color: white;
     max-height: 840px;
     overflow-y: hidden;
   }
@@ -148,7 +151,7 @@
 }
 
 .camera-icon-container {
-  color: #6c757d;
+  color: #9c0d38;
   cursor: pointer;
   font-size: 60px;
 
@@ -168,15 +171,23 @@
 }
 
 .save-and-cancel-buttons-wrapper {
-  border-top: 1px solid #ced4da;
+  border-top: 1px solid white;
 }
 
-.save-and-cancel-buttons {
+.save-and-cancel-and-buttons {
   padding: 10px;
   display: flex;
   justify-content: flex-end;
 
   .btn {
     margin-left: 10px;
+    border: 1px solid white;
+    background-color: #9c0d38;
   }
+}
+
+.search-button {
+  border: 1px solid white !important;
+  background-color: #9c0d38 !important;
+  opacity: 1 !important;
 }
