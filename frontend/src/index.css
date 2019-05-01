@@ -325,7 +325,7 @@
   padding: 5px 0; }
 
 .table-rows-wrapper {
-  background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
+  background: linear-gradient(#b7d1da 10%, #406e8e 90%);
   border: 1px solid white;
   border-radius: 6px;
   color: white;
@@ -335,7 +335,11 @@
   margin-bottom: 10px; }
   .table-rows-wrapper .populate-button-container {
     display: flex;
-    justify-content: center; }
+    justify-content: space-evenly;
+    padding-top: 12px; }
+    .table-rows-wrapper .populate-button-container .alert-success {
+      background-color: #bee6ce;
+      width: 75%; }
 
 .transition-effects, .table-row:after, .table-row:before {
   background-image: linear-gradient(to right, white, #eef7fa);

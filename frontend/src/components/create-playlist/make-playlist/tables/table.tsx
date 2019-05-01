@@ -6,6 +6,7 @@ import * as playlistActions from '../../../../actions/playlist/playlist-actions'
 import { IState, IPlaylistState } from 'src/reducers';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaMusic } from 'react-icons/fa';
+import { Alert } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
     buttonClick: (song: Song) => void;
@@ -19,9 +20,38 @@ interface IProps extends IPlaylistState {
     tableLabel: string;
 }
 
-export class SongsTable extends React.Component<IProps, any> {
+interface ISongsTableState {
+    ref: any;
+}
+
+export class SongsTable extends React.Component<IProps, ISongsTableState> {
     public constructor(props: any) {
         super(props);
+        this.state = {
+            ref: null
+        }
+    }
+
+    public alertMessage = () => {
+        switch (this.props.songs.length) {
+            case 3:
+                return (
+                    <Alert color="success">
+                        Click the button to generate your playlist or add up to two more songs!
+                    </Alert>
+                );
+            case 4:
+                return (
+                    <Alert color="success">
+                        Click the button to generate your playlist or add another song!
+                    </Alert>
+                );
+        }
+        return (
+            <Alert color="success">
+                Click the button to generate your playlist!
+            </Alert>
+        );
     }
 
     public populate = () => {
@@ -31,11 +61,31 @@ export class SongsTable extends React.Component<IProps, any> {
         this.props.getSpotifyRecommendations();
     }
 
+    public setRef = (ref: any) => {
+        this.setState({
+            ref
+        });
+    }
+
+    public componentDidUpdate(prevProps: IProps) {
+        const { ref } = this.state;
+        const { populated, includePopulateButton } = this.props;
+        if (includePopulateButton && !populated && prevProps.songs.length !== this.props.songs.length) {
+            ref.scrollTop = ref.scrollHeight - ref.clientHeight;
+        }
+        else if (populated) {
+            ref.scrollTop = 0;
+        }
+    }
+
     public render() {
         const { buttonClick, icon, includePopulateButton, populated, songs } = this.props;
         return (
             <>
-                <div className='table-rows-wrapper'>
+                <div
+                    className='table-rows-wrapper'
+                    ref={this.setRef}
+                >
                     <div className='table-label'> {this.props.tableLabel} </div>
                     {
                         songs.map((song: Song) => {
@@ -52,6 +102,7 @@ export class SongsTable extends React.Component<IProps, any> {
                     {
                         (includePopulateButton && !populated && songs.length >= 3) ?
                             <div className='populate-button-container'>
+                                {this.alertMessage()}
                                 <CircularButton
                                     onClick={this.populate}
                                     icon={<FaMusic />}

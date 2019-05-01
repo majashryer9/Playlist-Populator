@@ -7,7 +7,7 @@
 }
 
 .table-rows-wrapper {
-  background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
+  background: linear-gradient(#b7d1da 10%, #406e8e 90%);
   border: 1px solid white;
   border-radius: 6px;
   color: white;
@@ -18,7 +18,13 @@
 
   .populate-button-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    padding-top: 12px;
+
+    .alert-success {
+      background-color: #bee6ce;
+      width: 75%;
+    }
   }
 }
 
