@@ -23,7 +23,7 @@
 
 .category-chip {
   align-items: center;
-  background-color: #9C0D38;
+  background-color: #9c0d38;
   border: 1px solid white;
   border-radius: 40px;
   color: white;
@@ -53,6 +53,12 @@
 
 .css-15k3avv {
   margin-top: 0 !important; }
+
+.margin-top {
+  margin-top: 10px; }
+
+.no-margin-top {
+  margin-top: 0; }
 
 .react-autosuggest__container {
   position: relative; }

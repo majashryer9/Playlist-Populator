@@ -38,16 +38,21 @@ export class ChangeCategories extends React.Component<IProps, IChangeCategoriesS
         const playlistCategoryNames = this.props.newPlaylist.categories.map((category: Category) => category.name);
         return (
             <>
-                <Row>
-                    <Col sm={12}>
-                        <CategoryChipSlider
-                            arrayOfItems={this.props.newPlaylist.categories.map((category: Category) => category.name)}
-                            spacing={28}
-                            width={111}
-                        />
-                    </Col>
-                </Row>
-                <Row>
+                {
+                    (this.props.newPlaylist.categories.length) ?
+                        <Row>
+                            <Col sm={12}>
+                                <CategoryChipSlider
+                                    arrayOfItems={this.props.newPlaylist.categories.map((category: Category) => category.name)}
+                                    spacing={28}
+                                    width={111}
+                                />
+                            </Col>
+                        </Row>
+                        :
+                        null
+                }
+                <Row className={(this.props.newPlaylist.categories.length) ? 'no-margin-top' : 'margin-top'}>
                     <Col xs={9} sm={10}>
                         <Select
                             onChange={(selectedOption: any) => {
@@ -56,7 +61,7 @@ export class ChangeCategories extends React.Component<IProps, IChangeCategoriesS
                             // filter out any categories that have already been selected
                             options={options.filter((option: any) => !playlistCategoryNames.some((playlistCategoryName: string) => playlistCategoryName === option.label))}
                             placeholder='Add another category...'
-                            value={(this.state.selectedCategory.name)? { value: this.state.selectedCategory, label: this.state.selectedCategory.name } : null}
+                            value={(this.state.selectedCategory.name) ? { value: this.state.selectedCategory, label: this.state.selectedCategory.name } : null}
                         />
                     </Col>
                     <Col xs={3} sm={2}>
