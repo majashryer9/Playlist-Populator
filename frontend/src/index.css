@@ -107,7 +107,7 @@
   justify-content: center; }
 
 .add-song-wrapper {
-  background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
+  background: linear-gradient(#b7d1da 10%, #406e8e 90%);
   width: 100%;
   height: 65px;
   border: 1px solid white;
@@ -116,6 +116,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 10px; }
+
+.save-discard-button-row {
   margin-bottom: 10px; }
 
 .playlist-image-container {
@@ -342,6 +345,7 @@
       width: 75%; }
       @media all and (max-width: 320px) {
         .table-rows-wrapper .populate-button-container .alert-success {
+          font-size: 14px;
           width: 60%; } }
 
 .transition-effects, .table-row:after, .table-row:before {

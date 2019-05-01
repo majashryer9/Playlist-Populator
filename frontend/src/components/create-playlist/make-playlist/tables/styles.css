@@ -81,6 +81,7 @@
       width: 75%; }
       @media all and (max-width: 320px) {
         .table-rows-wrapper .populate-button-container .alert-success {
+          font-size: 14px;
           width: 60%; } }
 
 .transition-effects, .table-row:after, .table-row:before {

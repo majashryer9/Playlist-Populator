@@ -49,6 +49,7 @@ export class SongsTable extends React.Component<IProps, ISongsTableState> {
         }
         return (
             <Alert color="success">
+                You have reached the maximum number of songs you can enter before generating your playlist.
                 Click the button to generate your playlist!
             </Alert>
         );

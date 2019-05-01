@@ -10,6 +10,7 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 interface IProps extends IPlaylistState {
     addSongToNewPlaylist: (song: Song) => void;
     addSongToSuggestedSongs: (song: Song) => void;
+    populated: boolean;
     removeSongFromNewPlaylist: (song: Song) => void;
     removeSongFromSuggestedSongs: (song: Song) => void;
     setMostRecentlyAddedSong: (song: Song) => void;
@@ -42,10 +43,15 @@ export class TableContainer extends React.Component<IProps, {}> {
         const suggestedSongs = this.props.suggestedSongs;
         const songsLength = songs.length;
         const suggestedSongsLength = suggestedSongs.length;
+        const { populated } = this.props;
         return (
             <Container>
                 <Row>
-                    <Col sm={12} md={6}>
+                    <Col
+                        sm={12}
+                        md={(populated) ? 12 : 6}
+                        lg={(populated) ? { size: 8, offset: 2 } : 6}
+                    >
                         {
                             (songsLength) ?
                                 <SongsTable
@@ -59,19 +65,19 @@ export class TableContainer extends React.Component<IProps, {}> {
                                 null
                         }
                     </Col>
-                    <Col sm={12} md={6}>
-                        {
-                            (suggestedSongsLength) ?
+                    {
+                        (suggestedSongsLength && !populated) ?
+                            <Col sm={12} md={6}>
                                 <SongsTable
                                     buttonClick={this.add}
                                     icon={<FaPlus className='table-icon' />}
                                     songs={suggestedSongs}
                                     tableLabel={'Suggested songs to add to your playlist: '}
                                 />
-                                :
-                                null
-                        }
-                    </Col>
+                            </Col>
+                            :
+                            null
+                    }
                 </Row>
             </Container>
         );

@@ -10,6 +10,7 @@ import { Song } from 'src/models/Song';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
 import { MdDeleteForever, MdSave } from 'react-icons/md';
+import { Alert } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;
@@ -23,6 +24,7 @@ interface IProps extends IPlaylistState {
 }
 
 interface ISongInputState {
+    errorMessage: string;
     selectedSong: Song;
     suggestions: Song[];
     value: string;
@@ -32,26 +34,34 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
 
     public onSuggestionsFetchRequested = debounce(({ value }: any) => {
         const url = `${environment.context}song/song-search`;
-        fetch(url, {
-            body: JSON.stringify({
-                name: value
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST'
-        })
-            .then(resp => resp.json())
-            .then(suggestions => {
-                console.log(suggestions);
-                this.setState({ suggestions })
+        if (this.props.newPlaylist.songs.length < 5) {
+            fetch(url, {
+                body: JSON.stringify({
+                    name: value
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                method: 'POST'
             })
-            .catch(error => console.log(error))
+                .then(resp => resp.json())
+                .then(suggestions => {
+                    console.log(suggestions);
+                    this.setState({ suggestions })
+                })
+                .catch(error => console.log(error))
+        }
+        else if (this.props.newPlaylist.songs.length >= 5 && this.state.value.length > 0) {
+            this.setState({
+                errorMessage: 'You cannot enter more than 5 songs. Please generate your playlist.'
+            })
+        }
     }, 300);
 
     public constructor(props: any) {
         super(props);
         this.state = {
+            errorMessage: '',
             selectedSong: new Song(),
             suggestions: [],
             value: ''
@@ -66,9 +76,6 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
             this.props.addSelectedSong(this.state.selectedSong);
             this.props.setMostRecentlyAddedSong(this.state.selectedSong);
             this.setState({ value: '' });
-        }
-        else {
-            // set an error message
         }
     }
 
@@ -92,7 +99,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
     };
 
     public render() {
-        const { suggestions, value } = this.state;
+        const { errorMessage, suggestions, value } = this.state;
         const { populated, savePlaylist } = this.props;
         const inputProps = {
             onChange: this.onChange,
@@ -130,36 +137,43 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                                 </Col>
                             </Row>
                         </div>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs={6}>
                         {
-                            populated &&
-                            <div className='center-button'>
-                                <CircularButton
-                                    icon={<MdSave />}
-                                    onClick={() => savePlaylist(true)}
-                                    height={38}
-                                    width={38}
-                                />
-                            </div>
-                        }
-                    </Col>
-                    <Col xs={6}>
-                        {
-                            populated &&
-                            <div className='center-button'>
-                                <CircularButton
-                                    icon={<MdDeleteForever />}
-                                    onClick={this.discard}
-                                    height={38}
-                                    width={38}
-                                />
-                            </div>
+                            (errorMessage && !populated) ?
+                                <Alert color="danger">
+                                    {errorMessage}
+                                </Alert>
+                                :
+                                null
                         }
                     </Col>
                 </Row>
+                {
+                    (populated) ?
+                        <Row className='save-discard-button-row'>
+                            <Col xs={6}>
+                                <div className='center-button'>
+                                    <CircularButton
+                                        icon={<MdSave />}
+                                        onClick={() => savePlaylist(true)}
+                                        height={38}
+                                        width={38}
+                                    />
+                                </div>
+                            </Col>
+                            <Col xs={6}>
+                                <div className='center-button'>
+                                    <CircularButton
+                                        icon={<MdDeleteForever />}
+                                        onClick={this.discard}
+                                        height={38}
+                                        width={38}
+                                    />
+                                </div>
+                            </Col>
+                        </Row>
+                        :
+                        null
+                }
             </>
         )
     }
