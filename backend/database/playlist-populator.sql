@@ -86,7 +86,7 @@ INNER JOIN (
 	INNER JOIN playlist_populator.playlist USING(playlist_id)
 	INNER JOIN playlist_populator.playlists_categories USING (playlist_id)
 	INNER JOIN playlist_populator.category USING(category_id)
-	WHERE category_name='Mood'
+	WHERE category_name='Mood' and saved='true'
 	GROUP BY(song_id)
 ) AS songs USING(song_id)
 ORDER BY(song_counter) DESC

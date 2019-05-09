@@ -17,6 +17,11 @@ playlistRouter.get('/photo', async (req: Request, resp: Response) => {
   POST
 */
 
+playlistRouter.post('/advanced-search', async (req: Request, resp: Response) => {
+  const playlists = await playlistService.advancedSearch(req.body.spotifyTrackIds, req.body.spotifyArtistIds, req.body.categoryNames);
+  resp.json(playlists);
+})
+
 playlistRouter.post('/playlists-containing-song', async (req: Request, resp: Response) => {
   const playlists = await playlistService.getPlaylistsContainingSong(req.body);
   resp.json(playlists);

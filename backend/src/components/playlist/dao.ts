@@ -5,15 +5,55 @@ import { Song } from '../../models/Song';
 import { playlistConverter } from './converter';
 import { SqlPlaylist } from '../../dtos/Playlist';
 
-export const getPlaylistsContainingSong = async (song: Song) => {
+export const getPlaylistsContainingSong = async (spotifyTrackId: string) => {
     const client = await connectionPool.connect();
     try {
         const resp = await client.query(
             `SELECT * FROM playlist_populator.playlist
             INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
             INNER JOIN playlist_populator.song USING(song_id)
-            WHERE spotify_track_id = $1 AND saved=true`,
-            [song.spotifyTrackId]
+            WHERE spotify_track_id=$1 AND saved=true`,
+            [spotifyTrackId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((playlist: SqlPlaylist) => playlistConverter(playlist)) : [];
+    } catch (error) {
+        console.log(error);
+        return [];
+    } finally {
+        client.release();
+    }
+}
+
+export const getPlaylistContainingSongsByGivenArtist = async (spotifyArtistId: string) => {
+    const client = await connectionPool.connect();
+    try {
+        const resp = await client.query(
+            `SELECT DISTINCT ON(playlist_id) * FROM playlist_populator.playlist 
+            INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
+            INNER JOIN playlist_populator.song USING(song_id)
+            WHERE spotify_artist_id=$1 AND saved=true`,
+            [spotifyArtistId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((playlist: SqlPlaylist) => playlistConverter(playlist)) : [];
+    } catch (error) {
+        console.log(error);
+        return [];
+    } finally {
+        client.release();
+    }
+}
+
+export const getPlaylistWithinGivenCategory = async (categoryName: string) => {
+    const client = await connectionPool.connect();
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.playlist
+            INNER JOIN playlist_populator.playlists_categories USING(playlist_id)
+            INNER JOIN playlist_populator.category USING(category_id)
+            WHERE category_name=$1 and saved=true`,
+            [categoryName]
         );
         return (resp && resp.rows) ?
             resp.rows.map((playlist: SqlPlaylist) => playlistConverter(playlist)) : [];

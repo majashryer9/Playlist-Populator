@@ -25,8 +25,7 @@ export const getPlaylistSongs = async (playlistId: number) => {
 export const getSimilarSongs = async (songs: Song[]) => {
     const client = await connectionPool.connect();
     let songsString = `(`;
-    let i;
-    for (i = 1; i <= songs.length; i++) {
+    for (let i = 1; i <= songs.length; i++) {
         songsString += (i < songs.length) ? `$${i}, ` : `$${i})`;
     }
     const songArray = songs.map((song: Song) => {
