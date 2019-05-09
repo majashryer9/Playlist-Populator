@@ -4,8 +4,9 @@ import './App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './Store';
-import HomeComponent from './components/home-component';
 import NavBar from './components/navbar/NavBar';
+import CreatePlaylistContainer from './components/create-playlist/create-playlist-container';
+import AdvancedSearchContainer from './components/browse/advanced-search/advanced-search-container';
 
 class App extends React.Component {
   public render() {
@@ -16,7 +17,9 @@ class App extends React.Component {
             <NavBar />
             <div id="main-content-container">
               <Switch>
-                <Route component={HomeComponent} />
+                <Route path='/create-playlist' component={CreatePlaylistContainer} />
+                <Route path='/browse' component={AdvancedSearchContainer} />
+                <Route component={CreatePlaylistContainer} />
               </Switch>
             </div>
           </div>

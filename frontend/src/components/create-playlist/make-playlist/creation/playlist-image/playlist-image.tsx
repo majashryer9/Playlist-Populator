@@ -149,7 +149,7 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                                         You may choose to keep this, pick a photo from
                                         one of the other options below, search for more photos,
                                         or upload your own image. Please save whatever image you choose.
-                                            </div>
+                                    </div>
                                 </div>
                             </Col>
                             <Col xs={8} sm={4}>

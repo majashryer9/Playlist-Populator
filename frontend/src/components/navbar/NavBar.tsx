@@ -37,7 +37,7 @@ export default class NavBar extends React.Component<any, INavBarState> {
                     <div className='logo-and-menu-container'>
                         <div className='links-container'>
                             <div className='logo'>
-                                <Link to='/home'>
+                                <Link to='/'>
                                     <FaMusic />
                                 </Link>
                             </div>

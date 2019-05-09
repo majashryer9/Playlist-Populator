@@ -76,3 +76,39 @@
 .save-discard-button-row {
   margin-bottom: 10px;
 }
+
+.saved-pop-up {
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  .modal-content {
+    width: 250px;
+  }
+
+  .modal-body {
+    text-align: center;
+    color: white;
+    border-radius: 4px;
+    background-color: #39c16c;
+  }
+
+  .success-icon-container {
+    font-size: 30px;
+  }
+}
+
+.create-new-playlist-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.create-new-playlist-button {
+  background-color: #9c0d38;
+  border: 1px solid white;
+  border-radius: 6px;
+  color: white;
+  width: 200px;
+  height: 35px;
+}

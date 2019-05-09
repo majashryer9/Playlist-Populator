@@ -11,6 +11,8 @@ import CircularButton from 'src/components/reusable-components/circular-button/c
 import { FaPlus } from 'react-icons/fa';
 import { MdDeleteForever, MdSave } from 'react-icons/md';
 import { Alert } from 'reactstrap';
+import SavedPopup from './saved-popup';
+import CreateNewPlaylistButton from './create-new-playlist-button';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;
@@ -26,6 +28,7 @@ interface IProps extends IPlaylistState {
 interface ISongInputState {
     errorMessage: string;
     selectedSong: Song;
+    showPopup: boolean;
     suggestions: Song[];
     value: string;
 }
@@ -63,6 +66,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
         this.state = {
             errorMessage: '',
             selectedSong: new Song(),
+            showPopup: false,
             suggestions: [],
             value: ''
         }
@@ -84,6 +88,21 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
         this.props.clearSuggestedSongs();
         this.props.setPopulated(false);
         this.props.clearMostRecentlyAddedSong();
+        this.setState({
+            errorMessage: ''
+        });
+    }
+
+    public save = () => {
+        this.props.savePlaylist(true);
+        this.setState({
+            showPopup: true
+        });
+        setTimeout(() => {
+            this.setState({
+                showPopup: false
+            });
+        }, 1500);
     }
 
     public onChange = (e: any, { newValue }: any) => {
@@ -99,8 +118,8 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
     };
 
     public render() {
-        const { errorMessage, suggestions, value } = this.state;
-        const { populated, savePlaylist } = this.props;
+        const { errorMessage, showPopup, suggestions, value } = this.state;
+        const { populated } = this.props;
         const inputProps = {
             onChange: this.onChange,
             placeholder: 'Add a song...',
@@ -148,13 +167,13 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                     </Col>
                 </Row>
                 {
-                    (populated) ?
+                    (populated && !this.props.newPlaylist.saved) ?
                         <Row className='save-discard-button-row'>
                             <Col xs={6}>
                                 <div className='center-button'>
                                     <CircularButton
                                         icon={<MdSave />}
-                                        onClick={() => savePlaylist(true)}
+                                        onClick={this.save}
                                         height={38}
                                         width={38}
                                     />
@@ -171,6 +190,18 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                                 </div>
                             </Col>
                         </Row>
+                        :
+                        null
+                }
+                {
+                    (showPopup) ?
+                        <SavedPopup showPopup={showPopup} />
+                        :
+                        null
+                }
+                {
+                    (true) ?
+                        <CreateNewPlaylistButton />
                         :
                         null
                 }
