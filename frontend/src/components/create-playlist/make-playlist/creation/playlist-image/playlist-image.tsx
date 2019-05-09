@@ -9,6 +9,8 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 interface IProps extends IPlaylistState {
     clearUnsplashImageUrl: () => void;
     clearUploadedImage: () => void;
+    getNewImages: boolean;
+    setGetNewImages: (getNewImages: boolean) => void;
     setUnsplashImageUrl: (unplashImageUrl: string) => void;
     setUploadedImage: (uploadedImage: File) => void;
 }
@@ -49,6 +51,23 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
             unsavedImageUrl: firstImageUrl,
             unsplashImageUrlInState: firstImageUrl
         })
+    }
+
+    public async componentDidUpdate(prevProps: IProps) {
+        if (this.props.getNewImages && !prevProps.getNewImages) {
+            if (this.props.uploadedImage) { this.props.clearUploadedImage() };
+            if (this.props.newPlaylist.unsplashImageUrl) { this.props.clearUnsplashImageUrl() };
+            const imageUrls = await this.getPlaylistImage();
+            const firstImageUrl = imageUrls.length && imageUrls[0];
+            this.props.setUnsplashImageUrl(firstImageUrl);
+            this.props.setGetNewImages(false);
+            this.setState({
+                imageUrls,
+                savedImageUrl: firstImageUrl,
+                unsavedImageUrl: firstImageUrl,
+                unsplashImageUrlInState: firstImageUrl
+            })
+        }
     }
 
     public clickInputRef = () => {
@@ -222,6 +241,7 @@ const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
     clearUnsplashImageUrl: playlistActions.clearUnsplashImageUrl,
     clearUploadedImage: playlistActions.clearUploadedImage,
+    setGetNewImages: playlistActions.setGetNewImages,
     setUnsplashImageUrl: playlistActions.setUnsplashImageUrl,
     setUploadedImage: playlistActions.setUploadedImage
 }

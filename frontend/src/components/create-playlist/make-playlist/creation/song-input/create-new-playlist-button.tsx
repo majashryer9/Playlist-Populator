@@ -5,8 +5,9 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 
 interface IProps extends IPlaylistState {
     clearMostRecentlyAddedSong: () => void;
-    clearPlaylistSongs: () => void;
+    clearPlaylist: () => void;
     clearSuggestedSongs: () => void;
+    setGetNewImages: (getNewImages: boolean) => void;
     setPopulated: (populated: boolean) => void;
 }
 
@@ -17,10 +18,11 @@ export class CreateNewPlaylistButton extends React.Component<IProps, any> {
     }
 
     public clearEverything = () => {
-        this.props.clearPlaylistSongs();
+        this.props.clearPlaylist();
         this.props.clearSuggestedSongs();
         this.props.setPopulated(false);
         this.props.clearMostRecentlyAddedSong();
+        this.props.setGetNewImages(true);
     }
 
     public render() {
@@ -40,8 +42,9 @@ export class CreateNewPlaylistButton extends React.Component<IProps, any> {
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
     clearMostRecentlyAddedSong: playlistActions.clearMostRecentlyAddedSong,
-    clearPlaylistSongs: playlistActions.clearPlaylistSongs,
+    clearPlaylist: playlistActions.clearPlaylist,
     clearSuggestedSongs: playlistActions.clearSuggestedSongs,
+    setGetNewImages: playlistActions.setGetNewImages,
     setPopulated: playlistActions.setPopulated
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CreateNewPlaylistButton);

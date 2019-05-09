@@ -200,7 +200,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                         null
                 }
                 {
-                    (true) ?
+                    (this.props.newPlaylist.saved) ?
                         <CreateNewPlaylistButton />
                         :
                         null

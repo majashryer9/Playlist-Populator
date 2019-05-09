@@ -6,6 +6,7 @@ import { Song } from 'src/models/Song';
 const initialState: IPlaylistState = {
     categories: [],
     curRef: null,
+    getNewImages: false,
     mostRecentlyAddedSong: new Song(),
     newPlaylist: new Playlist(),
     playing: false,
@@ -51,6 +52,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 mostRecentlyAddedSong: action.payload.mostRecentlyAddedSong
+            }
+        case playlistTypes.CLEAR_PLAYLIST:
+            return {
+                ...state,
+                newPlaylist: action.payload.newPlaylist
             }
         case playlistTypes.CLEAR_PLAYLIST_SONGS:
             return {
@@ -132,6 +138,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 curRef: action.payload.curRef
+            }
+        case playlistTypes.SET_GET_NEW_IMAGES:
+            return {
+                ...state,
+                getNewImages: action.payload.getNewImages
             }
         case playlistTypes.SET_MOST_RECENTLY_ADDED_SONG:
             return {

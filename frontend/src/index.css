@@ -144,7 +144,8 @@
 
 .create-new-playlist-button-container {
   display: flex;
-  justify-content: center; }
+  justify-content: center;
+  margin-bottom: 10px; }
 
 .create-new-playlist-button {
   background-color: #9c0d38;

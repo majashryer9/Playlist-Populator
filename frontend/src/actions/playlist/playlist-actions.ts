@@ -2,6 +2,7 @@ import { playlistTypes } from './playlist-types';
 import { environment } from '../../environment';
 import { Category } from '../../models/Category';
 import { Song } from '../../models/Song';
+import { Playlist } from 'src/models/Playlist';
 
 /*
 CATEGORIES
@@ -49,6 +50,15 @@ export const clearMostRecentlyAddedSong = () => {
             mostRecentlyAddedSong: new Song()
         },
         type: playlistTypes.CLEAR_MOST_RECENTLY_ADDED_SONG
+    }
+}
+
+export const clearPlaylist = () => {
+    return {
+        payload: {
+            newPlaylist: new Playlist()
+        },
+        type: playlistTypes.CLEAR_PLAYLIST
     }
 }
 
@@ -127,6 +137,15 @@ export const savePlaylist = (saved: boolean) => (dispatch: any, getState: any) =
             }
         })
         .catch(error => console.log(error));
+}
+
+export const setGetNewImages = (getNewImages: boolean) => {
+    return {
+        payload: {
+            getNewImages
+        },
+        type: playlistTypes.SET_GET_NEW_IMAGES
+    }
 }
 
 export const setPlaylistDescription = (description: string) => {

@@ -22,11 +22,13 @@ export class PlaylistInformation extends React.Component<IProps, any> {
                     onChange={(e: any) => this.props.setPlaylistName(e.target.value)}
                     placeholder='Name your playlist...'
                     type='text'
+                    value={this.props.newPlaylist.name}
                 />
                 <Input
                     onChange={(e: any) => this.props.setPlaylistDescription(e.target.value)}
                     placeholder='Describe your playlist...'
                     type='textarea'
+                    value={this.props.newPlaylist.description}
                 />
             </div>
         )
