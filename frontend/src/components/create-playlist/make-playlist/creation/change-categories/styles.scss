@@ -47,3 +47,16 @@
 .no-margin-top {
   margin-top: 0;
 }
+
+.no-right-padding-mobile {
+  @media all and (max-width: 360px) {
+    padding-right: 0;
+  }
+}
+
+.no-left-right-padding-mobile {
+  @media all and (max-width: 360px) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}

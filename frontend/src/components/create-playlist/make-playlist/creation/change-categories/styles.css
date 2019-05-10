@@ -36,3 +36,12 @@
 
 .no-margin-top {
   margin-top: 0; }
+
+@media all and (max-width: 360px) {
+  .no-right-padding-mobile {
+    padding-right: 0; } }
+
+@media all and (max-width: 360px) {
+  .no-left-right-padding-mobile {
+    padding-right: 0;
+    padding-left: 0; } }

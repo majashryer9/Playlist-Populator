@@ -131,7 +131,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                     <Col sm={12}>
                         <div className='add-song-wrapper'>
                             <Row>
-                                <Col xs={9} sm={10}>
+                                <Col className='no-right-padding-mobile' xs={9} sm={10}>
                                     <Autosuggest
                                         suggestions={suggestions}
                                         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -144,7 +144,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                                         inputProps={inputProps}
                                     />
                                 </Col>
-                                <Col xs={3} sm={2}>
+                                <Col className='no-left-right-padding-mobile' xs={3} sm={2}>
                                     <div className='center-button'>
                                         <CircularButton
                                             icon={<FaPlus />}

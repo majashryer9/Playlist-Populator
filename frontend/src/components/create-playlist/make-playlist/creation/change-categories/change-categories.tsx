@@ -53,18 +53,18 @@ export class ChangeCategories extends React.Component<IProps, IChangeCategoriesS
                         null
                 }
                 <Row className={(this.props.newPlaylist.categories.length) ? 'no-margin-top' : 'margin-top'}>
-                    <Col xs={9} sm={10}>
+                    <Col className='no-right-padding-mobile' xs={9} sm={10}>
                         <Select
                             onChange={(selectedOption: any) => {
                                 this.setState({ selectedCategory: selectedOption.value });
                             }}
                             // filter out any categories that have already been selected
                             options={options.filter((option: any) => !playlistCategoryNames.some((playlistCategoryName: string) => playlistCategoryName === option.label))}
-                            placeholder='Add another category...'
+                            placeholder='Add category...'
                             value={(this.state.selectedCategory.name) ? { value: this.state.selectedCategory, label: this.state.selectedCategory.name } : null}
                         />
                     </Col>
-                    <Col xs={3} sm={2}>
+                    <Col className='no-left-right-padding-mobile' xs={3} sm={2}>
                         <div className='center-button'>
                             <CircularButton
                                 icon={<FaPlus />}

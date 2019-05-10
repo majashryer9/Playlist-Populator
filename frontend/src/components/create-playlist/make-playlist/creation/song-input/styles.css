@@ -1,3 +1,7 @@
+@media all and (max-width: 360px) {
+  .no-right-padding-mobile {
+    padding-right: 0; } }
+
 .react-autosuggest__container {
   position: relative; }
 
@@ -45,6 +49,11 @@
 
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd; }
+
+@media all and (max-width: 360px) {
+  .no-left-right-padding-mobile {
+    padding-right: 0;
+    padding-left: 0; } }
 
 .center-button {
   display: flex;
