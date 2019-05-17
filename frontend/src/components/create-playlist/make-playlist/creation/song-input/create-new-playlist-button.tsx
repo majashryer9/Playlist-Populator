@@ -6,6 +6,7 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 interface IProps extends IPlaylistState {
     clearMostRecentlyAddedSong: () => void;
     clearPlaylist: () => void;
+    clearState: () => void;
     clearSuggestedSongs: () => void;
     setGetNewImages: (getNewImages: boolean) => void;
     setPopulated: (populated: boolean) => void;
@@ -18,6 +19,7 @@ export class CreateNewPlaylistButton extends React.Component<IProps, any> {
     }
 
     public clearEverything = () => {
+        this.props.clearState();
         this.props.clearPlaylist();
         this.props.clearSuggestedSongs();
         this.props.setPopulated(false);

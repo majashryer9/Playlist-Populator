@@ -49,7 +49,6 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
             })
                 .then(resp => resp.json())
                 .then(suggestions => {
-                    console.log(suggestions);
                     this.setState({ suggestions })
                 })
                 .catch(error => console.log(error))
@@ -61,7 +60,7 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
         }
     }, 300);
 
-    public constructor(props: any) {
+    public constructor(props: IProps) {
         super(props);
         this.state = {
             errorMessage: '',
@@ -83,14 +82,22 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
         }
     }
 
+    public clearState = () => {
+        this.setState({
+            errorMessage: '',
+            selectedSong: new Song(),
+            showPopup: false,
+            suggestions: [],
+            value: ''
+        })
+    }
+
     public discard = () => {
         this.props.clearPlaylistSongs();
         this.props.clearSuggestedSongs();
         this.props.setPopulated(false);
         this.props.clearMostRecentlyAddedSong();
-        this.setState({
-            errorMessage: ''
-        });
+        this.clearState();
     }
 
     public save = () => {
@@ -201,7 +208,9 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                 }
                 {
                     (this.props.newPlaylist.saved) ?
-                        <CreateNewPlaylistButton />
+                        <CreateNewPlaylistButton 
+                        clearState={this.clearState}
+                        />
                         :
                         null
                 }

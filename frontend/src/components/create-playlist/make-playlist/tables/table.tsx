@@ -10,8 +10,8 @@ import { Alert } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
     buttonClick: (song: Song) => void;
-    getSimilarSongs: () => void;
-    getSpotifyRecommendations: () => void;
+    getSimilarSongs: (songs: Song[]) => void;
+    getSpotifyRecommendations: (songs: Song[]) => void;
     icon: any;
     includePopulateButton?: boolean;
     savePlaylist: (saved: boolean) => void;
@@ -56,10 +56,11 @@ export class SongsTable extends React.Component<IProps, ISongsTableState> {
     }
 
     public populate = () => {
+        const { songs } = this.props;
         this.props.setPopulated(true);
         this.props.savePlaylist(false);
-        this.props.getSimilarSongs();
-        this.props.getSpotifyRecommendations();
+        this.props.getSimilarSongs(songs);
+        this.props.getSpotifyRecommendations(songs);
     }
 
     public setRef = (ref: any) => {

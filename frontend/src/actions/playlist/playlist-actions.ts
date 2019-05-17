@@ -98,9 +98,9 @@ export const clearUploadedImage = () => {
     }
 }
 
-export const savePlaylist = (saved: boolean) => (dispatch: any, getState: any) => {
+export const savePlaylist = (saved: boolean, playlistToSave?: Playlist) => (dispatch: any, getState: any) => {
     const url = `${environment.context}playlist/save-playlist`;
-    const playlist = getState().playlist.newPlaylist;
+    const playlist = (playlistToSave) ? playlistToSave : getState().playlist.newPlaylist;
     playlist.saved = saved;
     const uploadedImage = getState().playlist.uploadedImage;
     if (uploadedImage) {
@@ -248,8 +248,7 @@ export const addSongToSuggestedSongs = (song: Song) => {
     }
 }
 
-export const getSimilarSongs = () => (dispatch: any, getState: any) => {
-    const songs = getState().playlist.newPlaylist.songs;
+export const getSimilarSongs = (songs: Song[]) => (dispatch: any, getState: any) => {
     const url = `${environment.context}song/similar-songs`;
     fetch(url, {
         body: JSON.stringify(songs),
@@ -280,8 +279,7 @@ export const getSimilarSongs = () => (dispatch: any, getState: any) => {
         .catch(error => console.log(error));
 }
 
-export const getSpotifyRecommendations = () => (dispatch: any, getState: any) => {
-    const songs = getState().playlist.newPlaylist.songs;
+export const getSpotifyRecommendations = (songs: Song[]) => (dispatch: any, getState: any) => {
     const url = `${environment.context}song/recommendations`;
     fetch(url, {
         body: JSON.stringify(songs),
@@ -301,7 +299,13 @@ export const getSpotifyRecommendations = () => (dispatch: any, getState: any) =>
                     return true;
                 }
                 return false;
-            })
+            });
+            dispatch(savePlaylist(false,
+                new Playlist({
+                    categories: getState().playlist.newPlaylist.categories,
+                    songs: recommendations
+                })
+            ));
             dispatch({
                 payload: {
                     songsWithNoDuplicates
