@@ -12,7 +12,7 @@ export const getPlaylistsContainingSong = async (spotifyTrackId: string) => {
             `SELECT * FROM playlist_populator.playlist
             INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
             INNER JOIN playlist_populator.song USING(song_id)
-            WHERE spotify_track_id=$1 AND saved=true`,
+            WHERE spotify_track_id=$1 AND saved=true AND LENGTH(unsplash_image_url) > 0`,
             [spotifyTrackId]
         );
         return (resp && resp.rows) ?
@@ -32,7 +32,7 @@ export const getPlaylistContainingSongsByGivenArtist = async (spotifyArtistId: s
             `SELECT DISTINCT ON(playlist_id) * FROM playlist_populator.playlist 
             INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
             INNER JOIN playlist_populator.song USING(song_id)
-            WHERE spotify_artist_id=$1 AND saved=true`,
+            WHERE spotify_artist_id=$1 AND saved=true AND LENGTH(unsplash_image_url) > 0`,
             [spotifyArtistId]
         );
         return (resp && resp.rows) ?
@@ -52,7 +52,7 @@ export const getPlaylistWithinGivenCategory = async (categoryName: string) => {
             `SELECT * FROM playlist_populator.playlist
             INNER JOIN playlist_populator.playlists_categories USING(playlist_id)
             INNER JOIN playlist_populator.category USING(category_id)
-            WHERE category_name=$1 and saved=true`,
+            WHERE category_name=$1 and saved=true AND LENGTH(unsplash_image_url) > 0`,
             [categoryName]
         );
         return (resp && resp.rows) ?
