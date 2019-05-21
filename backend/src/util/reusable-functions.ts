@@ -1,7 +1,12 @@
 import { Playlist } from '../models/Playlist';
 
 export const setIntersection = (arrays: Array<Playlist[]>) => {
-    const n = arrays.length;
+    let n = 0;
+    arrays.forEach((array: Playlist[]) => {
+        if (array.length) {
+            n = n + 1;
+        }
+    });
     const map = new Map<number, number>();
     const playlists: Playlist[] = [];
     arrays.forEach((arr: Playlist[]) => {
