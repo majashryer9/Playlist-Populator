@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -6,6 +7,7 @@ import { playlistRouter } from './components/playlist/router';
 import { songRouter } from './components/song/router';
 import { artistRouter } from './components/artist/router';
 
+dotenv.config();
 const app = express();
 const port = 8888;
 
