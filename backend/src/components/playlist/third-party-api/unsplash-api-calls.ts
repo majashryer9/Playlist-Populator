@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 
-const clientId = process.env.UNSPLASH_CLIENT_ID;
-const baseUrl = `https://api.unsplash.com/`;
-
 export const getUnsplashPhoto = (query?: string) => {
+    const baseUrl = `https://api.unsplash.com/`;
+    const clientId = process.env.UNSPLASH_CLIENT_ID;
+    console.log(clientId)
     const url = (query) ? `${baseUrl}photos/random/?client_id=${clientId}&orientation=squarish&count=10&query=${query}` : `${baseUrl}photos/random/?client_id=${clientId}&orientation=squarish&count=10`;
     return fetch(url)
         .then(results => results.json())
