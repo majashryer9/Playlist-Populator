@@ -3,6 +3,7 @@ import { environment } from '../../environment';
 import { Category } from '../../models/Category';
 import { Song } from '../../models/Song';
 import { Playlist } from 'src/models/Playlist';
+import { Artist } from 'src/models/Artist';
 
 /*
 CATEGORIES
@@ -43,6 +44,33 @@ export const setCategories = (categories: Category[]) => {
 /*
 PLAYLISTS
 */
+
+export const addArtistForSearch = (artistForSearch: Artist) => {
+    return {
+        payload: {
+            artistForSearch
+        },
+        type: playlistTypes.ADD_ARTIST_FOR_SEARCH
+    }
+}
+
+export const addCategoryForSearch = (categoryForSearch: Category) => {
+    return {
+        payload: {
+            categoryForSearch
+        },
+        type: playlistTypes.ADD_CATEGORY_FOR_SEARCH
+    }
+}
+
+export const addSongForSearch = (songForSearch: Song) => {
+    return {
+        payload: {
+            songForSearch
+        },
+        type: playlistTypes.ADD_SONG_FOR_SEARCH
+    }
+}
 
 export const clearMostRecentlyAddedSong = () => {
     return {

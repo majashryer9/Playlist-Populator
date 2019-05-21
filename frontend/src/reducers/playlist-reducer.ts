@@ -4,13 +4,16 @@ import { playlistTypes } from 'src/actions/playlist/playlist-types';
 import { Song } from 'src/models/Song';
 
 const initialState: IPlaylistState = {
+    artistsForSearch: [],
     categories: [],
+    categoriesForSearch: [],
     curRef: null,
     getNewImages: false,
     mostRecentlyAddedSong: new Song(),
     newPlaylist: new Playlist(),
     playing: false,
     populated: false,
+    songsForSearch: [],
     suggestedSongs: [],
     timeout: null,
     uploadedImage: null
@@ -18,6 +21,16 @@ const initialState: IPlaylistState = {
 
 export const playlistReducer = (state = initialState, action: any) => {
     switch (action.type) {
+        case playlistTypes.ADD_ARTIST_FOR_SEARCH:
+            return {
+                ...state,
+                artistsForSearch: [...state.artistsForSearch, action.payload.artistForSearch]
+            }
+        case playlistTypes.ADD_CATEGORY_FOR_SEARCH:
+            return {
+                ...state,
+                categoriesForSearch: [...state.categoriesForSearch, action.payload.categoryForSearch]
+            }
         case playlistTypes.ADD_PLAYLIST_CATEGORY:
             return {
                 ...state,
@@ -34,6 +47,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                     songs: [...state.newPlaylist.songs, action.payload.selectedSong]
                 },
                 suggestedSongs: action.payload.suggestedSongs
+            }
+        case playlistTypes.ADD_SONG_FOR_SEARCH:
+            return {
+                ...state,
+                songsForSearch: [...state.songsForSearch, action.payload.songForSearch]
             }
         case playlistTypes.ADD_SONG_TO_NEW_PLAYLIST:
             return {

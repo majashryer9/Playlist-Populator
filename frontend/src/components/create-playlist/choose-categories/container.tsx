@@ -21,13 +21,15 @@ export class ChooseCategoriesContainer extends React.Component<IProps, any> {
     }
 
     public componentDidMount() {
-        const url = `${environment.context}category/get-categories`;
-        fetch(url)
-            .then(resp => resp.json())
-            .then(categories => {
-                this.props.setCategories(categories);
-            })
-            .catch(error => console.log(error));
+        if (!this.props.categories.length) {
+            const url = `${environment.context}category/get-categories`;
+            fetch(url)
+                .then(resp => resp.json())
+                .then(categories => {
+                    this.props.setCategories(categories);
+                })
+                .catch(error => console.log(error));
+        }
     }
 
     public render() {
