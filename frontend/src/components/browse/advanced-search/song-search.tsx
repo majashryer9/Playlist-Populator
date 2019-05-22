@@ -8,6 +8,7 @@ import { environment } from 'src/environment';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
+import { Row, Col } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
     addSongForSearch: (songForSearch: Song) => void;
@@ -79,25 +80,29 @@ export class SongSearch extends React.Component<IProps, ISongSearchState> {
             value: songValue
         };
         return (
-            <div>
-                <Autosuggest
-                    suggestions={songSuggestions}
-                    onSuggestionsFetchRequested={this.onSongSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onSongSuggestionsClearRequested}
-                    getSuggestionValue={(songSuggestion: Song) => {
-                        this.setState({ selectedSong: songSuggestion });
-                        return `${songSuggestion.name} by ${songSuggestion.artistName}`;
-                    }}
-                    renderSuggestion={(songSuggestion: Song) => <span> {songSuggestion.name} by {songSuggestion.artistName} </span>}
-                    inputProps={inputSongProps}
-                />
-                <CircularButton
-                    icon={<FaPlus />}
-                    onClick={this.add}
-                    height={38}
-                    width={38}
-                />
-            </div>
+            <Row>
+                <Col sm={10}>
+                    <Autosuggest
+                        suggestions={songSuggestions}
+                        onSuggestionsFetchRequested={this.onSongSuggestionsFetchRequested}
+                        onSuggestionsClearRequested={this.onSongSuggestionsClearRequested}
+                        getSuggestionValue={(songSuggestion: Song) => {
+                            this.setState({ selectedSong: songSuggestion });
+                            return `${songSuggestion.name} by ${songSuggestion.artistName}`;
+                        }}
+                        renderSuggestion={(songSuggestion: Song) => <span> {songSuggestion.name} by {songSuggestion.artistName} </span>}
+                        inputProps={inputSongProps}
+                    />
+                </Col>
+                <Col sm={2}>
+                    <CircularButton
+                        icon={<FaPlus />}
+                        onClick={this.add}
+                        height={38}
+                        width={38}
+                    />
+                </Col>
+            </Row>
         )
     }
 }

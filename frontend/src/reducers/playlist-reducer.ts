@@ -4,6 +4,7 @@ import { playlistTypes } from 'src/actions/playlist/playlist-types';
 import { Song } from 'src/models/Song';
 
 const initialState: IPlaylistState = {
+    advancedSearchResults: [],
     artistsForSearch: [],
     categories: [],
     categoriesForSearch: [],
@@ -66,6 +67,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                 ...state,
                 suggestedSongs: [action.payload.song, ...state.suggestedSongs]
             }
+        case playlistTypes.ADVANCED_SEARCH:
+            return {
+                ...state,
+                advancedSearchResults: action.payload.advancedSearchResults
+            }
         case playlistTypes.CLEAR_MOST_RECENTLY_ADDED_SONG:
             return {
                 ...state,
@@ -118,6 +124,16 @@ export const playlistReducer = (state = initialState, action: any) => {
                     songs: action.payload.songsWithNoDuplicates
                 }
             }
+        case playlistTypes.REMOVE_ARTIST_FOR_SEARCH:
+            return {
+                ...state,
+                artistsForSearch: action.payload.artistsForSearch
+            }
+        case playlistTypes.REMOVE_CATEGORY_FOR_SEARCH:
+            return {
+                ...state,
+                categoriesForSearch: action.payload.categoriesForSearch
+            }
         case playlistTypes.REMOVE_PLAYLIST_CATEGORY:
             return {
                 ...state,
@@ -125,6 +141,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                     ...state.newPlaylist,
                     categories: action.payload.categories
                 }
+            }
+        case playlistTypes.REMOVE_SONG_FOR_SEARCH:
+            return {
+                ...state,
+                songsForSearch: action.payload.songsForSearch
             }
         case playlistTypes.REMOVE_SONG_FROM_NEW_PLAYLIST:
             return {

@@ -8,6 +8,7 @@ import { environment } from 'src/environment';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
+import { Row, Col } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
     addArtistForSearch: (artistForSearch: Artist) => void;
@@ -78,25 +79,29 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
             value: artistValue
         };
         return (
-            <div>
-                <Autosuggest
-                    suggestions={artistSuggestions}
-                    onSuggestionsFetchRequested={this.onArtistSuggestionsFetchRequested}
-                    onSuggestionsClearRequested={this.onArtistSuggestionsClearRequested}
-                    getSuggestionValue={(artistSuggestion: Artist) => {
-                        this.setState({ selectedArtist: artistSuggestion });
-                        return artistSuggestion.artistName;
-                    }}
-                    renderSuggestion={(suggestion: Artist) => <span> {suggestion.artistName} </span>}
-                    inputProps={inputArtistProps}
-                />
-                <CircularButton
-                    icon={<FaPlus />}
-                    onClick={this.add}
-                    height={38}
-                    width={38}
-                />
-            </div>
+            <Row>
+                <Col sm={10}>
+                    <Autosuggest
+                        suggestions={artistSuggestions}
+                        onSuggestionsFetchRequested={this.onArtistSuggestionsFetchRequested}
+                        onSuggestionsClearRequested={this.onArtistSuggestionsClearRequested}
+                        getSuggestionValue={(artistSuggestion: Artist) => {
+                            this.setState({ selectedArtist: artistSuggestion });
+                            return artistSuggestion.artistName;
+                        }}
+                        renderSuggestion={(suggestion: Artist) => <span> {suggestion.artistName} </span>}
+                        inputProps={inputArtistProps}
+                    />
+                </Col>
+                <Col sm={2}>
+                    <CircularButton
+                        icon={<FaPlus />}
+                        onClick={this.add}
+                        height={38}
+                        width={38}
+                    />
+                </Col>
+            </Row>
         )
     }
 }

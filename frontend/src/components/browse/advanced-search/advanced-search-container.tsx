@@ -7,22 +7,39 @@ import ArtistSearch from './artist-search';
 import { Song } from 'src/models/Song';
 import { Category } from 'src/models/Category';
 import { Artist } from 'src/models/Artist';
+import * as playlistActions from 'src/actions/playlist/playlist-actions';
+import { Container } from 'reactstrap';
+import SearchChip from './search-chip';
 
-export class AdvancedSearchContainer extends React.Component<IPlaylistState, any> {
+interface IProps extends IPlaylistState {
+    advancedSearch: (spotifyTrackIds: string[], spotifyArtistIds: string[], categoryNames: string[]) => void;
+}
+
+export class AdvancedSearchContainer extends React.Component<IProps, any> {
     public constructor(props: any) {
         super(props);
     }
 
+    public advancedSearch = () => {
+        const categoryNames = this.props.categoriesForSearch.map((categoryForSearch: Category) => categoryForSearch.name);
+        const spotifyTrackIds = this.props.songsForSearch.map((songForSearch: Song) => songForSearch.spotifyTrackId);
+        const spotifyArtistIds = this.props.artistsForSearch.map((artistForSearch: Artist) => artistForSearch.spotifyArtistId);
+        this.props.advancedSearch(spotifyTrackIds, spotifyArtistIds, categoryNames);
+    }
+
     public render() {
         return (
-            <div>
+            <Container>
                 <CategorySearch />
                 {
                     this.props.categoriesForSearch.map((categoryForSearch: Category) => {
                         return (
-                            <div key={categoryForSearch.name}>
-                                {categoryForSearch.name}
-                            </div>
+                            <SearchChip
+                                key={categoryForSearch.name}
+                                typeOfSearch='category'
+                                dataToDisplay={categoryForSearch.name}
+                                uniqueIdentifier={categoryForSearch.name}
+                            />
                         );
                     })
                 }
@@ -30,9 +47,12 @@ export class AdvancedSearchContainer extends React.Component<IPlaylistState, any
                 {
                     this.props.songsForSearch.map((songForSearch: Song) => {
                         return (
-                            <div key={songForSearch.spotifyTrackId}>
-                                {songForSearch.name}
-                            </div>
+                            <SearchChip
+                                key={songForSearch.spotifyTrackId}
+                                typeOfSearch='song'
+                                dataToDisplay={songForSearch.name}
+                                uniqueIdentifier={songForSearch.spotifyTrackId}
+                            />
                         )
                     })
                 }
@@ -40,17 +60,23 @@ export class AdvancedSearchContainer extends React.Component<IPlaylistState, any
                 {
                     this.props.artistsForSearch.map((artistForSearch: Artist) => {
                         return (
-                            <div key={artistForSearch.spotifyArtistId}>
-                                {artistForSearch.artistName}
-                            </div>
+                            <SearchChip
+                                key={artistForSearch.spotifyArtistId}
+                                typeOfSearch='artist'
+                                dataToDisplay={artistForSearch.artistName}
+                                uniqueIdentifier={artistForSearch.spotifyArtistId}
+                            />
                         )
                     })
                 }
-            </div>
+                <button onClick={this.advancedSearch}> Search </button>
+            </Container>
         );
     }
 }
 
 const mapStateToProps = (state: IState) => (state.playlist);
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+    advancedSearch: playlistActions.advancedSearch
+}
 export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchContainer);

@@ -7,6 +7,7 @@ import { environment } from 'src/environment';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
+import { Row, Col } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
     addCategoryForSearch: (categoryForSearch: Category) => void;
@@ -49,23 +50,27 @@ export class CategorySearch extends React.Component<IProps, ICategorySearchState
         /* tslint:disable */
         const options = this.props.categories.map((category: Category) => { return { value: category, label: category.name } })
         return (
-            <div>
-                <Select
-                    onChange={(selectedOption: any) => {
-                        this.setState({ selectedCategory: selectedOption.value });
-                    }}
-                    // filter out any categories that have already been selected
-                    options={options.filter((option: any) => !this.props.categoriesForSearch.some((categoryForSearch: Category) => categoryForSearch.name === option.label))}
-                    placeholder='Add category...'
-                    value={(this.state.selectedCategory.name) ? { value: this.state.selectedCategory, label: this.state.selectedCategory.name } : null}
-                />
-                <CircularButton
-                    icon={<FaPlus />}
-                    onClick={this.add}
-                    height={38}
-                    width={38}
-                />
-            </div>
+            <Row>
+                <Col sm={10}>
+                    <Select
+                        onChange={(selectedOption: any) => {
+                            this.setState({ selectedCategory: selectedOption.value });
+                        }}
+                        // filter out any categories that have already been selected
+                        options={options.filter((option: any) => !this.props.categoriesForSearch.some((categoryForSearch: Category) => categoryForSearch.name === option.label))}
+                        placeholder='Add category...'
+                        value={(this.state.selectedCategory.name) ? { value: this.state.selectedCategory, label: this.state.selectedCategory.name } : null}
+                    />
+                </Col>
+                <Col sm={2}>
+                    <CircularButton
+                        icon={<FaPlus />}
+                        onClick={this.add}
+                        height={38}
+                        width={38}
+                    />
+                </Col>
+            </Row>
         );
     }
 }

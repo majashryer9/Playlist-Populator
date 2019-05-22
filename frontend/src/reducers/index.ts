@@ -12,6 +12,7 @@ export interface IHomeState {
 }
 
 export interface IPlaylistState {
+    advancedSearchResults: Playlist[];
     artistsForSearch: Artist[];
     categories: Category[];
     categoriesForSearch: Category[];

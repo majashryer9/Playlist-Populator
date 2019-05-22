@@ -11,11 +11,12 @@
 @import "./components/reusable-components/circular-button/styles.scss";
 @import "./components/create-playlist/make-playlist/creation/styles.scss";
 @import "./components/navbar/styles.scss";
+@import "./components/browse/advanced-search/styles.scss";
 @import "./theme/theme-variables.scss";
 
 body {
   // background: linear-gradient(#B7D1DA 10%, #406E8E 90%);
-  background-color: #BEE6CE;
+  background-color: #bee6ce;
   font-family: "Abel", "Arial", "Helvetica", sans-serif;
   font-size: 16px;
   height: 100%;

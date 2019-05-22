@@ -72,6 +72,30 @@ export const addSongForSearch = (songForSearch: Song) => {
     }
 }
 
+export const advancedSearch = (spotifyTrackIds: string[], spotifyArtistIds: string[], categoryNames: string[]) => (dispatch: any) => {
+    const url = `${environment.context}playlist/advanced-search`;
+    fetch(url, {
+        body: JSON.stringify({
+            categoryNames,
+            spotifyArtistIds,
+            spotifyTrackIds
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    })
+        .then(resp => resp.json())
+        .then(advancedSearchResults => {
+            dispatch({
+                payload: {
+                    advancedSearchResults
+                },
+                type: playlistTypes.ADVANCED_SEARCH
+            })
+        });
+}
+
 export const clearMostRecentlyAddedSong = () => {
     return {
         payload: {
@@ -124,6 +148,36 @@ export const clearUploadedImage = () => {
         },
         type: playlistTypes.CLEAR_UPLOADED_IMAGE
     }
+}
+
+export const removeArtistForSearch = (spotifyArtistId: string) => (dispatch: any, getState: any) => {
+    const artistsForSearch = getState().playlist.artistsForSearch.filter((artistForSearch: Artist) => artistForSearch.spotifyArtistId !== spotifyArtistId);
+    dispatch({
+        payload: {
+            artistsForSearch
+        },
+        type: playlistTypes.REMOVE_ARTIST_FOR_SEARCH
+    })
+}
+
+export const removeCategoryForSearch = (categoryName: string) => (dispatch: any, getState: any) => {
+    const categoriesForSearch = getState().playlist.categoriesForSearch.filter((categoryForSearch: Category) => categoryForSearch.name !== categoryName);
+    dispatch({
+        payload: {
+            categoriesForSearch
+        },
+        type: playlistTypes.REMOVE_CATEGORY_FOR_SEARCH
+    })
+}
+
+export const removeSongForSearch = (spotifyTrackId: string) => (dispatch: any, getState: any) => {
+    const songsForSearch = getState().playlist.songsForSearch.filter((songForSearch: Song) => songForSearch.spotifyTrackId !== spotifyTrackId);
+    dispatch({
+        payload: {
+            songsForSearch
+        },
+        type: playlistTypes.REMOVE_SONG_FOR_SEARCH
+    })
 }
 
 export const savePlaylist = (saved: boolean, playlistToSave?: Playlist) => (dispatch: any, getState: any) => {
