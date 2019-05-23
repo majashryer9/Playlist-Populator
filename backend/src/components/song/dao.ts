@@ -43,7 +43,7 @@ export const getSimilarSongs = async (songs: Song[]) => {
                         SELECT playlist_id FROM playlist_populator.playlist
                         INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
                         INNER JOIN playlist_populator.song USING(song_id)
-                        WHERE spotify_track_id IN ${songsString} AND saved = false
+                        WHERE spotify_track_id IN ${songsString}
                         GROUP BY(playlist_id)
                         HAVING COUNT(spotify_track_id) = ${songs.length}
                     ) AND spotify_track_id NOT IN ${songsString}

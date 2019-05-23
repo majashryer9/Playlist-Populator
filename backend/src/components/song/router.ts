@@ -9,6 +9,11 @@ songRouter.get('/artists-top-songs/:spotifyArtistId', async (req: Request, resp:
     resp.json(topSongs);
 })
 
+songRouter.post('/frequently-occurring-songs', async (req: Request, resp: Response) => {
+    const frequentlyOccurringSongs = await songService.getFrequentlyOccurringSongsWithGivenSongs(req.body.songs);
+    resp.json(frequentlyOccurringSongs);
+})
+
 songRouter.post('/recommendations', async (req: Request, resp: Response) => {
     const recommendations = await spotifyApiCalls.getSpotifyRecommendations(req.body);
     resp.json(recommendations);
