@@ -32,7 +32,17 @@ export const advancedSearch = async (spotifyTrackIds: string[], spotifyArtistIds
     const arrayWithArraysOfPlaylistsFromCategoryQuery: Array<Playlist[]> = await Promise.all(promiseArrayWithArraysOfPlaylistsFromCategoryQuery);
     const playlistsFromCategoryQuery = reusableFunctions.setIntersection(arrayWithArraysOfPlaylistsFromCategoryQuery);
 
-    const playlists = reusableFunctions.setIntersection([playlistsFromSongQuery, playlistsFromArtistQuery, playlistsFromCategoryQuery]);
+    const arraysToIntersect = [];
+    if (spotifyTrackIds.length) {
+        arraysToIntersect.push(playlistsFromSongQuery);
+    }
+    if (spotifyArtistIds.length) {
+        arraysToIntersect.push(playlistsFromArtistQuery);
+    }
+    if (categoryNames.length) {
+        arraysToIntersect.push(playlistsFromCategoryQuery);
+    }
+    const playlists = reusableFunctions.setIntersection(arraysToIntersect);
     if (playlists.length) {
         return Promise.all(playlists.map(async (playlist: Playlist) => {
             // retrieve playlist categories
