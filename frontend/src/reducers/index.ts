@@ -22,6 +22,7 @@ export interface IPlaylistState {
     newPlaylist: Playlist;
     playing: boolean;
     populated: boolean;
+    songsForMostFrequentSongsSearch: Song[];
     songsForSearch: Song[];
     suggestedSongs: Song[];
     timeout: any;

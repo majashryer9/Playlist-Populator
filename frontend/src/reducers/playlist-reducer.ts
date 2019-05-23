@@ -14,6 +14,7 @@ const initialState: IPlaylistState = {
     newPlaylist: new Playlist(),
     playing: false,
     populated: false,
+    songsForMostFrequentSongsSearch: [],
     songsForSearch: [],
     suggestedSongs: [],
     timeout: null,
@@ -48,6 +49,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                     songs: [...state.newPlaylist.songs, action.payload.selectedSong]
                 },
                 suggestedSongs: action.payload.suggestedSongs
+            }
+        case playlistTypes.ADD_SONG_FOR_MOST_FREQUENT_SONGS_SEARCH:
+            return {
+                ...state,
+                songsForMostFrequentSongsSearch: [...state.songsForMostFrequentSongsSearch, action.payload.song]
             }
         case playlistTypes.ADD_SONG_FOR_SEARCH:
             return {

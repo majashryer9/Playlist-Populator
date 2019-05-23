@@ -312,6 +312,15 @@ export const addSelectedSong = (selectedSong: Song) => (dispatch: any, getState:
     }
 }
 
+export const addSongForMostFrequentSongsSearch = (song: Song) => {
+    return {
+        payload: {
+            song
+        },
+        type: playlistTypes.ADD_SONG_FOR_MOST_FREQUENT_SONGS_SEARCH
+    }
+}
+
 export const addSongToNewPlaylist = (song: Song) => {
     return {
         payload: {
