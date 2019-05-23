@@ -51,7 +51,7 @@ export class SongSearch extends React.Component<IProps, ISongSearchState> {
 
     public add = () => {
         const { selectedSong } = this.state;
-        if (!this.props.songsForSearch.some((songForSearch: Song) => songForSearch.spotifyTrackId === selectedSong.spotifyTrackId)) {
+        if (selectedSong.spotifyTrackId && !this.props.songsForSearch.some((songForSearch: Song) => songForSearch.spotifyTrackId === selectedSong.spotifyTrackId)) {
             this.props.addSongForSearch(selectedSong);
             this.setState({
                 selectedSong: new Song(),
@@ -80,8 +80,8 @@ export class SongSearch extends React.Component<IProps, ISongSearchState> {
             value: songValue
         };
         return (
-            <Row>
-                <Col sm={10}>
+            <Row className='margin-bottom-10'>
+                <Col xs={9} sm={10} lg={11}>
                     <Autosuggest
                         suggestions={songSuggestions}
                         onSuggestionsFetchRequested={this.onSongSuggestionsFetchRequested}
@@ -94,7 +94,7 @@ export class SongSearch extends React.Component<IProps, ISongSearchState> {
                         inputProps={inputSongProps}
                     />
                 </Col>
-                <Col sm={2}>
+                <Col xs={3} sm={2} lg={1}>
                     <CircularButton
                         icon={<FaPlus />}
                         onClick={this.add}

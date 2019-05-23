@@ -8,15 +8,17 @@ import { Song } from 'src/models/Song';
 import { Category } from 'src/models/Category';
 import { Artist } from 'src/models/Artist';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
-import { Container } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import SearchChip from './search-chip';
+import { Playlist } from 'src/models/Playlist';
+import PlaylistCard from 'src/components/reusable-components/playlist-card/card';
 
 interface IProps extends IPlaylistState {
     advancedSearch: (spotifyTrackIds: string[], spotifyArtistIds: string[], categoryNames: string[]) => void;
 }
 
 export class AdvancedSearchContainer extends React.Component<IProps, any> {
-    public constructor(props: any) {
+    public constructor(props: IProps) {
         super(props);
     }
 
@@ -29,48 +31,89 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
 
     public render() {
         return (
-            <Container>
+            <div className='advanced-search-container'>
                 <CategorySearch />
-                {
-                    this.props.categoriesForSearch.map((categoryForSearch: Category) => {
-                        return (
-                            <SearchChip
-                                key={categoryForSearch.name}
-                                typeOfSearch='category'
-                                dataToDisplay={categoryForSearch.name}
-                                uniqueIdentifier={categoryForSearch.name}
-                            />
-                        );
-                    })
-                }
+                <Row>
+                    <Col xs={9} sm={10} lg={11}>
+                        <Row>
+                            {
+                                this.props.categoriesForSearch.map((categoryForSearch: Category) => {
+                                    return (
+                                        <Col sm={4} key={categoryForSearch.name}>
+                                            <SearchChip
+                                                typeOfSearch='category'
+                                                dataToDisplay={categoryForSearch.name}
+                                                uniqueIdentifier={categoryForSearch.name}
+                                            />
+                                        </Col>
+                                    );
+                                })
+                            }
+                        </Row>
+                    </Col>
+                </Row>
                 <SongSearch />
-                {
-                    this.props.songsForSearch.map((songForSearch: Song) => {
-                        return (
-                            <SearchChip
-                                key={songForSearch.spotifyTrackId}
-                                typeOfSearch='song'
-                                dataToDisplay={songForSearch.name}
-                                uniqueIdentifier={songForSearch.spotifyTrackId}
-                            />
-                        )
-                    })
-                }
+                <Row>
+                    <Col xs={9} sm={10} lg={11}>
+                        <Row>
+                            {
+                                this.props.songsForSearch.map((songForSearch: Song) => {
+                                    return (
+                                        <Col sm={4} key={songForSearch.spotifyTrackId}>
+                                            <SearchChip
+                                                typeOfSearch='song'
+                                                dataToDisplay={`${songForSearch.name} by ${songForSearch.artistName}`}
+                                                uniqueIdentifier={songForSearch.spotifyTrackId}
+                                            />
+                                        </Col>
+                                    )
+                                })
+                            }
+                        </Row>
+                    </Col>
+                </Row>
                 <ArtistSearch />
+                <Row>
+                    <Col xs={9} sm={10} lg={11}>
+                        <Row>
+                            {
+                                this.props.artistsForSearch.map((artistForSearch: Artist) => {
+                                    return (
+                                        <Col sm={4} key={artistForSearch.spotifyArtistId}>
+                                            <SearchChip
+                                                typeOfSearch='artist'
+                                                dataToDisplay={artistForSearch.artistName}
+                                                uniqueIdentifier={artistForSearch.spotifyArtistId}
+                                            />
+                                        </Col>
+                                    )
+                                })
+                            }
+                        </Row>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} className='search-button-container'>
+                        <button onClick={this.advancedSearch}> Search </button>
+                    </Col>
+                </Row>
                 {
-                    this.props.artistsForSearch.map((artistForSearch: Artist) => {
-                        return (
-                            <SearchChip
-                                key={artistForSearch.spotifyArtistId}
-                                typeOfSearch='artist'
-                                dataToDisplay={artistForSearch.artistName}
-                                uniqueIdentifier={artistForSearch.spotifyArtistId}
-                            />
-                        )
-                    })
+                    (this.props.advancedSearchResults.length) ?
+                        <Row>
+                            {
+                                this.props.advancedSearchResults.map((playlist: Playlist) => {
+                                    return (
+                                        <Col xs={12} md={6} key={playlist.id} className='playlist-card-container'>
+                                            <PlaylistCard playlist={playlist} />
+                                        </Col>
+                                    )
+                                })
+                            }
+                        </Row>
+                        :
+                        null
                 }
-                <button onClick={this.advancedSearch}> Search </button>
-            </Container>
+            </div>
         );
     }
 }

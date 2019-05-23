@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from './Store';
 import NavBar from './components/navbar/NavBar';
 import CreatePlaylistContainer from './components/create-playlist/create-playlist-container';
-import AdvancedSearchContainer from './components/browse/advanced-search/advanced-search-container';
+import BrowseContainer from './components/browse/browse-container';
 
 class App extends React.Component {
   public render() {
@@ -18,7 +18,7 @@ class App extends React.Component {
             <div id="main-content-container">
               <Switch>
                 <Route path='/create-playlist' component={CreatePlaylistContainer} />
-                <Route path='/browse' component={AdvancedSearchContainer} />
+                <Route path='/browse' component={BrowseContainer} />
                 <Route component={CreatePlaylistContainer} />
               </Switch>
             </div>

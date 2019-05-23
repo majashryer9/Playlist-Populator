@@ -33,8 +33,14 @@ export class SearchChip extends React.Component<IProps, any> {
     public render() {
         return (
             <div className='search-chip-container'>
-                <FaTimes onClick={this.remove} />
-                {this.props.dataToDisplay}
+                <div className='data-to-display-container'>
+                    <div className='text-wrapper'>
+                        {this.props.dataToDisplay}
+                    </div>
+                </div>
+                <div className='remove-search-chip-container'>
+                    <FaTimes onClick={this.remove} />
+                </div>
             </div>
         );
     }

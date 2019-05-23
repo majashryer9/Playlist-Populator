@@ -50,7 +50,7 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
 
     public add = () => {
         const { selectedArtist } = this.state;
-        if (!this.props.artistsForSearch.some((artistForSearch: Artist) => artistForSearch.spotifyArtistId === selectedArtist.spotifyArtistId)) {
+        if (selectedArtist.artistName && !this.props.artistsForSearch.some((artistForSearch: Artist) => artistForSearch.spotifyArtistId === selectedArtist.spotifyArtistId)) {
             this.props.addArtistForSearch(selectedArtist);
             this.setState({
                 artistValue: '',
@@ -79,8 +79,8 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
             value: artistValue
         };
         return (
-            <Row>
-                <Col sm={10}>
+            <Row className='margin-bottom-10'>
+                <Col xs={9} sm={10} lg={11}>
                     <Autosuggest
                         suggestions={artistSuggestions}
                         onSuggestionsFetchRequested={this.onArtistSuggestionsFetchRequested}
@@ -93,7 +93,7 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
                         inputProps={inputArtistProps}
                     />
                 </Col>
-                <Col sm={2}>
+                <Col xs={3} sm={2} lg={1}>
                     <CircularButton
                         icon={<FaPlus />}
                         onClick={this.add}
