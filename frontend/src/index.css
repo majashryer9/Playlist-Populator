@@ -776,26 +776,27 @@
     .dropdown-links {
       display: none; } }
 
-.advanced-search-container {
+.advanced-search-container .playlist-card-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0; }
+
+.search-container {
   border: 1px solid white;
   padding: 15px;
   background: linear-gradient(#b7d1da 10%, #406e8e 90%);
   border-radius: 8px; }
-  .advanced-search-container .playlist-card-container {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0; }
-  .advanced-search-container .margin-bottom-10 {
-    margin-bottom: 10px; }
-  .advanced-search-container .search-button-container {
+  .search-container .search-button-container {
     display: flex;
     justify-content: center; }
-    .advanced-search-container .search-button-container button {
+    .search-container .search-button-container button {
       background-color: #9c0d38;
       color: white;
       border: 1px solid white;
       border-radius: 3px;
       height: 35px; }
+  .search-container .margin-bottom-10 {
+    margin-bottom: 10px; }
 
 .search-chip-container {
   display: flex;

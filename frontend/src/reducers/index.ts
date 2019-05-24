@@ -18,6 +18,7 @@ export interface IPlaylistState {
     categoriesForSearch: Category[];
     curRef: any;
     getNewImages: boolean;
+    mostFrequentSongsSearchResults: Song[];
     mostRecentlyAddedSong: Song;
     newPlaylist: Playlist;
     playing: boolean;

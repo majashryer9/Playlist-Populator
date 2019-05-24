@@ -10,6 +10,7 @@ const initialState: IPlaylistState = {
     categoriesForSearch: [],
     curRef: null,
     getNewImages: false,
+    mostFrequentSongsSearchResults: [],
     mostRecentlyAddedSong: new Song(),
     newPlaylist: new Playlist(),
     playing: false,
@@ -148,6 +149,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                     categories: action.payload.categories
                 }
             }
+        case playlistTypes.REMOVE_SONG_FOR_MOST_FREQUENT_SONGS_SEARCH:
+            return {
+                ...state,
+                songsForMostFrequentSongsSearch: action.payload.songsForMostFrequentSongsSearch
+            }
         case playlistTypes.REMOVE_SONG_FOR_SEARCH:
             return {
                 ...state,
@@ -188,6 +194,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 getNewImages: action.payload.getNewImages
+            }
+        case playlistTypes.SET_MOST_FREQUENT_SONGS_SEARCH_RESULTS:
+            return {
+                ...state,
+                mostFrequentSongsSearchResults: action.payload.mostFrequentSongsSearchResults
             }
         case playlistTypes.SET_MOST_RECENTLY_ADDED_SONG:
             return {

@@ -339,6 +339,29 @@ export const addSongToSuggestedSongs = (song: Song) => {
     }
 }
 
+export const getFrequentlyOccurringSongsWithGivenSongs = () => (dispatch: any, getState: any) => {
+    const url = `${environment.context}song//frequently-occurring-songs`;
+    const songsForMostFrequentSongsSearch = getState().playlist.songsForMostFrequentSongsSearch;
+    fetch(url, {
+        body: JSON.stringify({
+            songs: songsForMostFrequentSongsSearch
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    })
+        .then(resp => resp.json())
+        .then(mostFrequentSongsSearchResults => {
+            dispatch({
+                payload: {
+                    mostFrequentSongsSearchResults
+                },
+                type: playlistTypes.SET_MOST_FREQUENT_SONGS_SEARCH_RESULTS
+            })
+        });
+}
+
 export const getSimilarSongs = (songs: Song[]) => (dispatch: any, getState: any) => {
     const url = `${environment.context}song/similar-songs`;
     fetch(url, {
@@ -405,6 +428,16 @@ export const getSpotifyRecommendations = (songs: Song[]) => (dispatch: any, getS
             })
         })
         .catch(error => console.log(error));
+}
+
+export const removeSongForMostFrequentSongsSearch = (spotifyTrackId: string) => (dispatch: any, getState: any) => {
+    const songsForMostFrequentSongsSearch = getState().playlist.songsForMostFrequentSongsSearch.filter((song: Song) => spotifyTrackId !== song.spotifyTrackId);
+    dispatch({
+        payload: {
+            songsForMostFrequentSongsSearch
+        },
+        type: playlistTypes.REMOVE_SONG_FOR_MOST_FREQUENT_SONGS_SEARCH
+    })
 }
 
 export const removeSongFromNewPlaylist = (songToRemove: Song) => (dispatch: any, getState: any) => {

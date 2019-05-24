@@ -1,17 +1,15 @@
 import * as React from 'react';
 import * as Autosuggest from 'react-autosuggest';
-import { IPlaylistState, IState } from 'src/reducers';
-import { connect } from 'react-redux';
 import { Song } from 'src/models/Song';
 import { debounce } from 'debounce';
 import { environment } from 'src/environment';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
-import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import { Row, Col } from 'reactstrap';
 
-interface IProps extends IPlaylistState {
-    addSongForSearch: (songForSearch: Song) => void;
+interface IProps {
+    songFunction: (song: Song) => void;
+    songs: Song[];
 }
 
 interface ISongSearchState {
@@ -20,7 +18,7 @@ interface ISongSearchState {
     songValue: string;
 }
 
-export class SongSearch extends React.Component<IProps, ISongSearchState> {
+export default class SongSearch extends React.Component<IProps, ISongSearchState> {
 
     public onSongSuggestionsFetchRequested = debounce(({ value }: any) => {
         const url = `${environment.context}song/song-search`;
@@ -51,8 +49,8 @@ export class SongSearch extends React.Component<IProps, ISongSearchState> {
 
     public add = () => {
         const { selectedSong } = this.state;
-        if (selectedSong.spotifyTrackId && !this.props.songsForSearch.some((songForSearch: Song) => songForSearch.spotifyTrackId === selectedSong.spotifyTrackId)) {
-            this.props.addSongForSearch(selectedSong);
+        if (selectedSong.spotifyTrackId && !this.props.songs.some((song: Song) => song.spotifyTrackId === selectedSong.spotifyTrackId)) {
+            this.props.songFunction(selectedSong);
             this.setState({
                 selectedSong: new Song(),
                 songValue: ''
@@ -106,9 +104,3 @@ export class SongSearch extends React.Component<IProps, ISongSearchState> {
         )
     }
 }
-
-const mapStateToProps = (state: IState) => (state.playlist);
-const mapDispatchToProps = {
-    addSongForSearch: playlistActions.addSongForSearch
-}
-export default connect(mapStateToProps, mapDispatchToProps)(SongSearch);

@@ -2,19 +2,23 @@ import * as React from 'react';
 import { IState, IPlaylistState } from 'src/reducers';
 import { connect } from 'react-redux';
 import CategorySearch from './category-search';
-import SongSearch from './song-search';
+import SongSearch from '../song-search';
 import ArtistSearch from './artist-search';
 import { Song } from 'src/models/Song';
 import { Category } from 'src/models/Category';
 import { Artist } from 'src/models/Artist';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import { Row, Col } from 'reactstrap';
-import SearchChip from './search-chip';
+import SearchChip from '../search-chip';
 import { Playlist } from 'src/models/Playlist';
 import PlaylistCard from 'src/components/reusable-components/playlist-card/card';
 
 interface IProps extends IPlaylistState {
+    addSongForSearch: (songForSearch: Song) => void;
     advancedSearch: (spotifyTrackIds: string[], spotifyArtistIds: string[], categoryNames: string[]) => void;
+    removeArtistForSearch: (spotifyArtistId: string) => void;
+    removeCategoryForSearch: (categoryName: string) => void;
+    removeSongForSearch: (spotifyTrackId: string) => void;
 }
 
 export class AdvancedSearchContainer extends React.Component<IProps, any> {
@@ -31,7 +35,7 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
 
     public render() {
         return (
-            <div className='advanced-search-container'>
+            <div className='search-container advanced-search-container'>
                 <CategorySearch />
                 <Row>
                     <Col xs={9} sm={10} lg={11}>
@@ -41,8 +45,8 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                                     return (
                                         <Col sm={4} key={categoryForSearch.name}>
                                             <SearchChip
-                                                typeOfSearch='category'
                                                 dataToDisplay={categoryForSearch.name}
+                                                removeFunction={this.props.removeCategoryForSearch}
                                                 uniqueIdentifier={categoryForSearch.name}
                                             />
                                         </Col>
@@ -52,7 +56,7 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                         </Row>
                     </Col>
                 </Row>
-                <SongSearch />
+                <SongSearch songFunction={this.props.addSongForSearch} songs={this.props.songsForSearch} />
                 <Row>
                     <Col xs={9} sm={10} lg={11}>
                         <Row>
@@ -61,8 +65,8 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                                     return (
                                         <Col sm={4} key={songForSearch.spotifyTrackId}>
                                             <SearchChip
-                                                typeOfSearch='song'
                                                 dataToDisplay={`${songForSearch.name} by ${songForSearch.artistName}`}
+                                                removeFunction={this.props.removeSongForSearch}
                                                 uniqueIdentifier={songForSearch.spotifyTrackId}
                                             />
                                         </Col>
@@ -81,8 +85,8 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                                     return (
                                         <Col sm={4} key={artistForSearch.spotifyArtistId}>
                                             <SearchChip
-                                                typeOfSearch='artist'
                                                 dataToDisplay={artistForSearch.artistName}
+                                                removeFunction={this.props.removeArtistForSearch}
                                                 uniqueIdentifier={artistForSearch.spotifyArtistId}
                                             />
                                         </Col>
@@ -120,6 +124,10 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
 
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
-    advancedSearch: playlistActions.advancedSearch
+    addSongForSearch: playlistActions.addSongForSearch,
+    advancedSearch: playlistActions.advancedSearch,
+    removeArtistForSearch: playlistActions.removeArtistForSearch,
+    removeCategoryForSearch: playlistActions.removeCategoryForSearch,
+    removeSongForSearch: playlistActions.removeSongForSearch
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchContainer);
