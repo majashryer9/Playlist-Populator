@@ -6,6 +6,7 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import SongSearch from '../song-search';
 import SearchChip from '../search-chip';
 import { Row, Col } from 'reactstrap';
+import SongsTable from 'src/components/create-playlist/make-playlist/tables/table';
 
 interface IProps extends IPlaylistState {
     addSongForMostFrequentSongsSearch: (song: Song) => void;
@@ -49,13 +50,10 @@ export class MostFrequentlyOccurringSongsWithGivenSongs extends React.Component<
                     </Col>
                 </Row>
                 {
-                    this.props.mostFrequentSongsSearchResults.map((song: Song) => {
-                        return (
-                            <div key={song.spotifyTrackId}>
-                                {song.name}
-                            </div>
-                        )
-                    })
+                    <SongsTable
+                        songs={this.props.mostFrequentSongsSearchResults}
+                        tableLabel={'Songs: '}
+                    />
                 }
             </div>
         );

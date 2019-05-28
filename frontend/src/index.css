@@ -811,6 +811,11 @@
       border: 1px solid white;
       border-radius: 3px;
       height: 35px; }
+  .search-container .table-rows-wrapper {
+    background: transparent;
+    margin-bottom: 0; }
+  .search-container .tr-icons-wrapper {
+    justify-content: center; }
   .search-container .center {
     display: flex;
     justify-content: center; }

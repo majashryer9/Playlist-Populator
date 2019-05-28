@@ -7,8 +7,8 @@ import * as playlistActions from '../../../../actions/playlist/playlist-actions'
 import { connect } from 'react-redux';
 
 interface IProps extends IPlaylistState {
-    buttonClick: (song: Song) => void;
-    icon: any;
+    buttonClick?: (song: Song) => void;
+    icon?: any;
     setCurRef: (curRef: any) => void;
     setNewTimeout: (timeout: any) => void;
     setPlaying: (playing: boolean) => void;
@@ -33,10 +33,12 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
     public buttonClickAndSetPlayingToFalse = () => {
         const { buttonClick, curRef, setPlaying, song, timeout } = this.props;
         const { ref } = this.state;
-        buttonClick(song);
-        if (curRef && ref && curRef.id === ref.id) {
-            clearTimeout(timeout);
-            setPlaying(false);
+        if (buttonClick) {
+            buttonClick(song);
+            if (curRef && ref && curRef.id === ref.id) {
+                clearTimeout(timeout);
+                setPlaying(false);
+            }
         }
     }
 
@@ -126,9 +128,12 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
                                 </div>
                             }
                         </div>
-                        <div className='icon-wrapper' onClick={this.buttonClickAndSetPlayingToFalse}>
-                            {icon}
-                        </div>
+                        {
+                            icon &&
+                            <div className='icon-wrapper' onClick={this.buttonClickAndSetPlayingToFalse}>
+                                {icon}
+                            </div>
+                        }
                     </div>
                 </div>
                 <RowDropdown clicked={clicked} spotifyArtistId={song.spotifyArtistId} spotifyTrackId={song.spotifyTrackId} />

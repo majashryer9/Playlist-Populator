@@ -9,10 +9,10 @@ import { FaMusic } from 'react-icons/fa';
 import { Alert } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
-    buttonClick: (song: Song) => void;
+    buttonClick?: (song: Song) => void;
     getSimilarSongs: (songs: Song[]) => void;
     getSpotifyRecommendations: (songs: Song[]) => void;
-    icon: any;
+    icon?: any;
     includePopulateButton?: boolean;
     savePlaylist: (saved: boolean) => void;
     setPopulated: (populated: boolean) => void;

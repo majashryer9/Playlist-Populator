@@ -96,7 +96,7 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                         </Row>
                     </Col>
                 </Row>
-                <Row>
+                <Row className='margin-bottom-10'>
                     <Col xs={12} className='search-button-container'>
                         <button onClick={this.advancedSearch}> Search </button>
                     </Col>
