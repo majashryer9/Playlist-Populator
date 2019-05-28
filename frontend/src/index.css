@@ -780,6 +780,22 @@
   display: flex;
   justify-content: center;
   margin: 10px 0; }
+  .advanced-search-container .playlist-card-container .playlist-card-wrapper {
+    width: 300px;
+    height: 300px; }
+    @media all and (max-width: 360px) {
+      .advanced-search-container .playlist-card-container .playlist-card-wrapper {
+        width: 250px;
+        height: 250px; } }
+
+.advanced-search-container .all-playlist-cards-container {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 350px; }
+
+.advanced-search-container .css-kj6f9i-menu {
+  margin-top: 0;
+  z-index: 100; }
 
 .search-container {
   border: 1px solid white;
@@ -795,6 +811,9 @@
       border: 1px solid white;
       border-radius: 3px;
       height: 35px; }
+  .search-container .center {
+    display: flex;
+    justify-content: center; }
   .search-container .margin-bottom-10 {
     margin-bottom: 10px; }
 

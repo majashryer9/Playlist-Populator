@@ -43,7 +43,7 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                             {
                                 this.props.categoriesForSearch.map((categoryForSearch: Category) => {
                                     return (
-                                        <Col sm={4} key={categoryForSearch.name}>
+                                        <Col lg={6} key={categoryForSearch.name}>
                                             <SearchChip
                                                 dataToDisplay={categoryForSearch.name}
                                                 removeFunction={this.props.removeCategoryForSearch}
@@ -63,7 +63,7 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                             {
                                 this.props.songsForSearch.map((songForSearch: Song) => {
                                     return (
-                                        <Col sm={4} key={songForSearch.spotifyTrackId}>
+                                        <Col lg={6} key={songForSearch.spotifyTrackId}>
                                             <SearchChip
                                                 dataToDisplay={`${songForSearch.name} by ${songForSearch.artistName}`}
                                                 removeFunction={this.props.removeSongForSearch}
@@ -83,7 +83,7 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                             {
                                 this.props.artistsForSearch.map((artistForSearch: Artist) => {
                                     return (
-                                        <Col sm={4} key={artistForSearch.spotifyArtistId}>
+                                        <Col lg={6} key={artistForSearch.spotifyArtistId}>
                                             <SearchChip
                                                 dataToDisplay={artistForSearch.artistName}
                                                 removeFunction={this.props.removeArtistForSearch}
@@ -103,11 +103,11 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                 </Row>
                 {
                     (this.props.advancedSearchResults.length) ?
-                        <Row>
+                        <Row className='all-playlist-cards-container'>
                             {
                                 this.props.advancedSearchResults.map((playlist: Playlist) => {
                                     return (
-                                        <Col xs={12} md={6} key={playlist.id} className='playlist-card-container'>
+                                        <Col xs={12} key={playlist.id} className='playlist-card-container'>
                                             <PlaylistCard playlist={playlist} />
                                         </Col>
                                     )

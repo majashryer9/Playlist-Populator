@@ -51,7 +51,7 @@ export class CategorySearch extends React.Component<IProps, ICategorySearchState
         const options = this.props.categories.map((category: Category) => { return { value: category, label: category.name } })
         return (
             <Row className='margin-bottom-10'>
-                <Col xs={9} sm={10} lg={11}>
+                <Col xs={9} sm={10} md={9} lg={10}>
                     <Select
                         onChange={(selectedOption: any) => {
                             this.setState({ selectedCategory: selectedOption.value });
@@ -62,7 +62,7 @@ export class CategorySearch extends React.Component<IProps, ICategorySearchState
                         value={(this.state.selectedCategory.name) ? { value: this.state.selectedCategory, label: this.state.selectedCategory.name } : null}
                     />
                 </Col>
-                <Col xs={3} sm={2} lg={1}>
+                <Col xs={3} sm={2} md={3} lg={2} className='center'>
                     <CircularButton
                         icon={<FaPlus />}
                         onClick={this.add}

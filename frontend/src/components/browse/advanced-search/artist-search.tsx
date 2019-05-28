@@ -80,7 +80,7 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
         };
         return (
             <Row className='margin-bottom-10'>
-                <Col xs={9} sm={10} lg={11}>
+                <Col xs={9} sm={10} md={9} lg={10}>
                     <Autosuggest
                         suggestions={artistSuggestions}
                         onSuggestionsFetchRequested={this.onArtistSuggestionsFetchRequested}
@@ -93,7 +93,7 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
                         inputProps={inputArtistProps}
                     />
                 </Col>
-                <Col xs={3} sm={2} lg={1}>
+                <Col xs={3} sm={2} md={3} lg={2} className='center'>
                     <CircularButton
                         icon={<FaPlus />}
                         onClick={this.add}

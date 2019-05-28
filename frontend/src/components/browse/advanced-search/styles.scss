@@ -3,5 +3,26 @@
     display: flex;
     justify-content: center;
     margin: 10px 0;
+
+    .playlist-card-wrapper {
+      width: 300px;
+      height: 300px;
+
+      @media all and (max-width: 360px) {
+        width: 250px;
+        height: 250px;
+      }
+    }
+  }
+
+  .all-playlist-cards-container {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 350px;
+  }
+
+  .css-kj6f9i-menu {
+    margin-top: 0;
+    z-index: 100;
   }
 }

@@ -79,7 +79,7 @@ export default class SongSearch extends React.Component<IProps, ISongSearchState
         };
         return (
             <Row className='margin-bottom-10'>
-                <Col xs={9} sm={10} lg={11}>
+                <Col xs={9} sm={10} md={9} lg={10}>
                     <Autosuggest
                         suggestions={songSuggestions}
                         onSuggestionsFetchRequested={this.onSongSuggestionsFetchRequested}
@@ -92,13 +92,14 @@ export default class SongSearch extends React.Component<IProps, ISongSearchState
                         inputProps={inputSongProps}
                     />
                 </Col>
-                <Col xs={3} sm={2} lg={1}>
+                <Col xs={3} sm={2} md={3} lg={2} className='center'>
                     <CircularButton
                         icon={<FaPlus />}
                         onClick={this.add}
                         height={38}
                         width={38}
                     />
+
                 </Col>
             </Row>
         )

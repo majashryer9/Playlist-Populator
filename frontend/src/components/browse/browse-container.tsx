@@ -8,12 +8,14 @@ export default class BrowseContainer extends React.Component<any, any> {
         super(props);
     }
 
-        public render() {
+    public render() {
         return (
             <Container>
                 <Row>
-                    <Col>
+                    <Col md={6}>
                         <AdvancedSearchContainer />
+                    </Col>
+                    <Col md={6}>
                         <MostFrequentlyOccurringSongsWithGivenSongs />
                     </Col>
                 </Row>

@@ -32,7 +32,7 @@ export class MostFrequentlyOccurringSongsWithGivenSongs extends React.Component<
                     {
                         this.props.songsForMostFrequentSongsSearch.map((song: Song) => {
                             return (
-                                <Col sm={4} key={song.spotifyTrackId}>
+                                <Col lg={6} key={song.spotifyTrackId}>
                                     <SearchChip
                                         dataToDisplay={`${song.name} by ${song.artistName}`}
                                         removeFunction={this.props.removeSongForMostFrequentSongsSearch}
