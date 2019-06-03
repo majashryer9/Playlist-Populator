@@ -10,7 +10,7 @@ import { FaPlus } from 'react-icons/fa';
 import { Row, Col } from 'reactstrap';
 
 interface IProps extends IPlaylistState {
-    addCategoryForSearch: (categoryForSearch: Category) => void;
+    categoryFunction: (category: Category) => void;
     setCategories: (categories: Category[]) => void;
 }
 
@@ -41,7 +41,7 @@ export class CategorySearch extends React.Component<IProps, ICategorySearchState
     public add = () => {
         const { selectedCategory } = this.state;
         if (selectedCategory.name) {
-            this.props.addCategoryForSearch(selectedCategory)
+            this.props.categoryFunction(selectedCategory)
             this.setState({ selectedCategory: new Category() });
         }
     }
@@ -77,7 +77,6 @@ export class CategorySearch extends React.Component<IProps, ICategorySearchState
 
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
-    addCategoryForSearch: playlistActions.addCategoryForSearch,
     setCategories: playlistActions.setCategories
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySearch);

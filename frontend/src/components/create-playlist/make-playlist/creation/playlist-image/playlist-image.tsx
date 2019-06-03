@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Modal, Input, Button } from 'reactstrap';
+import { Container, Row, Col, Modal, Input, Button, Spinner } from 'reactstrap';
 import { environment } from 'src/environment';
 import { IPlaylistState, IState } from 'src/reducers';
 import * as playlistActions from 'src/actions/playlist/playlist-actions';
@@ -155,7 +155,12 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
                         </div>
                     </div>
                     <div className='center-image'>
-                        {this.state.savedImageUrl && <img className='playlist-image picked-image' onClick={this.toggle} src={this.state.savedImageUrl} alt='playlist image' />}
+                        {
+                            (this.state.savedImageUrl) ?
+                                <img className='playlist-image picked-image' onClick={this.toggle} src={this.state.savedImageUrl} alt='playlist image' />
+                                :
+                                <Spinner color="dark" />
+                        }
                     </div>
                 </div>
                 <Modal className='playlist-image-modal' isOpen={this.state.modal} toggle={this.toggle}>

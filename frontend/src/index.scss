@@ -7,7 +7,6 @@
 @import "./components/reusable-components/playlist-card/styles.scss";
 @import "./components/create-playlist/make-playlist/creation/playlist-information/styles.scss";
 @import "./components/create-playlist/make-playlist/tables/row-dropdown/styles.scss";
-@import "./components/create-playlist/styles.scss";
 @import "./components/reusable-components/circular-button/styles.scss";
 @import "./components/create-playlist/make-playlist/creation/styles.scss";
 @import "./components/navbar/styles.scss";
@@ -16,7 +15,8 @@
 @import "./theme/theme-variables.scss";
 
 body {
-  background-color: #bee6ce;
+  background: linear-gradient(#ffffff 10%, #06070E 90%);
+  // background-color: #bee6ce;
   font-family: "Abel", "Arial", "Helvetica", sans-serif;
   font-size: 16px;
   height: 100%;

@@ -110,29 +110,33 @@ export class TableRow extends React.Component<IProps, ITableRowState> {
                     <div className='tr-icons-wrapper'>
                         <div>
                             {
-                                song.previewUrl &&
-                                <div onClick={() => this.playOrPause(ref)}>
-                                    <audio
-                                        id={song.spotifyTrackId}
-                                        ref={this.setRef}
-                                        src={song.previewUrl}
-                                    />
-                                    <div className='play-icon-wrapper'>
-                                        <FaRegPlayCircle
-                                            className={(!playing || !curRef || (ref && curRef && (curRef.id !== ref.id))) ? 'show-play' : 'hide'}
+                                (song.previewUrl) ?
+                                    <div onClick={() => this.playOrPause(ref)}>
+                                        <audio
+                                            id={song.spotifyTrackId}
+                                            ref={this.setRef}
+                                            src={song.previewUrl}
                                         />
-                                        <FaRegPauseCircle
-                                            className={(playing && (ref && curRef && (curRef.id === ref.id))) ? 'show-pause' : 'hide'}
-                                        />
+                                        <div className='play-icon-wrapper'>
+                                            <FaRegPlayCircle
+                                                className={(!playing || !curRef || (ref && curRef && (curRef.id !== ref.id))) ? 'show-play' : 'hide'}
+                                            />
+                                            <FaRegPauseCircle
+                                                className={(playing && (ref && curRef && (curRef.id === ref.id))) ? 'show-pause' : 'hide'}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
+                                    :
+                                    null
                             }
                         </div>
                         {
-                            icon &&
-                            <div className='icon-wrapper' onClick={this.buttonClickAndSetPlayingToFalse}>
-                                {icon}
-                            </div>
+                            (icon) ?
+                                <div className='icon-wrapper' onClick={this.buttonClickAndSetPlayingToFalse}>
+                                    {icon}
+                                </div>
+                                :
+                                null
                         }
                     </div>
                 </div>

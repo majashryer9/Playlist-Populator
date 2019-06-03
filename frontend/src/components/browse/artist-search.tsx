@@ -1,17 +1,15 @@
 import * as React from 'react';
 import * as Autosuggest from 'react-autosuggest';
-import { IPlaylistState, IState } from 'src/reducers';
 import { Artist } from 'src/models/Artist';
-import { connect } from 'react-redux';
 import { debounce } from 'debounce';
 import { environment } from 'src/environment';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
-import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import { Row, Col } from 'reactstrap';
 
-interface IProps extends IPlaylistState {
-    addArtistForSearch: (artistForSearch: Artist) => void;
+interface IProps {
+    artistFunction: (artistForSearch: Artist) => void;
+    artists: Artist[];
 }
 
 interface IArtistSearchState {
@@ -20,7 +18,7 @@ interface IArtistSearchState {
     artistValue: string;
 }
 
-export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
+export default class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
     public onArtistSuggestionsFetchRequested = debounce(({ value }: any) => {
         const url = `${environment.context}artist/artist-search`;
         fetch(url, {
@@ -50,8 +48,8 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
 
     public add = () => {
         const { selectedArtist } = this.state;
-        if (selectedArtist.artistName && !this.props.artistsForSearch.some((artistForSearch: Artist) => artistForSearch.spotifyArtistId === selectedArtist.spotifyArtistId)) {
-            this.props.addArtistForSearch(selectedArtist);
+        if (selectedArtist.artistName && !this.props.artists.some((artist: Artist) => artist.spotifyArtistId === selectedArtist.spotifyArtistId)) {
+            this.props.artistFunction(selectedArtist);
             this.setState({
                 artistValue: '',
                 selectedArtist: new Artist()
@@ -105,9 +103,3 @@ export class ArtistSearch extends React.Component<IProps, IArtistSearchState> {
         )
     }
 }
-
-const mapStateToProps = (state: IState) => (state.playlist);
-const mapDispatchToProps = {
-    addArtistForSearch: playlistActions.addArtistForSearch
-}
-export default connect(mapStateToProps, mapDispatchToProps)(ArtistSearch);

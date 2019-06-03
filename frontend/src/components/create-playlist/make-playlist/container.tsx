@@ -22,7 +22,7 @@ export default class MakePlaylistContainer extends React.Component<any, any> {
                         <TableContainer />
                     </Col>
                 </Row>
-                <Row className='explore-row'>
+                <Row>
                     <Col sm={12}>
                         <ExploreContainer />
                     </Col>

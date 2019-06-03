@@ -45,15 +45,17 @@ export class MostFrequentlyOccurringSongsWithGivenSongs extends React.Component<
                     }
                 </Row>
                 <Row>
-                    <Col xs={12} className='search-button-container'>
+                    <Col xs={12} className='search-button-container margin-bottom-10'>
                         <button onClick={this.search}> Search </button>
                     </Col>
                 </Row>
                 {
-                    <SongsTable
-                        songs={this.props.mostFrequentSongsSearchResults}
-                        tableLabel={'Songs: '}
-                    />
+                    (this.props.mostFrequentSongsSearchResults.length) ?
+                        <SongsTable
+                            songs={this.props.mostFrequentSongsSearchResults}
+                        />
+                        :
+                        null
                 }
             </div>
         );

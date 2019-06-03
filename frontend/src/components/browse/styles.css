@@ -22,6 +22,9 @@
     justify-content: center; }
   .search-container .margin-bottom-10 {
     margin-bottom: 10px; }
+  .search-container .css-kj6f9i-menu {
+    margin-top: 0;
+    z-index: 100; }
 
 .search-chip-container {
   display: flex;

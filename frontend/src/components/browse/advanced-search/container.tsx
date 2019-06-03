@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { IState, IPlaylistState } from 'src/reducers';
 import { connect } from 'react-redux';
-import CategorySearch from './category-search';
+import CategorySearch from '../category-search';
 import SongSearch from '../song-search';
-import ArtistSearch from './artist-search';
+import ArtistSearch from '../artist-search';
 import { Song } from 'src/models/Song';
 import { Category } from 'src/models/Category';
 import { Artist } from 'src/models/Artist';
@@ -14,6 +14,8 @@ import { Playlist } from 'src/models/Playlist';
 import PlaylistCard from 'src/components/reusable-components/playlist-card/card';
 
 interface IProps extends IPlaylistState {
+    addArtistForSearch: (artistForSearch: Artist) => void;
+    addCategoryForSearch: (categoryForSearch: Category) => void;
     addSongForSearch: (songForSearch: Song) => void;
     advancedSearch: (spotifyTrackIds: string[], spotifyArtistIds: string[], categoryNames: string[]) => void;
     removeArtistForSearch: (spotifyArtistId: string) => void;
@@ -36,7 +38,7 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
     public render() {
         return (
             <div className='search-container advanced-search-container'>
-                <CategorySearch />
+                <CategorySearch categoryFunction={this.props.addCategoryForSearch} />
                 <Row>
                     <Col xs={9} sm={10} lg={11}>
                         <Row>
@@ -76,7 +78,10 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
                         </Row>
                     </Col>
                 </Row>
-                <ArtistSearch />
+                <ArtistSearch
+                    artistFunction={this.props.addArtistForSearch}
+                    artists={this.props.artistsForSearch}
+                />
                 <Row>
                     <Col xs={9} sm={10} lg={11}>
                         <Row>
@@ -124,6 +129,8 @@ export class AdvancedSearchContainer extends React.Component<IProps, any> {
 
 const mapStateToProps = (state: IState) => (state.playlist);
 const mapDispatchToProps = {
+    addArtistForSearch: playlistActions.addArtistForSearch,
+    addCategoryForSearch: playlistActions.addCategoryForSearch,
     addSongForSearch: playlistActions.addSongForSearch,
     advancedSearch: playlistActions.advancedSearch,
     removeArtistForSearch: playlistActions.removeArtistForSearch,

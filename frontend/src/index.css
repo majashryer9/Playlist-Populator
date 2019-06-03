@@ -193,7 +193,8 @@
           text-align: center; } }
   .playlist-image-container .center-image {
     display: flex;
-    justify-content: center; }
+    justify-content: center;
+    align-items: center; }
   @media all and (max-width: 420px) {
     .playlist-image-container {
       flex-direction: column; } }
@@ -711,9 +712,6 @@
 .top-ten-item-wrapper:hover .album-art {
   opacity: 0.5; }
 
-.explore-row {
-  margin-bottom: 400px; }
-
 .circular-button-container {
   align-items: center;
   background-color: #9C0D38;
@@ -793,10 +791,6 @@
   overflow-y: scroll;
   height: 350px; }
 
-.advanced-search-container .css-kj6f9i-menu {
-  margin-top: 0;
-  z-index: 100; }
-
 .search-container {
   border: 1px solid white;
   padding: 15px;
@@ -821,6 +815,9 @@
     justify-content: center; }
   .search-container .margin-bottom-10 {
     margin-bottom: 10px; }
+  .search-container .css-kj6f9i-menu {
+    margin-top: 0;
+    z-index: 100; }
 
 .search-chip-container {
   display: flex;
@@ -908,7 +905,7 @@
   font-weight: bold; }
 
 body {
-  background-color: #bee6ce;
+  background: linear-gradient(#ffffff 10%, #06070E 90%);
   font-family: "Abel", "Arial", "Helvetica", sans-serif;
   font-size: 16px;
   height: 100%; }

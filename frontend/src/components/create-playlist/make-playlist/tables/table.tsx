@@ -17,7 +17,7 @@ interface IProps extends IPlaylistState {
     savePlaylist: (saved: boolean) => void;
     setPopulated: (populated: boolean) => void;
     songs: Song[];
-    tableLabel: string;
+    tableLabel?: string;
 }
 
 interface ISongsTableState {
@@ -75,7 +75,7 @@ export class SongsTable extends React.Component<IProps, ISongsTableState> {
         if (includePopulateButton && !populated && prevProps.songs.length !== this.props.songs.length) {
             ref.scrollTop = ref.scrollHeight - ref.clientHeight;
         }
-        else if (populated) {
+        else if (!prevProps.populated && populated) {
             ref.scrollTop = 0;
         }
     }
@@ -88,7 +88,12 @@ export class SongsTable extends React.Component<IProps, ISongsTableState> {
                     className='table-rows-wrapper'
                     ref={this.setRef}
                 >
-                    <div className='table-label'> {this.props.tableLabel} </div>
+                    {
+                        (this.props.tableLabel) ?
+                            <div className='table-label'> {this.props.tableLabel} </div>
+                            :
+                            null
+                    }
                     {
                         songs.map((song: Song) => {
                             return (

@@ -340,7 +340,7 @@ export const addSongToSuggestedSongs = (song: Song) => {
 }
 
 export const getFrequentlyOccurringSongsWithGivenSongs = () => (dispatch: any, getState: any) => {
-    const url = `${environment.context}song//frequently-occurring-songs`;
+    const url = `${environment.context}song/frequently-occurring-songs-with-songs`;
     const songsForMostFrequentSongsSearch = getState().playlist.songsForMostFrequentSongsSearch;
     fetch(url, {
         body: JSON.stringify({
