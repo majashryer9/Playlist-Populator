@@ -5,12 +5,14 @@ import { Song } from 'src/models/Song';
 
 const initialState: IPlaylistState = {
     advancedSearchResults: [],
+    artistsForMostFrequentSongsSearch: [],
     artistsForSearch: [],
     categories: [],
     categoriesForSearch: [],
     curRef: null,
     getNewImages: false,
     mostFrequentSongsSearchResults: [],
+    mostFrequentSongsWithGivenArtistsSearchResults: [],
     mostRecentlyAddedSong: new Song(),
     newPlaylist: new Playlist(),
     playing: false,
@@ -24,6 +26,11 @@ const initialState: IPlaylistState = {
 
 export const playlistReducer = (state = initialState, action: any) => {
     switch (action.type) {
+        case playlistTypes.ADD_ARTIST_FOR_MOST_FREQUENT_SONGS_SEARCH:
+            return {
+                ...state,
+                artistsForMostFrequentSongsSearch: [...state.artistsForMostFrequentSongsSearch, action.payload.artistForMostFrequentSongsSearch]
+            }
         case playlistTypes.ADD_ARTIST_FOR_SEARCH:
             return {
                 ...state,
@@ -131,6 +138,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                     songs: action.payload.songsWithNoDuplicates
                 }
             }
+        case playlistTypes.REMOVE_ARTIST_FOR_MOST_FREQUENT_SONGS_SEARCH:
+            return {
+                ...state,
+                artistsForMostFrequentSongsSearch: action.payload.artistsForMostFrequentSongsSearch
+            }
         case playlistTypes.REMOVE_ARTIST_FOR_SEARCH:
             return {
                 ...state,
@@ -199,6 +211,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 mostFrequentSongsSearchResults: action.payload.mostFrequentSongsSearchResults
+            }
+        case playlistTypes.SET_MOST_FREQUENT_SONGS_WITH_GIVEN_ARTISTS_SEARCH_RESULTS:
+            return {
+                ...state,
+                mostFrequentSongsWithGivenArtistsSearchResults: action.payload.mostFrequentSongsWithGivenArtistsSearchResults
             }
         case playlistTypes.SET_MOST_RECENTLY_ADDED_SONG:
             return {

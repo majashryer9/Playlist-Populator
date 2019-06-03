@@ -279,6 +279,18 @@ export const setUploadedImage = (uploadedImage: File) => {
 SONGS
  */
 
+export const addArtistForMostFrequentSongsSearch = (artist: Artist) => (dispatch: any, getState: any) => {
+    const artistsForMostFrequentSongsSearch = getState().playlist.artistsForMostFrequentSongsSearch;
+    if (!artistsForMostFrequentSongsSearch.some((alreadyAddedArtist: Artist) => artist.spotifyArtistId === alreadyAddedArtist.spotifyArtistId)) {
+        dispatch({
+            payload: {
+                artistForMostFrequentSongsSearch: artist
+            },
+            type: playlistTypes.ADD_ARTIST_FOR_MOST_FREQUENT_SONGS_SEARCH
+        })
+    }
+}
+
 export const addSelectedSong = (selectedSong: Song) => (dispatch: any, getState: any) => {
     const currentNewPlaylistSongs = getState().playlist.newPlaylist.songs;
     // only proceed if selected song isn't already in the playlist
@@ -337,6 +349,29 @@ export const addSongToSuggestedSongs = (song: Song) => {
         },
         type: playlistTypes.ADD_SONG_TO_SUGGESTED_SONGS
     }
+}
+
+export const getFrequentlyOccurringSongsWithGivenArtists = () => (dispatch: any, getState: any) => {
+    const url = `${environment.context}song/frequently-occurring-songs-with-artists`;
+    const artistsForMostFrequentSongsSearch = getState().playlist.artistsForMostFrequentSongsSearch;
+    fetch(url, {
+        body: JSON.stringify({
+            artists: artistsForMostFrequentSongsSearch
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    })
+        .then(resp => resp.json())
+        .then(mostFrequentSongsWithGivenArtistsSearchResults => {
+            dispatch({
+                payload: {
+                    mostFrequentSongsWithGivenArtistsSearchResults
+                },
+                type: playlistTypes.SET_MOST_FREQUENT_SONGS_WITH_GIVEN_ARTISTS_SEARCH_RESULTS
+            })
+        });
 }
 
 export const getFrequentlyOccurringSongsWithGivenSongs = () => (dispatch: any, getState: any) => {
@@ -428,6 +463,16 @@ export const getSpotifyRecommendations = (songs: Song[]) => (dispatch: any, getS
             })
         })
         .catch(error => console.log(error));
+}
+
+export const removeArtistForMostFrequentSongsSearch = (spotifyArtistId: string) => (dispatch: any, getState: any) => {
+    const artistsForMostFrequentSongsSearch = getState().playlist.artistsForMostFrequentSongsSearch.filter((artist: Artist) => artist.spotifyArtistId !== spotifyArtistId);
+    dispatch({
+        payload: {
+            artistsForMostFrequentSongsSearch
+        },
+        type: playlistTypes.REMOVE_ARTIST_FOR_MOST_FREQUENT_SONGS_SEARCH
+    })
 }
 
 export const removeSongForMostFrequentSongsSearch = (spotifyTrackId: string) => (dispatch: any, getState: any) => {

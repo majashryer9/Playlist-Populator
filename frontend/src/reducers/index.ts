@@ -13,12 +13,14 @@ export interface IHomeState {
 
 export interface IPlaylistState {
     advancedSearchResults: Playlist[];
+    artistsForMostFrequentSongsSearch: Artist[];
     artistsForSearch: Artist[];
     categories: Category[];
     categoriesForSearch: Category[];
     curRef: any;
     getNewImages: boolean;
     mostFrequentSongsSearchResults: Song[];
+    mostFrequentSongsWithGivenArtistsSearchResults: Song[];
     mostRecentlyAddedSong: Song;
     newPlaylist: Playlist;
     playing: boolean;
