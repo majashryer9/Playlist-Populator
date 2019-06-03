@@ -1,31 +1,20 @@
 import { Song } from '../../models/Song';
 import * as songDao from './dao';
+import { Artist } from '../../models/Artist';
+import { countMostFrequentlyOccuringSongs } from '../../util/reusable-functions';
+
+export const getFrequentlyOccurringSongsWithGivenArtists = async (artists: Artist[]) => {
+    const nestedArrayOfSongs = await Promise.all(artists.map((artist: Artist) => songDao.getFrequentlyOccurringSongsWithGivenArtist(artist.spotifyArtistId)));
+    // reduce nested array to one array containing all songs
+    const songs = nestedArrayOfSongs.reduce((outerArray: Song[], innerArray: Song[]) => outerArray.concat(innerArray), []);
+    return countMostFrequentlyOccuringSongs(songs);
+}
 
 export const getFrequentlyOccurringSongsWithGivenSongs = async (songs: Song[]) => {
     const similarSongsNestedArray = await Promise.all(songs.map((song: Song) => songDao.getSimilarSongs([song])));
     // reduce nested array to one array containing all songs
     const similarSongs = similarSongsNestedArray.reduce((outerArray: Song[], innerArray: Song[]) => outerArray.concat(innerArray), []);
-    const map = new Map<string, number>();
-    // count up how frequently songs occur
-    similarSongs.forEach((song: Song) => {
-        const count = map.get(song.spotifyTrackId);
-        const toAdd = (count) ? count + 1 : 1;
-        map.set(song.spotifyTrackId, toAdd);
-    });
-    // order songs by most frequently occurring
-    const orderedIds = [...map.keys()].sort((id1: string, id2: string) => (map.get(id2) || 0) - (map.get(id1) || 0));
-    const topTwenty = (orderedIds.length > 20)? orderedIds.slice(0, 20) : orderedIds;
-    const noDuplicateSongs = similarSongs.filter((song: Song) => {
-        const index = topTwenty.indexOf(song.spotifyTrackId);
-        if (index >= 0) {
-            topTwenty.splice(index, 1);
-            return true;
-        }
-        else {
-            return false;
-        }
-    });
-    return noDuplicateSongs;
+    return countMostFrequentlyOccuringSongs(similarSongs);
 }
 
 export const getPlaylistSongs = (playlistId: number) => {

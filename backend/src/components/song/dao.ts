@@ -3,6 +3,33 @@ import { Song } from '../../models/Song';
 import { SqlSong } from '../../dtos/Song';
 import { songConverter } from './converter';
 
+export const getFrequentlyOccurringSongsWithGivenArtist = async (spotifyArtistId: string) => {
+    const client = await connectionPool.connect();
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.song
+            INNER JOIN (
+                SELECT song_id, COUNT(song_id) AS song_counter FROM playlist_populator.song
+                INNER JOIN playlist_populator.playlists_songs USING(song_id)
+                INNER JOIN playlist_populator.playlist USING(playlist_id)
+                WHERE playlist_id IN (
+                    SELECT playlist_id FROM playlist_populator.playlist
+                    INNER JOIN playlist_populator.playlists_songs USING(playlist_id)
+                    INNER JOIN playlist_populator.song USING(song_id)
+                    WHERE spotify_artist_id=$1
+                ) AND spotify_artist_id!=$1
+                GROUP BY(song_id)
+            ) AS songs USING(song_id)
+            ORDER BY(song_counter) DESC
+            LIMIT(20)`, [spotifyArtistId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((song: SqlSong) => songConverter(song)) : [];
+    } catch (error) {
+        return [];
+    }
+}
+
 export const getPlaylistSongs = async (playlistId: number) => {
     const client = await connectionPool.connect();
     try {
