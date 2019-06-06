@@ -14,6 +14,11 @@ songRouter.post('/frequently-occurring-songs-with-artists', async (req: Request,
     resp.json(frequentlyOccurringSongs);
 })
 
+songRouter.post('/frequently-occurring-songs-with-categories', async (req: Request, resp: Response) => {
+    const frequentlyOccurringSongs = await songService.getFrequentlyOccurringSongsWithGivenCategories(req.body.categories);
+    resp.json(frequentlyOccurringSongs);
+})
+
 songRouter.post('/frequently-occurring-songs-with-songs', async (req: Request, resp: Response) => {
     const frequentlyOccurringSongs = await songService.getFrequentlyOccurringSongsWithGivenSongs(req.body.songs);
     resp.json(frequentlyOccurringSongs);

@@ -2,7 +2,6 @@ CREATE SCHEMA playlist_populator;
 SET SCHEMA 'playlist_populator';
 
 CREATE TABLE app_user(
-	email VARCHAR(100),
 	first_name VARCHAR(100) NOT NULL,
 	last_name VARCHAR(100) NOT NULL,
 	password VARCHAR(100) NOT NULL,
@@ -75,19 +74,3 @@ CREATE TABLE users_playlists(
 	playlist_id INTEGER REFERENCES playlist(playlist_id) NOT NULL,
 	UNIQUE(user_id, playlist_id)
 );
-
-
--- QUERY TO GET MOST FREQUENTLY OCCURRING SONGS IN A GIVEN CATEGORY:
-
-SELECT * FROM playlist_populator.song
-INNER JOIN (
-	SELECT song_id, COUNT(song_id) AS song_counter FROM playlist_populator.song
-	INNER JOIN playlist_populator.playlists_songs USING(song_id)
-	INNER JOIN playlist_populator.playlist USING(playlist_id)
-	INNER JOIN playlist_populator.playlists_categories USING (playlist_id)
-	INNER JOIN playlist_populator.category USING(category_id)
-	WHERE category_name='Mood'
-	GROUP BY(song_id)
-) AS songs USING(song_id)
-ORDER BY(song_counter) DESC
-LIMIT(20);

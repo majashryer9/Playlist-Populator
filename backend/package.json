@@ -17,6 +17,7 @@
     "@types/request-promise": "^4.1.42",
     "aws-sdk": "^2.417.0",
     "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@types/aws-sdk": "^2.7.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/dotenv": "^6.1.1",
     "@types/pg": "^7.4.11"
   }

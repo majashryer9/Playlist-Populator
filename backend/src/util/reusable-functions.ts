@@ -9,9 +9,22 @@ export const countMostFrequentlyOccuringSongs = (songs: Song[]) => {
         const toAdd = (count) ? count + 1 : 1;
         map.set(song.spotifyTrackId, toAdd);
     });
+    const mapKeys = [...map.keys()];
     // order songs by most frequently occurring
-    const orderedIds = [...map.keys()].sort((id1: string, id2: string) => (map.get(id2) || 0) - (map.get(id1) || 0));
-    const topTwenty = (orderedIds.length > 20) ? orderedIds.slice(0, 20) : orderedIds;
+    const idsOfSongsOccurringMoreThanOnce = mapKeys.filter((spotifyTrackId: string) => (map.get(spotifyTrackId) || 0) > 1);
+    const idsOfSongsOnlyOccurringOnce = mapKeys.filter((spotifyTrackId: string) => (map.get(spotifyTrackId) || 0) === 1);
+    const orderedIds = idsOfSongsOccurringMoreThanOnce.sort((id1: string, id2: string) => (map.get(id2) || 0) - (map.get(id1) || 0));
+    const numSongsNeededToGetTo20 = 20 - orderedIds.length;
+    let random: string[] = [];
+    if (idsOfSongsOnlyOccurringOnce.length <= numSongsNeededToGetTo20) {
+        random.push(...idsOfSongsOnlyOccurringOnce);
+    }
+    else {
+        for (let i = 0; i < numSongsNeededToGetTo20; i++) {
+            random.push(idsOfSongsOnlyOccurringOnce[Math.floor(Math.random() * idsOfSongsOnlyOccurringOnce.length)])
+        }
+    }
+    const topTwenty = (numSongsNeededToGetTo20 <= 0) ? orderedIds.slice(0, 20) : orderedIds.concat(random);
     const noDuplicateSongs = songs.filter((song: Song) => {
         const index = topTwenty.indexOf(song.spotifyTrackId);
         if (index >= 0) {
