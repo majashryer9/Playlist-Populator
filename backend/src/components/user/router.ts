@@ -1,6 +1,9 @@
 import Router, { Request, Response } from 'express';
 import * as userService from './service';
 import { User } from '../../models/User';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
+
 
 export const userRouter = Router();
 
@@ -13,13 +16,30 @@ userRouter.post('/register', async (req: Request, resp: Response) => {
     const user = await userService.registerUser(req.body)
         .catch((err: Error) => {
             switch (err.message) {
-                case 'duplicate key value violates unique constraint "app_user_username_key"':
-                    resp.status(409).send('Username is not unique');
+                case 'Internal Server Error':
+                    resp.status(500).send(err.message);
+                case 'Username not unique':
+                    resp.status(409).send(err.message);
             }
         });
     resp.json(user);
 });
 
 userRouter.post('/sign-in', async (req: Request, resp: Response) => {
-
+    const user = new User(req.body);
+    if (!user.password) resp.status(400).send('Must include password');
+    if (!user.username) resp.status(400).send('Must include username');
+    userService.getUserByUsernameAndPassword(req.body.username, req.body.password)
+        .then((foundUser: User) => {
+            const payload = { id: foundUser.id };
+            const secretOrKey = process.env.SECRET_OR_KEY;
+            if (!secretOrKey) throw new Error('Internal Server Error');
+            const token = jwt.sign(payload, secretOrKey);
+            resp.set('Authorization', token);
+            resp.json(foundUser);
+        })
+        .catch((err: Error) => {
+            const statusCode = (err.message === 'Internal Server Error') ? 500 : 400;
+            resp.status(statusCode).send(err.message);
+        });
 });
