@@ -12,10 +12,11 @@
 @import "./components/navbar/styles.scss";
 @import "./components/browse/advanced-search/styles.scss";
 @import "./components/browse/styles.scss";
+@import "./components/login-register/styles.scss";
 @import "./theme/theme-variables.scss";
 
 body {
-  background: linear-gradient(#ffffff 10%, #06070E 90%);
+  background: linear-gradient(#ffffff 10%, #06070e 90%);
   // background-color: #bee6ce;
   font-family: "Abel", "Arial", "Helvetica", sans-serif;
   font-size: 16px;

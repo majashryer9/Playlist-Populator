@@ -1,0 +1,5 @@
+export const userTypes = {
+    SET_LOGGED_IN_USER: 'SET_LOGGED_IN_USER',
+    SET_PASSWORD: 'SET_PASSWORD',
+    SET_USERNAME: 'SET_USERNAME'
+}

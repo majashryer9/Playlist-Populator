@@ -6,6 +6,7 @@ import { Song } from 'src/models/Song';
 import { Category } from 'src/models/Category';
 import { userReducer } from './user-reducer';
 import { Artist } from 'src/models/Artist';
+import { User } from 'src/models/User';
 
 export interface IHomeState {
     variablePlaceholder: string;
@@ -16,11 +17,13 @@ export interface IPlaylistState {
     artistsForMostFrequentSongsSearch: Artist[];
     artistsForSearch: Artist[];
     categories: Category[];
+    categoriesForMostFrequentSongsSearch: Category[];
     categoriesForSearch: Category[];
     curRef: any;
     getNewImages: boolean;
     mostFrequentSongsSearchResults: Song[];
     mostFrequentSongsWithGivenArtistsSearchResults: Song[];
+    mostFrequentSongsWithGivenCategoriesSearchResults: Song[];
     mostRecentlyAddedSong: Song;
     newPlaylist: Playlist;
     playing: boolean;
@@ -33,7 +36,7 @@ export interface IPlaylistState {
 }
 
 export interface IUserState {
-    username: string;
+    loggedInUser: User;
 }
 
 export interface IState {

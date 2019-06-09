@@ -8,11 +8,13 @@ const initialState: IPlaylistState = {
     artistsForMostFrequentSongsSearch: [],
     artistsForSearch: [],
     categories: [],
+    categoriesForMostFrequentSongsSearch: [],
     categoriesForSearch: [],
     curRef: null,
     getNewImages: false,
     mostFrequentSongsSearchResults: [],
     mostFrequentSongsWithGivenArtistsSearchResults: [],
+    mostFrequentSongsWithGivenCategoriesSearchResults: [],
     mostRecentlyAddedSong: new Song(),
     newPlaylist: new Playlist(),
     playing: false,
@@ -35,6 +37,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 artistsForSearch: [...state.artistsForSearch, action.payload.artistForSearch]
+            }
+        case playlistTypes.ADD_CATEGORY_FOR_MOST_FREQUENT_SONGS_SEARCH:
+            return {
+                ...state,
+                categoriesForMostFrequentSongsSearch: [...state.categoriesForMostFrequentSongsSearch, action.payload.categoryForMostFrequentSongsSearch]
             }
         case playlistTypes.ADD_CATEGORY_FOR_SEARCH:
             return {
@@ -148,6 +155,11 @@ export const playlistReducer = (state = initialState, action: any) => {
                 ...state,
                 artistsForSearch: action.payload.artistsForSearch
             }
+        case playlistTypes.REMOVE_CATEGORY_FOR_MOST_FREQUENT_SONGS_SEARCH:
+            return {
+                ...state,
+                categoriesForMostFrequentSongsSearch: action.payload.categoriesForMostFrequentSongsSearch
+            }
         case playlistTypes.REMOVE_CATEGORY_FOR_SEARCH:
             return {
                 ...state,
@@ -216,6 +228,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 mostFrequentSongsWithGivenArtistsSearchResults: action.payload.mostFrequentSongsWithGivenArtistsSearchResults
+            }
+        case playlistTypes.SET_MOST_FREQUENT_SONGS_WITH_GIVEN_CATEGORIES_SEARCH_RESULTS:
+            return {
+                ...state,
+                mostFrequentSongsWithGivenCategoriesSearchResults: action.payload.mostFrequentSongsWithGivenCategoriesSearchResults
             }
         case playlistTypes.SET_MOST_RECENTLY_ADDED_SONG:
             return {

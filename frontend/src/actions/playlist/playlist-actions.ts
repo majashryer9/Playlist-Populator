@@ -291,6 +291,15 @@ export const addArtistForMostFrequentSongsSearch = (artist: Artist) => (dispatch
     }
 }
 
+export const addCategoryForMostFrequentSongsSearch = (category: Category) => {
+    return {
+        payload: {
+            categoryForMostFrequentSongsSearch: category
+        },
+        type: playlistTypes.ADD_CATEGORY_FOR_MOST_FREQUENT_SONGS_SEARCH
+    }
+}
+
 export const addSelectedSong = (selectedSong: Song) => (dispatch: any, getState: any) => {
     const currentNewPlaylistSongs = getState().playlist.newPlaylist.songs;
     // only proceed if selected song isn't already in the playlist
@@ -372,6 +381,29 @@ export const getFrequentlyOccurringSongsWithGivenArtists = () => (dispatch: any,
                 type: playlistTypes.SET_MOST_FREQUENT_SONGS_WITH_GIVEN_ARTISTS_SEARCH_RESULTS
             })
         });
+}
+
+export const getFrequentlyOccurringSongsWithGivenCategories = () => (dispatch: any, getState: any) => {
+    const url = `${environment.context}song/frequently-occurring-songs-with-categories`;
+    const categoriesForMostFrequentSongsSearch = getState().playlist.categoriesForMostFrequentSongsSearch;
+    fetch(url, {
+        body: JSON.stringify({
+            categories: categoriesForMostFrequentSongsSearch
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST'
+    })
+    .then(resp => resp.json())
+    .then(mostFrequentSongsWithGivenCategoriesSearchResults => {
+        dispatch({
+            payload: {
+                mostFrequentSongsWithGivenCategoriesSearchResults
+            },
+            type: playlistTypes.SET_MOST_FREQUENT_SONGS_WITH_GIVEN_CATEGORIES_SEARCH_RESULTS
+        })
+    });
 }
 
 export const getFrequentlyOccurringSongsWithGivenSongs = () => (dispatch: any, getState: any) => {
@@ -472,6 +504,16 @@ export const removeArtistForMostFrequentSongsSearch = (spotifyArtistId: string) 
             artistsForMostFrequentSongsSearch
         },
         type: playlistTypes.REMOVE_ARTIST_FOR_MOST_FREQUENT_SONGS_SEARCH
+    })
+}
+
+export const removeCategoryForMostFrequentSongsSearch = (categoryName: string) => (dispatch: any, getState: any) => {
+    const categoriesForMostFrequentSongsSearch = getState().playlist.categoriesForMostFrequentSongsSearch.filter((alreadyAddedCategory: Category) => alreadyAddedCategory.name !== categoryName);
+    dispatch({
+        payload: {
+            categoriesForMostFrequentSongsSearch
+        },
+        type: playlistTypes.REMOVE_CATEGORY_FOR_MOST_FREQUENT_SONGS_SEARCH
     })
 }
 

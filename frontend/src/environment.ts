@@ -1,5 +1,5 @@
 const dev = {
-    context: 'http://localhost:8888/'
+    context: 'http://localhost:8080/'
   };
   
   // const prod = {

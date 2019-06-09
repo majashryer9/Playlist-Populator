@@ -7,6 +7,8 @@ import { store } from './Store';
 import NavBar from './components/navbar/NavBar';
 import CreatePlaylistContainer from './components/create-playlist/create-playlist-container';
 import BrowseContainer from './components/browse/browse-container';
+import LoginContainer from './components/login-register/login-container';
+import MyProfileContainer from './components/my-profile/container';
 
 class App extends React.Component {
   public render() {
@@ -19,7 +21,9 @@ class App extends React.Component {
               <Switch>
                 <Route path='/create-playlist' component={CreatePlaylistContainer} />
                 <Route path='/browse' component={BrowseContainer} />
-                <Route component={CreatePlaylistContainer} />
+                <Route path='/login' component={LoginContainer} />
+                <Route path='/my-profile' component={MyProfileContainer} />
+                <Route component={LoginContainer} />
               </Switch>
             </div>
           </div>
