@@ -29,9 +29,9 @@ export class CreateNewPlaylistButton extends React.Component<IProps, any> {
 
     public render() {
         return (
-            <div className='create-new-playlist-button-container'>
+            <div className='new-playlist-button-container'>
                 <button
-                    className='create-new-playlist-button'
+                    className='new-playlist-button'
                     onClick={this.clearEverything}
                 >
                     CREATE NEW PLAYLIST

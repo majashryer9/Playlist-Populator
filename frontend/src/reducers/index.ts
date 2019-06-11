@@ -33,10 +33,12 @@ export interface IPlaylistState {
     suggestedSongs: Song[];
     timeout: any;
     uploadedImage: File | null;
+    userId: number;
 }
 
 export interface IUserState {
     loggedInUser: User;
+    loggingInToSave: boolean;
 }
 
 export interface IState {

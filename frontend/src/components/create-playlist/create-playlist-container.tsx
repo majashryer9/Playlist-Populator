@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IState, IPlaylistState } from 'src/reducers';
-import ChooseCategoriesContainer from './choose-categories/container';
+// import ChooseCategoriesContainer from './choose-categories/container';
 import MakePlaylistContainer from './make-playlist/container';
 
 interface ICreatePlaylistContainerState {
     showCategories: boolean
 }
-
 
 export class CreatePlaylistContainer extends React.Component<IPlaylistState, ICreatePlaylistContainerState> {
     public constructor(props: any) {
@@ -17,9 +16,16 @@ export class CreatePlaylistContainer extends React.Component<IPlaylistState, ICr
         }
     }
 
+    public componentDidUpdate(prevProps: IPlaylistState) {
+        if (!prevProps.newPlaylist.categories.length && this.props.newPlaylist.categories.length) {
+            this.setState({
+                showCategories: false
+            });
+        }
+    }
+
     public showSongs = () => {
         this.setState({
-            ...this.state,
             showCategories: false
         })
     }
@@ -27,10 +33,13 @@ export class CreatePlaylistContainer extends React.Component<IPlaylistState, ICr
     public render() {
         return (
             <div>
-                {
+                {/* {
                     (this.state.showCategories) ?
-                        <ChooseCategoriesContainer showSongs={this.showSongs} /> : <MakePlaylistContainer />
-                }
+                        <ChooseCategoriesContainer showSongs={this.showSongs} />
+                        :
+                        <MakePlaylistContainer />
+                } */}
+                <MakePlaylistContainer />
             </div>
         )
     }

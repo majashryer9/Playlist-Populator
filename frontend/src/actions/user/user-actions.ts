@@ -1,5 +1,15 @@
 import { userTypes } from './user-types';
 import { environment } from 'src/environment';
+import { playlistTypes } from '../playlist/playlist-types';
+
+export const setLoggingInToSave = (loggingIn: boolean) => {
+    return {
+        payload: {
+            loggingIn
+        },
+        type: userTypes.SET_LOGGING_IN_TO_SAVE
+    }
+}
 
 export const setPassword = (password: string) => {
     return {
@@ -43,7 +53,13 @@ export const signIn = () => (dispatch: any, getState: any) => {
                         user
                     },
                     type: userTypes.SET_LOGGED_IN_USER
-                })
+                });
+                dispatch({
+                    payload: {
+                        userId: user.id
+                    },
+                    type: playlistTypes.SET_USER_ID
+                });
             }
             else {
                 console.log(userOrMessage);

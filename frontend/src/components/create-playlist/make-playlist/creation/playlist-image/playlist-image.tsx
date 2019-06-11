@@ -55,6 +55,16 @@ export class PlaylistImage extends React.Component<IProps, IPlaylistImageState> 
 
     public async componentDidUpdate(prevProps: IProps) {
         if (this.props.getNewImages && !prevProps.getNewImages) {
+            this.setState({
+                imageUrls: [],
+                inputRef: null,
+                modal: false,
+                photoSearchQuery: '',
+                savedImageUrl: '',
+                unsavedImageUrl: '',
+                unsplashImageUrlInState: '',
+                uploadedImageInState: null
+            });
             if (this.props.uploadedImage) { this.props.clearUploadedImage() };
             if (this.props.newPlaylist.unsplashImageUrl) { this.props.clearUnsplashImageUrl() };
             const imageUrls = await this.getPlaylistImage();

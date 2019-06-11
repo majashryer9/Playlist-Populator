@@ -9,10 +9,11 @@ import * as playlistActions from 'src/actions/playlist/playlist-actions';
 import { Song } from 'src/models/Song';
 import CircularButton from 'src/components/reusable-components/circular-button/circular-button';
 import { FaPlus } from 'react-icons/fa';
-import { MdDeleteForever, MdSave } from 'react-icons/md';
+import { MdSave } from 'react-icons/md';
 import { Alert } from 'reactstrap';
 import SavedPopup from './saved-popup';
 import CreateNewPlaylistButton from './create-new-playlist-button';
+import LoginToSaveButton from './login-to-save-button';
 
 interface IProps extends IPlaylistState {
     addSelectedSong: (selectedSong: Song) => void;
@@ -90,14 +91,6 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
             suggestions: [],
             value: ''
         })
-    }
-
-    public discard = () => {
-        this.props.clearPlaylistSongs();
-        this.props.clearSuggestedSongs();
-        this.props.setPopulated(false);
-        this.props.clearMostRecentlyAddedSong();
-        this.clearState();
     }
 
     public save = () => {
@@ -178,21 +171,23 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                         <Row className='save-discard-button-row'>
                             <Col xs={6}>
                                 <div className='center-button'>
-                                    <CircularButton
-                                        icon={<MdSave />}
-                                        onClick={this.save}
-                                        height={38}
-                                        width={38}
-                                    />
+                                    {
+                                        (this.props.userId) ?
+                                            <CircularButton
+                                                icon={<MdSave />}
+                                                onClick={this.save}
+                                                height={38}
+                                                width={38}
+                                            />
+                                            :
+                                            <LoginToSaveButton />
+                                    }
                                 </div>
                             </Col>
                             <Col xs={6}>
                                 <div className='center-button'>
-                                    <CircularButton
-                                        icon={<MdDeleteForever />}
-                                        onClick={this.discard}
-                                        height={38}
-                                        width={38}
+                                    <CreateNewPlaylistButton
+                                        clearState={this.clearState}
                                     />
                                 </div>
                             </Col>
@@ -208,9 +203,11 @@ export class SongInput extends React.Component<IProps, ISongInputState> {
                 }
                 {
                     (this.props.newPlaylist.saved) ?
-                        <CreateNewPlaylistButton 
-                        clearState={this.clearState}
-                        />
+                        <div className='center-button'>
+                            <CreateNewPlaylistButton
+                                clearState={this.clearState}
+                            />
+                        </div>
                         :
                         null
                 }

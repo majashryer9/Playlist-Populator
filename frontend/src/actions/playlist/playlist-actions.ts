@@ -4,6 +4,7 @@ import { Category } from '../../models/Category';
 import { Song } from '../../models/Song';
 import { Playlist } from 'src/models/Playlist';
 import { Artist } from 'src/models/Artist';
+import { userTypes } from '../user/user-types';
 
 /*
 CATEGORIES
@@ -183,6 +184,8 @@ export const removeSongForSearch = (spotifyTrackId: string) => (dispatch: any, g
 export const savePlaylist = (saved: boolean, playlistToSave?: Playlist) => (dispatch: any, getState: any) => {
     const url = `${environment.context}playlist/save-playlist`;
     const playlist = (playlistToSave) ? playlistToSave : getState().playlist.newPlaylist;
+    const loggedInUserId = getState().user.loggedInUser.id;
+    if (loggedInUserId) { playlist.ownerId = loggedInUserId };
     playlist.saved = saved;
     const uploadedImage = getState().playlist.uploadedImage;
     if (uploadedImage) {
@@ -203,6 +206,13 @@ export const savePlaylist = (saved: boolean, playlistToSave?: Playlist) => (disp
         .then(resp => resp.json())
         .then(playlistIdAndSignedUrl => {
             const playlistId = playlistIdAndSignedUrl.playlistId;
+            playlist.id = playlistId;
+            dispatch({
+                payload: {
+                    playlist
+                },
+                type: userTypes.ADD_USER_PLAYLIST
+            })
             dispatch({
                 payload: {
                     playlistId
@@ -395,15 +405,15 @@ export const getFrequentlyOccurringSongsWithGivenCategories = () => (dispatch: a
         },
         method: 'POST'
     })
-    .then(resp => resp.json())
-    .then(mostFrequentSongsWithGivenCategoriesSearchResults => {
-        dispatch({
-            payload: {
-                mostFrequentSongsWithGivenCategoriesSearchResults
-            },
-            type: playlistTypes.SET_MOST_FREQUENT_SONGS_WITH_GIVEN_CATEGORIES_SEARCH_RESULTS
-        })
-    });
+        .then(resp => resp.json())
+        .then(mostFrequentSongsWithGivenCategoriesSearchResults => {
+            dispatch({
+                payload: {
+                    mostFrequentSongsWithGivenCategoriesSearchResults
+                },
+                type: playlistTypes.SET_MOST_FREQUENT_SONGS_WITH_GIVEN_CATEGORIES_SEARCH_RESULTS
+            })
+        });
 }
 
 export const getFrequentlyOccurringSongsWithGivenSongs = () => (dispatch: any, getState: any) => {

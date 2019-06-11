@@ -1,0 +1,67 @@
+@mixin button {
+  background-color: #9c0d38;
+  color: white;
+  border: 1px solid white;
+  border-radius: 3px;
+  height: 35px;
+  width: 100px;
+}
+
+@mixin button-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+
+  @media all and (max-width: 575px) {
+    margin-top: 30px;
+  }
+
+  .form-wrapper {
+    background: linear-gradient(#b7d1da 10%, #406e8e 90%);
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 280px;
+  }
+
+  .button-container {
+    @include button-container();
+  }
+
+  .button {
+    @include button();
+  }
+}
+
+.registration-modal {
+  display: flex;
+  margin-top: 150px;
+  justify-content: center;
+
+  .modal-content,
+  .modal-body {
+    background: linear-gradient(#b7d1da 10%, #406e8e 90%);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 290px;
+  }
+
+  .button-container {
+    @include button-container();
+  }
+
+  .button {
+    @include button();
+  }
+}

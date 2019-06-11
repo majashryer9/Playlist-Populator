@@ -4,6 +4,7 @@ import { IUserState, IState } from 'src/reducers';
 import { connect } from 'react-redux';
 import * as userActions from '../../actions/user/user-actions';
 import { Redirect } from 'react-router-dom';
+import RegisterContainer from './register-container';
 
 interface IProps extends IUserState {
     setPassword: (password: string) => void;
@@ -12,6 +13,7 @@ interface IProps extends IUserState {
 }
 
 interface ILoginContainerState {
+    modalOpen: boolean;
     redirect: boolean;
 }
 
@@ -20,7 +22,16 @@ export class LoginContainer extends React.Component<IProps, ILoginContainerState
     public constructor(props: any) {
         super(props);
         this.state = {
+            modalOpen: false,
             redirect: false
+        }
+    }
+
+    public componentDidUpdate() {
+        if (this.props.loggedInUser.id) {
+            this.setState({
+                redirect: true
+            });
         }
     }
 
@@ -32,17 +43,16 @@ export class LoginContainer extends React.Component<IProps, ILoginContainerState
         this.props.setUsername(e.target.value);
     }
 
-    public componentDidUpdate() {
-        if (this.props.loggedInUser.id) {
-            this.setState({
-                redirect: true
-            });
-        }
+    public toggle = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        })
     }
 
     public render() {
         if (this.state.redirect) {
-            return <Redirect to='/my-profile' />;
+            const path = (this.props.loggingInToSave) ? '/create-playlist' : '/my-profile';
+            return <Redirect to={path} />;
         }
         return (
             <div className='login-container'>
@@ -63,7 +73,14 @@ export class LoginContainer extends React.Component<IProps, ILoginContainerState
                             />
                         </FormGroup>
                     </Form>
-                    <button onClick={this.props.signIn}> Sign In </button>
+                    <div className='button-container'>
+                        <button className='button' onClick={this.props.signIn}> Sign In </button>
+                        <button className='button' onClick={this.toggle}> Register </button>
+                    </div>
+                    <RegisterContainer
+                        modalOpen={this.state.modalOpen}
+                        toggle={this.toggle}
+                    />
                 </div>
             </div>
         )

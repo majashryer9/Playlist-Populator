@@ -89,12 +89,12 @@
   .saved-pop-up .success-icon-container {
     font-size: 30px; }
 
-.create-new-playlist-button-container {
+.new-playlist-button-container {
   display: flex;
   justify-content: center;
   margin-bottom: 10px; }
 
-.create-new-playlist-button {
+.new-playlist-button {
   background-color: #9c0d38;
   border: 1px solid white;
   border-radius: 6px;

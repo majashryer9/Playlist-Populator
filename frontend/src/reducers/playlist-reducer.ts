@@ -23,7 +23,8 @@ const initialState: IPlaylistState = {
     songsForSearch: [],
     suggestedSongs: [],
     timeout: null,
-    uploadedImage: null
+    uploadedImage: null,
+    userId: 0
 }
 
 export const playlistReducer = (state = initialState, action: any) => {
@@ -282,6 +283,11 @@ export const playlistReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 uploadedImage: action.payload.uploadedImage
+            }
+        case playlistTypes.SET_USER_ID:
+            return {
+                ...state,
+                userId: action.payload.userId
             }
     }
     return state;

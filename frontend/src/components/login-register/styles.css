@@ -1,0 +1,54 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 80px; }
+  @media all and (max-width: 575px) {
+    .login-container {
+      margin-top: 30px; } }
+  .login-container .form-wrapper {
+    background: linear-gradient(#b7d1da 10%, #406e8e 90%);
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 280px; }
+  .login-container .button-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    justify-content: space-between;
+    width: 100%; }
+  .login-container .button {
+    background-color: #9c0d38;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    height: 35px;
+    width: 100px; }
+
+.registration-modal {
+  display: flex;
+  margin-top: 150px;
+  justify-content: center; }
+  .registration-modal .modal-content,
+  .registration-modal .modal-body {
+    background: linear-gradient(#b7d1da 10%, #406e8e 90%);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 290px; }
+  .registration-modal .button-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    justify-content: space-between;
+    width: 100%; }
+  .registration-modal .button {
+    background-color: #9c0d38;
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    height: 35px;
+    width: 100px; }
