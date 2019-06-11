@@ -38,14 +38,12 @@ export const getSpotifyRecommendations = async (songs: Song[]) => {
     })
         .then(results => results.json())
         .then(results => {
-            if (results && !results.error) {
-                return results.tracks.map((spotifySong: any) => spotifySongConverter(spotifySong));
-            }
-            return [];
+            if (!results) throw new Error();
+            if (results.error) throw new Error();
+            return results.tracks.map((spotifySong: any) => spotifySongConverter(spotifySong));
         })
-        .catch(error => {
-            console.log(error);
-            return [];
+        .catch((err: Error) => {
+            throw err;
         });
 }
 

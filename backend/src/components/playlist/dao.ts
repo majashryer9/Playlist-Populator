@@ -65,6 +65,23 @@ export const getPlaylistWithinGivenCategory = async (categoryName: string) => {
     }
 }
 
+export const getUserPlaylists = async (userId: number) => {
+    const client = await connectionPool.connect()
+        .catch((err: Error) => { throw err });
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.playlist
+            WHERE owner_id=$1 and saved=true`, [userId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((playlist: SqlPlaylist) => playlistConverter(playlist)) : [];
+    } catch (error) {
+        throw error;
+    } finally {
+        client.release();
+    }
+}
+
 export const savePlaylist = async (playlist: Playlist) => {
     const client = await connectionPool.connect();
     try {

@@ -1,6 +1,8 @@
 import { User } from '../../models/User';
 import bcrypt from 'bcryptjs';
 import * as userDao from './dao';
+// import * as playlistDao from '../playlist/dao';
+// import * as songDao from '../song/dao';
 
 export const getUserByUsernameAndPassword = async (username: string, password: string) => {
     const user = await userDao.getUserByUsername(username)
@@ -10,6 +12,12 @@ export const getUserByUsernameAndPassword = async (username: string, password: s
         .catch((err: Error) => { throw new Error('Internal Server Error') });
     if (passwordsMatch) {
         user.password = '';
+        // const userPlaylists = await playlistDao.getUserPlaylists(user.id)
+        //     .catch((err: Error) => { throw new Error('Internal Server Error') });
+        // const userLikedSongs = await songDao.getUserLikedSongs(user.id)
+        //     .catch((err: Error) => { throw new Error('Internal Server Error') });
+        // user.playlists = userPlaylists;
+        // user.likedSongs = userLikedSongs;
         return user;
     }
     else {

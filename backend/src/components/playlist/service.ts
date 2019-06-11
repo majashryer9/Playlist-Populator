@@ -4,6 +4,8 @@ import { Song } from '../../models/Song';
 import * as categoryService from '../category/service';
 import * as songService from '../song/service';
 import * as playlistDao from './dao';
+import * as categoryDao from '../category/dao';
+import * as songDao from '../song/dao';
 import * as reusableFunctions from '../../util/reusable-functions';
 import { putObjectSignedUrl } from '../../util/aws-s3';
 
@@ -71,6 +73,22 @@ export const getPlaylistsContainingSong = async (song: Song) => {
         }));
     }
     return [];
+}
+
+export const getUserPlaylists = async (userId: number) => {
+    let playlists = await playlistDao.getUserPlaylists(userId)
+        .catch((err: Error) => { throw new Error('Internal Server Error') });
+    if (!playlists.length) throw new Error('User has no playlists');
+    playlists = await Promise.all(playlists.map(async (playlist: Playlist) => {
+        const playlistCategories = await categoryDao.getPlaylistCategories(playlist.id)
+            .catch((err: Error) => { throw new Error('Internal Server Error') });
+        const playlistSongs = await songDao.getPlaylistSongs(playlist.id)
+            .catch((err: Error) => { throw new Error('Internal Server Error') });
+        playlist.categories = playlistCategories;
+        playlist.songs = playlistSongs;
+        return playlist;
+    }));
+    return playlists;
 }
 
 export const savePlaylist = async (playlist: Playlist) => {

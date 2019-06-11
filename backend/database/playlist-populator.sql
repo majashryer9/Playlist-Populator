@@ -11,7 +11,7 @@ CREATE TABLE app_user(
 );
 
 CREATE TABLE playlist(
-	owner_id INTEGER,
+	owner_id INTEGER REFERENCES app_user(user_id),
 	playlist_id SERIAL PRIMARY KEY,
 	playlist_name VARCHAR(200),
 	playlist_description TEXT,
@@ -67,10 +67,4 @@ CREATE TABLE users_liked_songs(
 	user_id INTEGER REFERENCES app_user(user_id) NOT NULL,
 	song_id INTEGER REFERENCES song(song_id) NOT NULL,
 	UNIQUE(user_id, song_id)
-);
-
-CREATE TABLE users_playlists(
-	user_id INTEGER REFERENCES app_user(user_id) NOT NULL,
-	playlist_id INTEGER REFERENCES playlist(playlist_id) NOT NULL,
-	UNIQUE(user_id, playlist_id)
 );

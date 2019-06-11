@@ -59,7 +59,8 @@ export const getFrequentlyOccurringSongsWithGivenCategory = async (categoryName:
 }
 
 export const getPlaylistSongs = async (playlistId: number) => {
-    const client = await connectionPool.connect();
+    const client = await connectionPool.connect()
+        .catch((err: Error) => { throw err });
     try {
         const resp = await client.query(
             `SELECT * FROM playlist_populator.song
@@ -70,8 +71,7 @@ export const getPlaylistSongs = async (playlistId: number) => {
         return (resp && resp.rows) ?
             resp.rows.map((song: SqlSong) => songConverter(song)) : [];
     } catch (error) {
-        console.log(error);
-        return [];
+        throw error;
     } finally {
         client.release();
     }
@@ -129,6 +129,25 @@ export const getSongIdBySpotifyTrackId = async (spotifyTrackId: string) => {
     } catch (error) {
         console.log(error);
         return 0;
+    } finally {
+        client.release();
+    }
+}
+
+export const getUserLikedSongs = async (userId: number) => {
+    const client = await connectionPool.connect()
+        .catch((err: Error) => { throw err });
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.song
+            INNER JOIN playlist_populator.users_liked_songs USING(song_id)
+            INNER JOIN playlist_populator.app_user USING(user_id)
+            WHERE user_id=$1`, [userId]
+        );
+        return (resp && resp.rows) ?
+            resp.rows.map((song: SqlSong) => songConverter(song)) : [];
+    } catch (error) {
+        throw error;
     } finally {
         client.release();
     }

@@ -1,6 +1,7 @@
 import Router, { Request, Response } from 'express';
 import * as songService from './service';
 import * as spotifyApiCalls from './third-party-api/spotify-api/spotify-api-calls';
+import { Song } from '../../models/Song';
 
 export const songRouter = Router();
 
@@ -25,7 +26,10 @@ songRouter.post('/frequently-occurring-songs-with-songs', async (req: Request, r
 })
 
 songRouter.post('/recommendations', async (req: Request, resp: Response) => {
-    const recommendations = await spotifyApiCalls.getSpotifyRecommendations(req.body);
+    const songs = req.body;
+    if (!songs.length) resp.status(400).send('Must include songs');
+    const recommendations = await spotifyApiCalls.getSpotifyRecommendations(songs)
+        .catch((err: Error) => resp.status(500).send('Internal Server Error'));
     resp.json(recommendations);
 })
 

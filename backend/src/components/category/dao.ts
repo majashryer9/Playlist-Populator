@@ -20,7 +20,8 @@ export const getCategoryIdByName = async (categoryName: string) => {
 }
 
 export const getPlaylistCategories = async (playlistId: number) => {
-    const client = await connectionPool.connect();
+    const client = await connectionPool.connect()
+        .catch((err: Error) => { throw err });
     try {
         const resp = await client.query(
             `SELECT * FROM playlist_populator.category
@@ -31,8 +32,7 @@ export const getPlaylistCategories = async (playlistId: number) => {
         return (resp && resp.rows) ?
             resp.rows.map((category: SqlCategory) => categoryConverter(category)) : [];
     } catch (error) {
-        console.log(error);
-        return [];
+        throw error;
     } finally {
         client.release();
     }

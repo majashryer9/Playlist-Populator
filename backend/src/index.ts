@@ -15,7 +15,9 @@ const app = express();
 const port = process.env.PORT || 8888;
 
 // temporarily allow all cors
-app.use(cors())
+app.use(cors({
+    exposedHeaders: ['Authorization'],
+}));
 app.use(bodyParser.json());
 app.use(auth);
 
