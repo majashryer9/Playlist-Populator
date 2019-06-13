@@ -51,3 +51,9 @@ export const verifyUserById = async (id: number) => {
     if (!userExists) throw new Error('User not found');
     return userExists;
 }
+
+export const verifyUsernameUnique = async (username: string) => {
+    const isUnique = await userDao.verifyUsernameUnique(username)
+        .catch((err: Error) => { throw new Error('Internal Server Error') });
+    return isUnique;
+}

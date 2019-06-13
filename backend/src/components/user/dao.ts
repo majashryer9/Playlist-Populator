@@ -51,3 +51,19 @@ export const verifyUserById = async (id: number) => {
         client.release();
     }
 }
+
+export const verifyUsernameUnique = async (username: string) => {
+    const client = await connectionPool.connect()
+        .catch((err: Error) => { throw err });
+    try {
+        const resp = await client.query(
+            `SELECT * FROM playlist_populator.app_user
+            WHERE username=$1`, [username]
+        );
+        return (resp && resp.rows && resp.rows.length) ? false : true;
+    } catch (error) {
+        throw error;
+    } finally {
+        client.release();
+    }
+}

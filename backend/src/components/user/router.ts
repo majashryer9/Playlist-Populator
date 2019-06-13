@@ -6,6 +6,13 @@ import jwt from 'jsonwebtoken';
 
 export const userRouter = Router();
 
+userRouter.get('/username', async (req: Request, resp: Response) => {
+    const username = req.query.username;
+    if (!username) return resp.status(400).json('Must include username');
+    const isUnique = await userService.verifyUsernameUnique(username);
+    resp.json(isUnique);
+})
+
 userRouter.post('/register', async (req: Request, resp: Response) => {
     const newUser = new User(req.body);
     if (!newUser.firstName) resp.status(400).send('Must include first name');
