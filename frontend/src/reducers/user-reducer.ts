@@ -4,7 +4,9 @@ import { userTypes } from 'src/actions/user/user-types';
 
 const initialState: IUserState = {
     loggedInUser: new User(),
-    loggingInToSave: false
+    loggingInToSave: false,
+    registrationPassword: '',
+    registrationUsername: ''
 }
 
 export const userReducer = (state = initialState, action: any) => {
@@ -34,6 +36,16 @@ export const userReducer = (state = initialState, action: any) => {
                     ...state.loggedInUser,
                     password: action.payload.password
                 }
+            }
+        case userTypes.SET_REGISTRATION_PASSWORD:
+            return {
+                ...state,
+                registrationPassword: action.payload.registrationPassword
+            }
+        case userTypes.SET_REGISTRATION_USERNAME:
+            return {
+                ...state,
+                registrationUsername: action.payload.registrationUsername
             }
         case userTypes.SET_USERNAME:
             return {

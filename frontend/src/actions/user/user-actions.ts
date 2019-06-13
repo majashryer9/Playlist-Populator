@@ -20,6 +20,24 @@ export const setPassword = (password: string) => {
     }
 }
 
+export const setRegistrationPassword = (registrationPassword: string) => {
+    return {
+        payload: {
+            registrationPassword
+        },
+        type: userTypes.SET_REGISTRATION_PASSWORD
+    }
+}
+
+export const setRegistrationUsername = (registrationUsername: string) => {
+    return {
+        payload: {
+            registrationUsername
+        },
+        type: userTypes.SET_REGISTRATION_USERNAME
+    }
+}
+
 export const setUsername = (username: string) => {
     return {
         payload: {

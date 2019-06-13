@@ -899,6 +899,24 @@
     height: 35px;
     width: 100px; }
 
+.password-criteria-card {
+  background-color: white;
+  border: 1px solid white;
+  border-radius: 8px;
+  margin-top: 10px;
+  padding: 5px; }
+
+.password-criteria-message {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px; }
+
+.success {
+  color: green; }
+
+.fail {
+  color: red; }
+
 .font-12-regular {
   font-size: 12px;
   font-weight: normal; }
@@ -960,7 +978,7 @@
   font-weight: bold; }
 
 body {
-  background: linear-gradient(#ffffff 10%, #06070e 90%);
+  background-color: #bee6ce;
   font-family: "Abel", "Arial", "Helvetica", sans-serif;
   font-size: 16px;
   height: 100%; }

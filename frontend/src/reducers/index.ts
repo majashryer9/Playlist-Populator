@@ -39,6 +39,8 @@ export interface IPlaylistState {
 export interface IUserState {
     loggedInUser: User;
     loggingInToSave: boolean;
+    registrationPassword: string;
+    registrationUsername: string;
 }
 
 export interface IState {

@@ -1,16 +1,47 @@
 import * as React from 'react';
 import { Modal, ModalBody, Form, FormGroup, Input } from 'reactstrap';
+import PasswordCriteriaCard from './password-criteria-card';
+import { IUserState, IState } from 'src/reducers';
+import { connect } from 'react-redux';
+import * as userActions from '../../actions/user/user-actions';
+import { debounce } from 'debounce';
+import { environment } from 'src/environment';
 
-interface IProps {
+interface IProps extends IUserState {
     modalOpen: boolean;
+    setRegistrationPassword: (password: string) => void;
+    setRegistrationUsername: (username: string) => void;
     toggle: () => void;
 }
 
-export default class RegisterContainer extends React.Component<IProps, any> {
+interface IRegisterContainerState {
+    showPasswordCriteria: boolean;
+    showUsernameUniqueness: boolean;
+    usernameIsUnique: boolean;
+}
+
+export class RegisterContainer extends React.Component<IProps, IRegisterContainerState> {
+    public setRegistrationUsernameAndCheckForUniqueness = debounce((username: string) => {
+        const url = `${environment.context}user/username?username=${username}`;
+        if (username) {
+            console.log(username);
+            fetch(url)
+                .then(resp => resp.json())
+                .then(usernameIsUnique => {
+                    this.setState({
+                        usernameIsUnique
+                    });
+                });
+        }
+        this.props.setRegistrationUsername(username);
+    }, 300);
+
     public constructor(props: IProps) {
         super(props);
         this.state = {
-            showPasswordCriteria: false
+            showPasswordCriteria: false,
+            showUsernameUniqueness: false,
+            usernameIsUnique: true
         }
     }
 
@@ -18,6 +49,16 @@ export default class RegisterContainer extends React.Component<IProps, any> {
         this.setState({
             showPasswordCriteria
         })
+    }
+
+    public setRegistrationPassword = (e: any) => {
+        this.props.setRegistrationPassword(e.target.value);
+    }
+
+    public usernameUniqueness = (showUsernameUniqueness: boolean) => {
+        this.setState({
+            showUsernameUniqueness
+        });
     }
 
     public render() {
@@ -41,19 +82,36 @@ export default class RegisterContainer extends React.Component<IProps, any> {
                             <Input
                                 type='text'
                                 placeholder='Enter username...'
+                                onChange={(e: any) => this.setRegistrationUsernameAndCheckForUniqueness(e.target.value)}
+                                onFocus={() => this.usernameUniqueness(true)}
+                                onBlur={() => this.usernameUniqueness(false)}
                             />
+                            {
+                                (this.state.showUsernameUniqueness && this.props.registrationUsername) ?
+                                    <div>
+                                        {
+                                            (this.state.usernameIsUnique) ?
+                                                'Username is unique'
+                                                :
+                                                'Username is not unique'
+                                        }
+                                    </div>
+                                    :
+                                    null
+                            }
                         </FormGroup>
                         <FormGroup>
                             <Input
                                 type='password'
                                 placeholder='Enter password...'
+                                onChange={this.setRegistrationPassword}
                                 onFocus={() => this.passwordCriteria(true)}
                                 onBlur={() => this.passwordCriteria(false)}
                             />
                             {
                                 (this.state.showPasswordCriteria) ?
                                     <div>
-                                        Password Criteria
+                                        <PasswordCriteriaCard />
                                     </div>
                                     :
                                     null
@@ -69,3 +127,10 @@ export default class RegisterContainer extends React.Component<IProps, any> {
         )
     }
 }
+
+const mapStateToProps = (state: IState) => (state.user);
+const mapDispatchToProps = {
+    setRegistrationPassword: userActions.setRegistrationPassword,
+    setRegistrationUsername: userActions.setRegistrationUsername
+};
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterContainer);
